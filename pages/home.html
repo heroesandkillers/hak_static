@@ -1,0 +1,84 @@
+
+<div id="conjunto" class="container_12" style="position:relative">
+
+    <div>
+        <!--<div id="tituloIndex" class="grid_9"></div>-->
+        
+        <div class="grid_3 contenedor">
+            <!--<div id="iframeInner">-->
+            <!--<iframe id="iframe" ></iframe>-->
+            <!--</div>-->
+        </div>
+
+        <div id="contenido1" class="grid_6" style="position:relative">
+            <div id="tituloIndex"></div>
+            <div class="clear"></div>
+            
+            <div id="contenido1A" class="contenedor" style="height:70%">
+                <div style="margin:20px;">
+                    <!--                    <div id="juegaAhora">
+                                            CREA TU PROPIO EQUIPO DE CRIATURAS!
+                                        </div>-->
+                    <!--<div id="iframeInner">-->
+                    <iframe id="iframe" ></iframe>
+                    <!--</div>-->
+                </div>
+            </div>
+            <!--<div id="contenido1B" class="contenedor bot" style="height:30%">-->
+            <!--<div class="titulo">COMO FUNCIONA ESTE JUEGO?</div>-->
+            <!--</div>-->
+        </div>
+    </div>
+
+    <!--<div id="contenido2" class="grid_3 contenedor" style="position:absolute; top:0px; margin-top: 15px;">-->
+    <!--<div class="titulo">GALERÍA DE IMÁGENES</div>-->
+    <!--</div>-->
+
+</div>
+
+<script>
+
+    //videojs.options.flash.swf = "video-js.swf";
+
+    $(document).ready(function () {
+        var titleHeight = $("body").width() * 0.1;
+        $("#tituloIndex").height(titleHeight);
+        var alto = $(document).height() - titleHeight - 20;
+
+//        $("#contenido1").height(alto + "px");
+//        $("#contenido1B").height(alto - $("#contenido1A").height() - 15 + "px");
+//        $("#contenido2").height(alto + titleHeight - 15 + "px");
+//        $("#iframe").closest(".contenedor").height(alto + "px");
+
+        $("#contenido1").css("max-height", alto + "px");
+
+        $("#iframeInner").append("<div class='loaderInner'><div class='loader'></div></div>");
+
+
+        $("#iframeInner .loaderInner").remove();
+        $("#iframe").attr("src", "/forum/login.php");
+
+        $("#iframe").load(function () {
+            $(this).height($(this).contents().height() + 35);
+
+            var x = document.getElementById("iframe");
+            var y = (x.contentWindow || x.contentDocument);
+            if (y.document) {
+                y = y.document;
+            }
+            var as = $(y).find("a");
+            for (var i = 0; i < as.length; i++) {
+                var a = as[i];
+                if ($(a).attr("href") != "#") {
+                    $(a).attr("target", "_blank");
+                }
+            }
+
+            //submit action
+            $(this).contents().find("#login").submit(function () {
+                gameAccess.enter = true;
+            });
+        });
+    });
+
+</script>

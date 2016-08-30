@@ -1,0 +1,114 @@
+/*
+--- CONSTRUCCION --------------------------------------------------------------------
+*/
+#construccionCanvasInner{
+    overflow: hidden;
+    margin-left: 6px;
+    margin-right: 6px;
+    margin-top: 3px;
+}
+
+/*
+--- ENTRENO --------------------------------------------------------------------
+*/
+.ui-slider-disabled {
+    opacity: 1;
+}
+
+/* General dropdown styles */       
+.dropdown dd, .dropdown dt, .dropdown ul {
+    margin:0px;
+    padding:0px;
+}
+
+.dropdown{
+    font-weight: bold;
+    width:100%;
+    font-size: 14px;
+    color:black;
+    text-shadow: 1px 1px rgba(255,255,255,0.8);
+
+    border: solid black;
+    border-width: 1px 0 1px 0;
+    background: rgba(255,255,255,0.3);
+    height: 45px;
+}
+
+/* DT styles for sliding doors */
+.dropdown dt{
+    cursor:pointer; 
+    height: 100%;
+}
+.dropdown dt a {
+    text-shadow: none;
+    display:block; 
+    padding-right:20px;
+}
+.dropdown dt a span {    
+    display:block; 
+    padding:5px;
+}
+
+.dropdown dd {
+    position:relative; 
+}
+.dropdown dd a{
+    text-shadow: 1px 1px rgba(255,255,255,0.8);
+}
+.dropdown span.value { 
+    display:none;
+}
+/* UL styles */
+.dropdown dd ul { 
+    background:#e4dfcb none repeat scroll 0 0; 
+    display:none;
+    list-style:none; 
+    padding:5px 0px; 
+    position:absolute; 
+    left:0px; 
+    top:2px;
+    width:100%;
+    z-index:9;
+}
+.dropdown dd ul li{
+    height:45px;
+    margin-left:5px;
+    cursor: pointer;
+}
+.dropdown dd ul li:hover{
+    background-color: rgba(0,0,0,0.1);
+}
+.dropdown dd ul li a {    
+    display:block;
+    height: 100%;
+}
+.dropdown small {
+    font-weight: normal;
+    display:block;
+}
+#selectsEntrenamiento .tiempoDia{
+    margin-top:10px;
+}
+
+/*
+--- ALINEACION --------------------------------------------------------------------
+*/
+.ui-spinner-input{
+    margin:0;
+}
+.ui-state-default{
+    background: inherit;
+}
+
+.ui-icon-triangle-1-n, .ui-icon-triangle-1-s {
+    background: rgba(0,0,0,0);
+}
+
+/*
+--- BATALLAS --------------------------------------------------------------------
+*/
+.profundidad{
+    -moz-box-shadow: inset 10px 10px 50px rgba(0,0,0,.5),inset -10px 10px 50px rgba(0,0,0,.5),inset 10px -10px 50px rgba(0,0,0,.5),inset -10px -10px 50px rgba(0,0,0,.5);
+    -webkit-box-shadow: inset 10px 10px 50px rgba(0,0,0,.5),inset -10px 10px 50px rgba(0,0,0,.5),inset 10px -10px 50px rgba(0,0,0,.5),inset -10px -10px 50px rgba(0,0,0,.5);
+    box-shadow: inset 10px 10px 50px rgba(0,0,0,.5),inset -10px 10px 50px rgba(0,0,0,.5),inset 10px -10px 50px rgba(0,0,0,.5),inset -10px -10px 50px rgba(0,0,0,.5);
+}

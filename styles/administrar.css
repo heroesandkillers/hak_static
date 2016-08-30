@@ -1,0 +1,13 @@
+
+.administrar_grid { 
+    background-color:gainsboro;
+}
+
+input[type="button"]{
+/*    width:50%;  */
+    cursor: pointer;
+    height:25px;
+}
+a.hover{
+    color:blue;
+}

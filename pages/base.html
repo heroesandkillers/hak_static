@@ -1,0 +1,268 @@
+
+<header>
+
+    <div class='iconosMin'>
+        <div class="iconoMin" style="width:50px;">
+            <a href="/forum">
+                <div title="foro" id="iconoForo" class="minImg ico_foro"></div>
+            </a>
+        </div>
+
+        <div class="iconoMin" style="width:50px;">
+            <a href="javascript:cargar('mensajes')">
+                <div title="mensajes" class="minImg ico_mensajes">
+                    <span id="numeroMensajes"></span>
+                </div>
+            </a> 
+        </div>
+
+    </div>
+
+    <div class="iconosMin" style="position: absolute; top: 0;">
+        <div style="height:50%;">
+            <div style="padding-top:10px;">
+                <a href="javascript:cargar('perfil')">
+                    <div id="nombreId" style="float:left">
+                    </div>
+                </a>
+
+                <div style="float:right">
+
+                    <span style="color:white;">rank: </span>
+
+                    <a href="javascript:cargar('estadisticas')">
+                        <span id="posicion" class="posicion"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div style="height:50%">
+            <div id="oro" class="oro">
+                <span></span>
+            </div>
+            <div id="posicionReflejo" class="oro"></div>  
+        </div>
+    </div>
+
+    <div id="proximaBatalla_div">
+        <!--<p>Próxima batalla:</p>-->
+        <table style="height: 100%" id="proximaBatalla">
+            <thead>
+                <tr>
+                    <td class="proximaBatalla_equipo" style="text-align: right;">
+                        <div id="proximaBatalla_equipoLocal"></div>
+                    </td>
+                    <td style="text-align: center;">
+                        <p><span id="tipo"></span></p>   
+                        <p><span id="fecha" style="font-size:18px"></span></p>   
+
+                        <!--<p><span id="hora"></span></p>-->   
+                    </td>
+                    <td class="proximaBatalla_equipo">
+                        <div id="proximaBatalla_equipoVisitante"></div>
+                        <!--<img style="height: 50px" class="escudo"/>-->
+                    </td>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    <div class='iconosMin' style="height:100%; float:right">
+        <!--<a href="logout">-->
+        <div class="iconoSup" style="float:right; width:50px;">
+            <div id="ico_logout" class="minImg"></div>
+        </div>
+        <!--</a>-->
+    </div>
+
+</header> 
+
+<div id="fondo">
+
+    <div id="handler" style="position:relative">
+
+        <div id="mapaCanvasInner">
+        </div>
+
+        <div id="contenidos"></div>
+        <!--<div id="contenidos2"></div>-->
+
+    </div>
+
+</div>
+
+<footer>
+    <div class='grid_1'>
+        <p>.</p>
+    </div>
+
+    <div class='icono grid_1'>
+        <a href="javascript:cargar('mapa')">
+            <div class="iconoImg ico_mapa"></div>
+            <span>Mapa</span>
+        </a>
+    </div>                
+    <div class='icono grid_1'>
+        <!--        <a href="javascript:cargar('construccion')">  
+                    <div class="iconoImg ico_construccion"></div>        
+                    <span>Construcción</span>
+                </a>-->
+    </div>
+    <div class='icono grid_1'>
+        <a href="javascript:cargar('equipo')">
+            <div class="iconoImg ico_equipo"></div>
+            <span>Equipo</span>
+        </a>
+    </div>
+    <div class='icono grid_1'>
+        <a href="javascript:cargar('academia')">
+            <div class="iconoImg ico_academia"></div>
+            <span>Academia</span>
+        </a>
+    </div>
+    <div class='icono grid_1'>
+        <a href="javascript:cargar('entreno')">
+            <div class="iconoImg ico_entreno"></div>
+            <span>Entreno</span>
+        </a>
+    </div>
+    <div class='icono grid_1'>
+        <a href="javascript:cargar('alineacion')">
+            <div class="iconoImg ico_alineacion"></div>
+            <span>Alineación</span>
+        </a>
+    </div>
+    <div class='icono grid_1'>
+        <a href="javascript:cargar('batallas'); getMiBatalla();">
+            <div class="iconoImg ico_batallas"></div>
+            <span>Batallas</span>
+        </a>
+    </div>
+    <div class='icono grid_1'>
+        <a href="javascript:cargar('mazmorras')">
+            <div class="iconoImg ico_mazmorras"></div>
+            <span>Mazmorras</span>
+        </a> 
+    </div>
+    <div class='grid_1'>
+        <p>.</p>
+    </div>
+    <div class='icono grid_1'>
+        <a id="contactoClick" href="javascript:global.contactoId = global.perfil.id; cargar('contacto')">
+            <div class="iconoImg ico_perfil"></div>
+            <span>Contacto</span>
+        </a>
+    </div>
+    <div class='grid_1'>
+        <p></p>
+    </div>
+</footer>
+
+<div id="foroVentana">
+    <iframe id="iframe"></iframe>
+</div>
+
+
+<div id="error" class="dialog">
+    <div id="mensajeError"></div>
+</div>
+
+<div id="aviso" class="dialog">
+    <div id="mensajeAviso"></div>
+</div>
+
+<div id="confirmacion">
+    <div id="mensajeConfirmacion"></div>
+</div>
+
+<div id="divApodo" class="dialog">
+    apodo anterior: <span id="apodoAnterior"></span> 
+    <br/><br/>
+
+    <input style="width:150px" type="text" id="nuevoApodo"/>
+
+    <button id="botonApodo">apodar</button>
+</div>
+
+<script type="text/javascript">
+
+    //time of loading
+    var willContinueLoading = true;
+    setTimeout(function () {
+        willContinueLoading = false;
+    }, 5000);
+
+    var contenidoPaginas = {
+        perfil: "",
+        contacto: "",
+        mapa: "",
+        calendario: "",
+        construccion: "",
+        equipo: "",
+        academia: "",
+        academiaEquipo: "",
+        academiaAdministracion: "",
+        academiaAlineacion: "",
+        entreno: "",
+        alineacion: "",
+        batallas: "",
+        mazmorras: "",
+        contactoResumen: "",
+        contactoCalendario: "",
+        contactoEquipo: "",
+        contactoTraspasos: "",
+        estadisticas: "",
+        mensajes: "",
+        perfilDatos: "",
+        perfilEconomia: ""
+    };
+
+    var global = {};
+    console.log("getAll")
+    ajax.getAll(function (response) {
+
+        if (!response) {
+            console.log("null ajax.getAll() response");
+            location.href = "/#user_error";
+            return;
+        }
+
+        console.log("global:");
+        console.log(response);
+        global = response;
+
+        for (var name in global) {
+            global[name] = JSON.parse(global[name]);
+        }
+        global.division = global.perfil.division.division;
+        if (global.perfil.entreno) {
+            global.perfil.entreno = JSON.parse(global.perfil.entreno);
+        }
+
+        getBatallasCalculo(function () {
+            cargarPerfil();
+            load();
+        });
+
+        var batalla = getProximaBatalla();
+        if (batalla) {
+            setProximaBatalla(batalla);
+        }
+
+        $(document).ready(function () {
+            configurarGraficos();
+        });
+
+    });
+
+    $("#ico_logout").click(function () {
+        ajax.call("logout", {id: batalla.id}, function (error) {
+            if (error) {
+                alert(error);
+            } else {
+                location.href = "/";
+            }
+        });
+    });
+    
+</script>

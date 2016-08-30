@@ -1,0 +1,445 @@
+
+<div class="grid_9" style="height: 100%; position:relative">
+
+    <div class="contenedor" id="bloque" style="height: 100%">
+        <div class="titulo">ACADEMIA<span id="numCriaturasAcademia"></span></div>
+        <div class="cuerpo tabla">
+            <div class="subtitulo">
+                <table class="thead">
+                    <tr>                            
+                        <th class="arrows" style="width:180px">Nombre</th>
+                        <th class="innerHTML arrows" style="width:20px"></th>
+                        <th class="innerHTML arrows" style="width:20px"></th>
+                        <th class="innerHTML arrows" style="width:30px"></th>
+                        <th class="help numero arrows" style="width:30px">Fu<span>Fuerza</span></th>                            
+                        <th class="help numero arrows" style="width:30px">Ma<span>Magia</span></th>
+                        <th class="help numero arrows" style="width:30px">Ag<span>Agilidad</span></th>
+                        <th class="help numero arrows" style="width:30px">Rf<span>Reflejos</span></th>
+                        <th class="help numero arrows" style="width:30px">Co<span>Constitución</span></th>
+                        <th class="help numero arrows" style="width:30px">Df<span>Defensa</span></th>
+                        <th class="help numero arrows" style="width:30px">Rc<span>Reacción</span></th>
+                        <th title="Nivel" class="numero arrows" style="width:30px">Nivel</th>
+                        <th class="numero arrows" style="width:30px">Edad</th>
+                    </tr>
+                </table>
+            </div>
+            <div class="scrollTabla">
+                <table id="tableAcademia" class="tbody">
+                    <thead style="height: 0">
+                        <tr style="height: 0">
+                            <th style="height: 0;"><input type="hidden" value="false" id="input"/></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="detalleCriatura" class="bloque contenedor movil">
+        <div class="titulo">
+            <span id="nombre"></span>
+            <input id="apodoDetalles" class="apodoInput" type="text"/> 
+            <div class="maximizar" onclick="detalles();"></div> 
+        </div>
+        <div class="cuerpo tabla innerTabla20" style="font-weight: bold">
+
+            <table style="height:100%">
+                <tbody>
+                    <tr>
+                        <td id="aspectoDiv" class="alturaCanvas" width="1%"></td>
+
+                        <td width="26.6%">
+                            <table class="tablaIn">
+                                <tbody>
+                                    <tr class="UnHighLight">
+                                        <td>Fuerza:</td>
+                                        <td id="fuerza" style="text-align: right"></td>
+                                        <td style="text-align: right"><div class="observable"></div></td>
+                                    </tr>
+                                    <tr class="UnHighLight">
+                                        <td>Magia:</td>
+                                        <td id="magia" style="text-align: right"></td>
+                                        <td style="text-align: right"><div class="observable"></div></td>
+                                    </tr>
+                                    <tr class="UnHighLight">
+                                        <td>Agilidad:</td>
+                                        <td id="agilidad" style="text-align: right"></td>
+                                        <td style="text-align: right"><div class="observable"></div></td>
+                                    </tr>
+                                    <tr class="UnHighLight">
+                                        <td>Reflejos:</td>
+                                        <td id="reflejos" style="text-align: right"></td>
+                                        <td style="text-align: right"><div class="observable"></div></td>
+                                    </tr>
+                                    <tr class="UnHighLight">
+                                        <td>Constitucion:</td>
+                                        <td id="constitucion" style="text-align: right"></td>
+                                        <td style="text-align: right"><div class="observable"></div></td>
+                                    </tr>
+                                    <tr class="UnHighLight">
+                                        <td>Defensa:</td>
+                                        <td id="defensa" style="text-align: right"></td>
+                                        <td style="text-align: right"><div class="observable"></div></td>
+                                    </tr>
+                                    <tr class="UnHighLight">
+                                        <td>Reacción:</td>
+                                        <td id="reaccion" style="text-align: right"></td>
+                                        <td style="text-align: right"><div class="observable"></div></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </td>
+                        <td width="26.6%">
+                            <table class="tablaIn">
+                                <tbody>
+                                    <tr class="UnHighLight">
+                                        <td>Nivel:</td>
+                                        <td id="nivel" colspan="2" style="text-align: right;"></td>
+                                        <!--<td style="text-align: right"><div class="no-observable"></div></td>-->
+                                    </tr>
+                                    <tr class="UnHighLight">
+                                        <td>Raza:</td>
+                                        <td id="raza" colspan="2" style="text-align: right;"></td>
+                                        <!--<td style="text-align: right"><div class="no-observable"></div></td>-->
+                                    </tr>
+                                    <tr class="UnHighLight">
+                                        <td>Elemento:</td>
+                                        <td id="elemento" style="text-align: right;"></td>
+                                        <td style="text-align: right"><div class="observable"></div></td>
+                                    </tr>    
+                                    <tr class="UnHighLight">
+                                        <td>Mutación:</td>
+                                        <td id="mutacion" style="text-align: right;"></td>
+                                        <td style="text-align: right"><div class="observable"></div></td>
+                                    </tr>
+                                    <!--                                    <tr class="UnHighLight">
+                                                                            <td>
+                                    
+                                                                            </td>
+                                                                            <td style="text-align: right;">temp.</td>
+                                                                            <td style="text-align: right;">total</td>
+                                                                        </tr>-->
+                                    <tr class="UnHighLight">
+                                        <td>Batallas:</td>
+                                        <!--<td id="batallasTemp" style="text-align: right;"></td>-->
+                                        <td id="batallasTotal" colspan="2" style="text-align: right;"></td>
+                                    </tr>
+                                    <tr class="UnHighLight">
+                                        <td>Bajas:</td>
+                                        <!--<td id="bajasTemp" style="text-align: right;"></td>-->
+                                        <td id="bajasTotal" colspan="2" style="text-align: right;"></td>
+                                    </tr>
+                                    <tr class="UnHighLight">
+                                        <td>Muertes:</td>
+                                        <!--<td id="muertesTemp" style="text-align: right;"></td>-->
+                                        <td id="muertesTotal" colspan="2" style="text-align: right;"></td>
+                                    </tr>
+                                    <!--                                    <tr class="UnHighLight">
+                                                                            <td>Ratio:</td>
+                                                                            <td id="ratioTemp" style="text-align: right;"></td>
+                                                                            <td id="ratioTotal" style="text-align: right;"></td>
+                                                                        </tr>-->
+                                    <!--                                    <tr>
+                                                                            <td colspan="3">
+                                                                                <div onclick="botonExpulsar();" class="boton"><span>Expulsar</span></div>
+                                                                            </td>
+                                                                        </tr>-->
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="divOcultar" class="dialog" style="display: none">
+    <div>Seguro que quieres ocultar <span id="atrOcultar"></span> para destapar un nuevo valor?</div> 
+    <br/>
+
+    <button onclick="academiaEquipoJs.ocultar(this);">Ocultar</button>
+</div>
+
+<div id="divExpular" class="dialog" style="display: none">
+    <div>Quieres expulsar a <span id="nombreExpulsado"></span> ?</div> 
+    <br/><br/>
+
+    <button id="botonFinalExpular" onclick="academiaEquipoJs.expulsar(this);">Expular</button>
+</div>
+
+<script type="text/javascript">
+    documentLoad();
+
+    var academiaEquipoJs = {
+        canvas: document.createElement('canvas'),
+        eqAcademia: global.equipoAcademia,
+        batallasAcademia: global.batallasAcademia,
+        createCanvas: function () {
+            var ths = this;
+            ths.canvas.width = 100;
+            ths.canvas.height = 150;
+            $("#aspectoDiv").append(ths.canvas);
+            $(ths.canvas).attr("id", "aspecto");
+            ths.stage = new createjs.Stage(ths.canvas);
+        },
+        getBatallasAcademia: function () {
+            if (this.batallasAcademia === "") {
+                var ths = this;
+                $.ajax({
+                    type: "GET",
+                    url: "getBatallasAcademia",
+                    success: function (response) {
+                        ths.batallasAcademia = JSON.parse(response);
+                        ths.selectBatallas();
+                    }
+                });
+            } else {
+                this.selectBatallas();
+            }
+        },
+        selectBatallas: function () {
+            for (var i = 0; i < this.batallasAcademia.length; i++) {
+                $('<option>').val(i).text(this.batallasAcademia[i].equipoLocal + " : " + this.batallasAcademia[i].equipoVisitante).appendTo('#selectBatallas');
+            }
+        },
+        mostrarAcademia: function () {
+            var eqAcademia = this.eqAcademia;
+            var table = $("#tableAcademia tbody").get(0);
+            $(table).html("");
+            var rowCount = 0;
+
+            $("#numCriaturasAcademia").text(" (" + eqAcademia.length + ") ");
+
+            for (var i = 0; i < eqAcademia.length; i++) {
+
+                var row = table.insertRow(rowCount);
+
+                $(row).attr("i", i);
+                $(row).attr("class", "UnHighLight");
+                $(row).attr("onMouseOver", "HighLight(this)");
+                $(row).attr("onMouseOut", "UnHighLight(this)");
+                $(row).attr("onclick", 'Select(this), academiaEquipoJs.detalle(' + i + ')');
+
+                $(row).attr("ondblclick", "detalles()");
+
+                var td1 = $("<td>");
+                $(row).append(td1);
+                var nombre = getApodo(eqAcademia[i]);
+                td1.html("<div>" + nombre + "<div>");
+
+                var td2 = $("<td>");
+                $(row).append(td2);
+                var div = $("<div>");
+                td2.append(div);
+                setRazaImg(div, eqAcademia[i].raza);
+
+                var atributos = ["fu", "ma", "ag", "rf", "co", "df", "rc"];
+
+                if (typeof this.eqAcademia[i].destapes !== 'undefined') {
+                    var dest = JSON.parse(eqAcademia[i].destapes);
+
+                    var td3 = $("<td>");
+                    $(row).append(td3);
+                    setElemImg(td3[0], dest.ele);
+
+                    var td4 = $("<td>");
+                    $(row).append(td4);
+                    setMutaImg(td4[0], dest.mut);
+
+                    for (var j = 0; j < atributos.length; j++) {
+                        var td = $("<td>");
+                        var div = $("<div>");
+                        td.append(div);
+                        $(row).append(td);
+                        div.html(setDest(dest[atributos[j]]));
+                    }
+                } else {
+                    var td3 = $("<td>");
+                    $(row).append(td3);
+
+                    var td4 = $("<td>");
+                    $(row).append(td4);
+
+                    for (var j = 0; j < atributos.length; j++) {
+                        var td = $("<td>");
+                        var div = $("<div>");
+                        td.append(div);
+                        $(row).append(td);
+                        div.html("-");
+                    }
+                }
+
+                var td12 = $("<td>");
+                $(row).append(td12);
+                var div = $("<div>");
+                td12.append(div);
+                setNivel(div, eqAcademia[i].exp);
+                
+                var td13 = $("<td>");
+                $(row).append(td13);
+                td13.html(getEdad(eqAcademia[i].edad));
+
+            }
+            reloadTablas();
+            helpers();
+        },
+        detalle: function (i) {
+            var ths = this;
+            global.criatura = ths.eqAcademia[i];
+            detalleCriatura(global.criatura, ths.stage, "#contenidosAcademia");
+
+            $(".observable").each(function () {
+                var div = $(this);
+                var td = div.parent().parent().find('td:eq(1)');
+
+                div.removeClass("observar");
+                if (td.text().search("-") === -1) {
+                    div.addClass("observar");
+                    div.addClass("help");
+                    div.html('<span>ocultar valor</span>');
+                    div.click(function () {
+                        ths.ocultarValor();
+                        ths.atributo = td.attr("id");
+                    });
+                }
+            });
+            helpers();
+
+            $("#detalleCriatura").css("display", "inherit");
+            if ($("#detalleCriatura").height() === 0) {
+                var alto = 200 / $("#bloque").parent().height() * 100;
+                var alto2 = 200 / ($("#bloque").parent().height() - 60) * 100;
+                $("#bloque").height(100 - alto2 + "%");
+                $("#detalleCriatura").height(alto + "%");
+            }
+
+        },
+        ocultarValor: function () {
+            var nombre = this.eqAcademia[this.i].nombre;
+            $("#atrOcultar").text(this.atributo.toUpperCase());
+
+            $('#divOcultar').dialog({
+                resizable: false,
+                closeOnEscape: false,
+                height: 150,
+                width: 300,
+                title: nombre,
+                modal: true,
+                draggable: true,
+                close: function () {
+                    $(this).dialog("destroy");
+                }
+            });
+        },
+        ocultar: function (elem) {
+            var ths = this;
+
+            $(elem).closest('.dialog').dialog('close');
+            var id = ths.eqAcademia[ths.i].id;
+            $.ajax({
+                type: "GET",
+                url: "ocultar",
+                data: {
+                    id: id,
+                    atr: ths.atributo
+                },
+                success: function (response) {
+                    if (response !== "") {
+                        error(response);
+                    }
+                    ths.eqAcademia[ths.i][ths.atributo] = 0;
+                    ths.pestanaAcademia('academiaEquipo');
+                }
+            });
+        },
+        setDest: function (i) {
+            if (i <= 0)
+                i = "-";
+            return i;
+        },
+        botonExpulsar: function () {
+            var nombre = this.eqAcademia[this.i].nombre;
+            $("#nombreExpulsado").text(nombre);
+
+            $('#divExpular').dialog({
+                resizable: false,
+                closeOnEscape: false,
+                height: 150,
+                width: 300,
+                title: nombre,
+                modal: true,
+                draggable: true,
+                close: function () {
+                    $(this).dialog("destroy");
+                }
+            });
+        },
+        expulsar: function (elem) {
+            $(elem).closest(".dialog").dialog('close');
+
+            var ths = this;
+            $.ajax({
+                type: "GET",
+                url: "expulsar",
+                data: {
+                    id: ths.eqAcademia[ths.i].id
+                },
+                success: function (response) {
+                    if (response !== "") {
+                        error(response);
+                    } else {
+                        confirmacion("criatura expulsada");
+                    }
+                    $('#divExpulsar').dialog('close');
+                    global.equipoAcademia = "";
+                    ths.pestanaAcademia('academiaEquipo');
+                }
+            });
+        },
+        events: function () {
+            var ths = this;
+            $("#apodoDetalles").focus(function () {
+                if ($("#apodoDetalles").hasClass("sinApodo")) {
+                    $("#apodoDetalles").val("");
+                } else {
+                    $("#apodoDetalles").val($("#apodoDetalles").val().split('" ')[1].split(' "')[0]);
+                }
+            });
+            
+            $("#apodoDetalles").blur(function () {
+                if ($("#apodoDetalles").val() !== ths.eqAcademia[ths.i].apodo) {
+                    $.ajax({
+                        type: "GET",
+                        url: "asignarApodo",
+                        data: {
+                            id: ths.eqAcademia[ths.i].id,
+                            apodo: $("#apodoDetalles").val()
+                        }
+                    });
+                }
+                ths.eqAcademia[ths.i].apodo = $("#apodoDetalles").val();
+                if ($("#apodoDetalles").val() !== "") {
+                    $("#apodoDetalles").val('" ' + $("#apodoDetalles").val() + ' "');
+                    $("#academia_" + ths.i).find(".apodo").text($("#apodoDetalles").val());
+                } else {
+                    $("#academia_" + ths.i).find(".apodo").text('');
+                }
+            });
+            $('#botonFinalExpular').keydown(function (e) {
+                if (e.keyCode === 13) {
+                    return false;
+                }
+            });
+        }
+    };
+
+    academiaEquipoJs.mostrarAcademia();
+    academiaEquipoJs.createCanvas();
+    academiaEquipoJs.events();
+
+</script>

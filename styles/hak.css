@@ -1,0 +1,264 @@
+/*
+--- DIALOG --------------------------------------------------------------------
+*/
+
+/*
+--- GENERAL --------------------------------------------------------------------
+*/
+
+#loadScreen{
+    width: 100%;
+    height:100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: white;
+    z-index: 99;
+}
+#loadScreen > div{
+    width:100%;
+    text-align: center;
+    margin-top: 200px;
+}
+
+#body{
+    width: 100%;
+    height: 100%;
+}
+
+footer{
+    z-index:2;
+    position: absolute;
+    bottom:0;
+    background-color: rgba(200,200,180,1);
+    background-repeat: repeat-x;
+    margin-left: -14px;
+    
+    -webkit-transition: bottom 250ms; 
+    -moz-transition: bottom 250ms;    
+    -o-transition: bottom 250ms; 
+    transition: bottom 250ms;
+    
+    -webkit-box-shadow: 0 0 30px 5px #000, inset 0 10px 20px rgba(0,0,0,0.8);
+    -moz-box-shadow: 0 0 30px 5px #000, inset 0 10px 20px rgba(0,0,0,0.8);
+    -o-box-shadow: 0 0 30px 5px #000, inset 0 10px 20px rgba(0,0,0,0.8);
+    box-shadow: 0 0 30px 5px #000, inset 0 10px 20px rgba(0,0,0,0.8);
+}
+.footerHover{
+    bottom: 0 !important;
+}
+
+#oro{
+    margin-top:8px;
+    background: -webkit-linear-gradient(#eee, #333);
+    -webkit-background-clip: text;    
+    -webkit-text-fill-color: transparent;    
+}
+
+#posicionReflejo{
+    background: -webkit-linear-gradient(transparent, #333, #444);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    transform:scale(1,-1);
+    -ms-transform:scale(1,-1);
+    -moz-transform:scale(1,-1);
+    -webkit-transform:scale(1,-1);
+    -o-transform:rotate(180deg);
+}
+
+#posicion{
+    font-weight: bold;
+    font-size: 18px;
+}
+#posicion:hover{
+    text-decoration: underline;
+}
+
+#nombreId{
+    font-weight: bold;
+    font-size: 18px;
+}
+#nombreId:hover{
+    text-decoration: underline;
+}
+
+#numeroMensajes{
+    position:absolute;
+    top:15px; 
+    margin-left:28px;
+    font-weight: bold;
+    color: yellow;
+
+    text-shadow:
+        -1px -1px 1px rgba(0, 0, 0, 1),
+        1px -1px 1px rgba(0, 0, 0, 1),
+        -1px 1px 1px rgba(0, 0, 0, 1),
+        1px 1px 1px rgba(0, 0, 0, 1);  
+
+}
+
+.mensajeNuevo{
+    font-weight: bold;
+}
+#bandejaEntrada td{
+    font-weight: inherit;
+}
+#bandejaSalida td{
+    font-weight: inherit;
+}
+/*#detalleCriatura.movil{*/
+/*width:100%;*/ 
+/*height: 0%;*/ 
+/*position:absolute;*/ 
+/*bottom:0;*/
+/*}*/
+
+.maximizar{
+    float:right;    
+    background-repeat: no-repeat;
+    cursor: pointer;
+    height:12px;
+    width:14px;
+    margin-top:3px; 
+    margin-right:16px;
+}
+.maximizar:hover{    
+    background-position: -14px 0;
+}
+
+#proximaBatalla{
+    font-size: 10px;
+}
+
+.help span{
+    max-height: 0;
+    max-width: 0;
+    position: absolute;
+    color:black;
+    text-shadow: 1px 1px rgba(255,255,255,0.8);
+
+    font-size: 11px;
+    border-radius: 5px;
+    z-index: 100;
+    background: rgba(255,255,255,0.7);
+    background-repeat: no-repeat;
+    overflow:hidden;
+
+    -webkit-transition: max-height 100ms ease-in, max-width 100ms ease-in, padding 100ms ease-in, border 100ms ease-in;
+    -moz-transition: max-height 100ms ease-in, max-width 100ms ease-in, padding 100ms ease-in, border 100ms ease-in;
+    -o-transition: max-height 100ms ease-in, max-width 100ms ease-in, padding 100ms ease-in, border 100ms ease-in;
+    transition: max-height 100ms ease-in, max-width 100ms ease-in, padding 100ms ease-in, border 100ms ease-in;
+}
+.help:hover{
+    cursor: help;
+}
+
+.help:hover span{
+    max-height: 999px;
+    max-width: 999px;
+    border: grey 1px solid;
+    /*    padding: 0 6px 0 18px;*/
+    padding: 0 6px 0 6px;
+
+    -webkit-transition: max-height 150ms ease-in 1000ms, max-width 150ms ease-in 1000ms, padding 150ms ease-in 1000ms, border 150ms ease-in 1000ms;
+    -moz-transition: max-height 150ms ease-in 1000ms, max-width 150ms ease-in 1000ms, padding 150ms ease-in 1000ms, border 150ms ease-in 1000ms;
+    -o-transition: max-height 150ms ease-in 1000ms, max-width 150ms ease-in 1000ms, padding 150ms ease-in 1000ms, border 150ms ease-in 1000ms;
+    transition: max-height 150ms ease-in 1000ms, max-width 150ms ease-in 1000ms, padding 150ms ease-in 1000ms, border 150ms ease-in 1000ms;
+}
+
+#graficoCriat{
+    width:96%; 
+    height:84%; 
+    display:none; 
+    position:relative;     
+}
+
+#graficoCriatInner{
+    position:relative;
+}
+
+
+#graficoCriatInner > div{
+    position:absolute;
+    bottom:0;
+    border:none;
+}
+
+.readInput{
+    pointer-events: none;
+    border:none;
+}
+.observar{
+    cursor: pointer;
+}
+.visualize{
+    text-shadow: none;
+}
+
+/*
+--- MAPA --------------------------------------------------------------------
+*/
+.comentarioUsuario { 
+    font-weight: bold;
+}
+
+.tbody tbody{
+    width: 100%;
+}
+.scrollComentarios{
+    margin-top:2px;
+}
+
+#mapaCanvasInner{
+    overflow: hidden;
+}
+
+#fondo{  
+    z-index:1;
+    height:100%;
+}
+
+.mapaEvent{
+    position: absolute; 
+    display: none;
+    z-index:5;
+}
+#mapaOver{
+    background-color: rgba(0,0,0,0.6); 
+    height:60px; 
+    width:160px;    
+}
+#mapaOver div{
+    float:left;
+}
+#mapaClick{
+    pointer-events: auto;
+    cursor: pointer;
+    background-color: rgba(255,255,255,1); 
+    color: black;  
+    border-radius: 10px;
+    border-color: grey;
+    border-width: 1px;
+    padding-left:5px;
+    padding-right:5px;
+
+    box-shadow: -5px -5px 10px rgba(0,0,0,0.2), 5px -5px 10px rgba(0,0,0,0.2), -5px 5px 10px rgba(0,0,0,0.2), 5px 5px 10px rgba(0,0,0,0.2);
+    -webkit-box-shadow: -5px -5px 10px rgba(0,0,0,0.2), 5px -5px 10px rgba(0,0,0,0.2), -5px 5px 10px rgba(0,0,0,0.2), 5px 5px 10px rgba(0,0,0,0.2);
+    -moz-box-shadow: -5px -5px 10px rgba(0,0,0,0.2), 5px -5px 10px rgba(0,0,0,0.2), -5px 5px 10px rgba(0,0,0,0.2), 5px 5px 10px rgba(0,0,0,0.2);
+    -o-box-shadow: -5px -5px 10px rgba(0,0,0,0.2), 5px -5px 10px rgba(0,0,0,0.2), -5px 5px 10px rgba(0,0,0,0.2), 5px 5px 10px rgba(0,0,0,0.2);
+}
+#mapaClick:hover{
+    text-decoration: underline;
+    color:blue;
+}
+
+#tituloMapa div{
+    margin-left:10px;
+    float:right;
+}
+
+.fechaCell{
+    color: black;
+    text-shadow: 1px 1px rgba(255,255,255,0.2);
+}

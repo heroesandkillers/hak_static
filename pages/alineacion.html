@@ -1,0 +1,357 @@
+
+<style>
+    #atributosDiv{
+        padding: 10px;
+        /*float:left;*/ 
+        /*width:27%;*/ 
+        /*height:100%*/
+        height: 185px;
+        position: absolute;
+        bottom: 0;
+    }
+    #paginaAlineacion #detalleCriatura table{
+        width:100%; 
+        height:100%; 
+        overflow:hidden
+    }
+    #alineacionPage #alineacionCanvas{
+        width: 100%;
+        position: absolute;
+        top: 25px;
+        bottom: 200px;
+        /*float: left*/
+    }
+</style>
+
+<div id="paginaAlineacion" class="grid_7" style="height: 100%; position:relative">
+    <div class="contenedor" id="bloque" style="height: 100%">
+        <div class="titulo">EQUIPO</div>
+        <div class="cuerpo tabla">
+            <div class="subtitulo">
+                <table class="thead">
+                    <tr>                                
+                        <th style="width:180px">Nombre </th>
+                        <!--<th style="width:120px" class="arrowDown"></th>-->
+                        <th style="width:30px"></th>
+                        <th style="width:30px"></th>
+                        <th style="width:30px"></th>
+                        <th style="width:30px"></th>
+                        <th class="decimal arrows" style="width:60px">Media</th>                         
+                        <th class="numero arrows" style="width:60px">Edad</th>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <table id="table1" class="tbody">
+                    <thead style="height: 0">
+                        <tr style="height: 0">
+                            <th style="height: 0"><input type="hidden" value="false" id="input"/></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="detalleCriatura" class="bloque contenedor movil">
+        <div class="titulo">
+            <span id="nombre"></span>
+            <input id="apodoDetalles" class="apodoInput readInput" type="text" readonly/>
+            <div class="maximizar" onclick="alineacionJs.detalle()"></div>
+        </div>
+        <div class="cuerpo tabla innerTabla20" style="font-weight: bold">
+
+            <table>
+                <tbody>
+                    <tr>
+                        <td id="aspectoDiv" class="alturaCanvas" width="1%"></td>
+
+                        <td width="33%">
+                            <table class="tablaIn">
+                                <tbody>      
+                                    <tr class="UnHighLight">
+                                        <td>Nivel:</td>
+                                        <td id="nivel" style="text-align: right;"></td>
+                                    </tr>
+                                    <tr class="UnHighLight">
+                                        <td>Raza:</td>
+                                        <td id="raza" style="text-align: right;"></td>
+                                    </tr>
+                                    <tr class="UnHighLight">
+                                        <td>Clase:</td>
+                                        <td id="clase" style="text-align: right;"></td>
+                                    </tr>
+                                    <tr class="UnHighLight">
+                                        <td>Elemento:</td>
+                                        <td id="elemento" style="text-align: right;"></td>
+                                    </tr>    
+                                    <tr class="UnHighLight">
+                                        <td>Mutación:</td>
+                                        <td id="mutacion" style="text-align: right;"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+
+                        <td width="33%">
+                            <table class="tablaIn">
+                                <tbody>
+                                    <tr class="UnHighLight">
+                                        <td>Fuerza:</td>
+                                        <td id="fuerza" style="text-align: right;"></td>
+                                    </tr>
+                                    <tr class="UnHighLight">
+                                        <td>Magia:</td>
+                                        <td id="magia" style="text-align: right;"></td>
+                                    </tr>
+                                    <tr class="UnHighLight">
+                                        <td>Agilidad:</td>
+                                        <td id="agilidad" style="text-align: right;"></td>
+                                    </tr>
+                                    <tr class="UnHighLight">
+                                        <td>Reflejos:</td>
+                                        <td id="reflejos" style="text-align: right;"></td>
+                                    </tr>
+                                    <tr class="UnHighLight">
+                                        <td>Constitucion:</td>
+                                        <td id="constitucion" style="text-align: right;"></td>
+                                    </tr>
+                                    <tr class="UnHighLight">
+                                        <td>Defensa:</td>
+                                        <td id="defensa" style="text-align: right;"></td>
+                                    </tr>
+                                    <tr class="UnHighLight">
+                                        <td>Reacción:</td>
+                                        <td id="reaccion" style="text-align: right;"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </td>
+
+                        <td width="33%">
+                            <table class="tablaIn">
+                                <tbody>
+                                    <tr class="UnHighLight">
+                                        <td>País:</td>
+                                        <td id="pais" style="text-align: right;"></td>
+                                    </tr>
+                                    <tr class="UnHighLight">
+                                        <td>Media:</td>
+                                        <td id="media" style="text-align: right;"></td>
+                                    </tr>
+                                    <tr class="UnHighLight">
+                                        <td>Valor</td>
+                                        <td id="valor" style="text-align: right;"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<div id="alineacionPage" class="grid_5 contenedor" style="height: 100%">
+    <div class="titulo">ALINEACIÓN</div>
+
+    <div id="alineacionCanvas" class="innerTabla20">
+        <canvas id="canvasAlineacion" class="canvasAlineacion" style="margin-top:10px; margin-left:10px"/>
+    </div>
+
+    <div id="atributosDiv">
+        <div id="atributos" style="display:none">
+            <div id="atributoTitulo"></div>
+            <table style="width: 100%;">
+                <tr>
+                    <td>
+                        Actitud:
+                    </td>
+                    <td style="text-align: right; padding-right:8%">
+                        <div class="select" style="float:right">
+                            <select id="alineacionActitudSelect"> 
+                                <option value="agresivo">
+                                    agresivo
+                                </option> 
+                                <option value="moderado" selected="selected">
+                                    moderado
+                                </option> 
+                                <option value="cauto">
+                                    cauto
+                                </option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Clase:
+                    </td>
+                    <td style="text-align: right; padding-right:8%">
+                        <div class="select" style="float:right">
+                            <select id="alineacionClaseSelect"> 
+                                <option value="barbaro" selected="selected">
+                                    barbaro
+                                </option> 
+                                <option value="arquero">
+                                    arquero
+                                </option>
+                                <option value="mago">
+                                    mago
+                                </option>
+                                <option class="opcionEspecial" value="especial">
+                                    <!--depends on class-->
+                                </option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="botones" style="position:absolute; bottom:0; width:27%; margin-bottom: 10px">
+            <div style="float: left" class="boton" id="asignarAlineacion" onclick="alineacion.asignarAlineacion()"><span>Guardar</span></div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    documentLoad();
+
+    var alineacionJs = {
+        equipo: global.equipo,
+        canvas: document.createElement('canvas'),
+        stage: "",
+        colocarAlineacion: function() {
+            var ths = this;
+            var table = $("#table1 tbody").get(0);
+            var rowCount = table.rows.length;
+
+            for (var i = 0; i < ths.equipo.length; i++) {
+
+                var row = table.insertRow(rowCount);
+
+                row.setAttribute("id", "alineacion_" + i);
+                row.setAttribute("class", "UnHighLight");
+                row.setAttribute("onMouseOver", "HighLight(this)");
+                row.setAttribute("onMouseOut", "UnHighLight(this)");
+                row.setAttribute("onclick", 'Select(this), alineacionJs.detalle(' + i + ')');
+                row.setAttribute("onmousedown", 'alineacionJs.getId(' + ths.equipo[i].id + ')');
+
+                row.setAttribute("ondblclick", "detalles()");
+
+                var td = $("<td>");
+                var div = $("<div>");
+                $(row).append(td);
+                td.append(div);
+                var nombre = getApodo(ths.equipo[i]);
+                div.html(nombre);
+
+                var td = $("<td>");
+                var div = $("<div>");
+                $(row).append(td);
+                td.append(div);
+                setRazaImg(div, ths.equipo[i].raza);
+
+                var td = $("<td>");
+                var div = $("<div>");
+                $(row).append(td);
+                td.append(div);
+                setClaseImg(div, ths.equipo[i].clases);
+
+                var td = $("<td>");
+                var div = $("<div>");
+                $(row).append(td);
+                td.append(div);
+                div.html("-");
+
+                var td = $("<td>");
+                var div = $("<div>");
+                $(row).append(td);
+                td.append(div);
+                div.html("-");
+
+                var td = $("<td>");
+                var div = $("<div>");
+                $(row).append(td);
+                td.append(div);
+                div.html(getMedia(ths.equipo[i].media));
+
+                var td = $("<td>");
+                var div = $("<div>");
+                $(row).append(td);
+                td.append(div);
+                div.html(getEdad(ths.equipo[i].edad));
+            }
+
+            $("#table1 tbody tr").draggable({
+                appendTo: "#wrapper",
+                helper: function() {
+                    return $('<img src="' + org + 'img/raza/raza1.png"/>');
+                },
+                cursor: "move",
+                cursorAt: {top: 8, left: 8},
+                drag: function() {
+                    alineacion.drag = true;
+                },
+                stop: function() {
+                    alineacion.drag = false;
+                }
+
+            });
+            reloadTablas();
+        },
+        getId: function(id) {
+            alineacion.dragId = id;
+        },
+        detalle: function(i) {
+            var ths = this;
+            console.log(i);
+            global.criatura = ths.equipo[i];
+            detalleCriatura(global.criatura, ths.stage, "#paginaAlineacion");
+        },
+        iniciarCanvas: function() {
+            var ths = this;
+            ths.canvas.width = 100;
+            ths.canvas.height = 150;
+            $("#aspectoDiv").append(ths.canvas);
+            $(ths.canvas).attr("id", "aspecto");
+            ths.stage = new createjs.Stage(ths.canvas);
+        }
+    };
+
+</script>
+<script src="../../hak_static/js/alineacion.js"></script>       
+<script>
+
+    alineacionJs.iniciarCanvas();
+
+    var alineacion = alineacionObj;
+    alineacion.pagina = "alineacion";
+    alineacion.equipo = "equipo";
+    alineacion.alineacion = "alin";
+    alineacion.urlAsignar = "asignarAlineacion";
+    alineacion.js = alineacionJs;
+
+    alineacion.canvas = document.getElementById("canvasAlineacion");
+    alineacion.contenedor = $("#alineacionCanvas");
+    alineacion.botonAsignar = $("#asignarAlineacion");
+    alineacion.claseSelect = $("#alineacionClaseSelect");
+    alineacion.actitudSelect = $("#alineacionActitudSelect");
+    alineacion.atributos = $("#atributos");
+    alineacion.nombre = $("#atributoTitulo");
+
+    alineacion.obj = global.equipo;
+    alineacionJs.colocarAlineacion();
+    alineacion.startCanvas();
+
+</script>

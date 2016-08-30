@@ -1,0 +1,152 @@
+
+<div class="grid_12 contenedor" id="bloquePrincipal" style="height: 100%">
+    <div class="titulo">TUS CRIATURAS</div>
+    <div class="cuerpo tabla">
+        <div class="subtitulo">
+            <table class="thead">
+                <tr>
+                    <th class="arrows" style="width:180px">Nombre</th>
+                    <th class="innerHTML arrows" style="width:20px">Ra</th>
+                    <th class="innerHTML arrows" style="width:20px">Cl</th>
+                    <th class="innerHTML arrows" style="width:20px">El</th>
+                    <th class="innerHTML arrows" style="width:20px">Mu</th>
+                    <th class="numero arrows" style="width:40px">Edad</th>  
+                    <th class="decimal arrows" style="width:40px">Media</th>  
+                    <th class="numero arrows" style="width:40px">Nivel</th>  
+                    <th class="numero arrows" style="width:40px">Físico</th>  
+                    <th class="numero arrows" style="width:40px">Frescura</th>  
+                    <th class="numero arrows" style="width:40px">Bajas</th> 
+                    <th class="decimal arrows" style="width:40px">Ratio</th>  
+                    <th class="numero arrows" style="width:40px">Valor</th>
+                </tr>
+            </table>
+        </div>
+        <div class="scrollTabla">
+            <table id="table1" class="tbody">
+                <thead style="height: 0">
+                    <tr style="height: 0">
+                        <th style="height: 0;"><input type="hidden" value="false" id="input"/></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    console.log("contactoEquipo")
+    console.log(global.contacto)
+
+    var contactoEquipoJs = {
+        equipoContacto: global.contacto.equipo,
+        canvas: document.createElement('canvas'),
+        iniciarCanvas: function () {
+            var ths = this;
+            ths.canvas.width = 100;
+            ths.canvas.height = 150;
+            $("#aspectoDiv").append(ths.canvas);
+            $(ths.canvas).attr("id", "aspecto");
+            ths.stage = new createjs.Stage(ths.canvas);
+        },
+        mostrarEquipo: function () {
+            var ths = this;
+            var obj = ths.equipoContacto;
+
+            var table = $("#table1 tbody").get(0);
+            var rowCount = $(table).find("tr").length;
+
+            for (var i = 0; i < obj.length; i++) {
+
+                var row = table.insertRow(rowCount);
+
+                $(row).attr("i", i);
+                $(row).attr("obj", "equipoContacto");
+                $(row).attr("class", "UnHighLight");
+                $(row).attr("onMouseOver", "HighLight(this)");
+                $(row).attr("onMouseOut", "UnHighLight(this)");
+                $(row).attr("onclick", 'Select(this), contactoEquipoJs.detalle(' + i + ')');
+
+                $(row).attr("ondblclick", "detalles()");
+                                
+                var td1 = $("<td>");
+                $(row).append(td1);
+                td1.html("<div>" + obj[i].nombre + "</div>");
+                
+                var td2 = $("<td>");
+                $(row).append(td2);
+                setRazaImg(td2[0], obj[i].raza);
+                
+                var td3 = $("<td>");
+                $(row).append(td3);
+                setClaseImg(td3[0], obj[i].clases.split(";")[0].split(":")[0]);
+                
+                var td4 = $("<td>");
+                $(row).append(td4);
+                setElemImg(td4[0], obj[i].elemento);
+                
+                var td5 = $("<td>");
+                $(row).append(td5);
+                setMutaImg(td5[0], obj[i].mutacion);
+                
+                var td6 = $("<td>");
+                $(row).append(td6);
+                td6.html("<div>" + getEdad(obj[i].edad) + "</div>");
+                
+                var td7 = $("<td>");
+                $(row).append(td7);
+                td7.html("<div>" + getMedia(obj[i].media) + "</div>");
+                
+                var td8 = $("<td>");
+                $(row).append(td8);
+                var div = $("<div>");
+                td8.html(div);
+                setNivel(div, obj[i].exp);
+                
+                var td9 = $("<td>");
+                $(row).append(td9);
+                var fisico = obj[i].fisico;
+                if(!fisico){
+                    fisico = "";
+                }
+                td9.html("<div>" + fisico + "</div>");
+                
+                var td10 = $("<td>");
+                $(row).append(td10);
+                td10.html("<div>" + obj[i].frescura + "</div>");
+                
+                var td11 = $("<td>");
+                $(row).append(td11);
+                td11.html("<div>" + obj[i].bajas + "</div>");
+                
+                var td12 = $("<td>");
+                $(row).append(td12);
+                td12.html("<div>" + getRatio(obj[i].bajas, obj[i].muertes) + "</div>");
+                
+                var td13 = $("<td>");
+                $(row).append(td13);
+                if (global.contacto.id === global.perfil.id) {
+                    td13.html("<div>" + numero(getPrecio(obj[i].pujas)) + "</div>");
+                    td13.attr("style", 'text-align:right');
+                } else {
+                    td13.html("<div>-</div>");
+                }
+
+            }
+            reloadTablas();
+            ordenarTablas();
+            helpers();
+        },
+        detalle: function (i) {
+            global.criatura = this.equipoContacto[i];
+            detalleCriatura(global.criatura, this.stage, "#contenidosContacto .detalleCriatura");
+        }
+    };
+
+    contactoEquipoJs.mostrarEquipo();
+    contactoEquipoJs.iniciarCanvas();
+
+</script>

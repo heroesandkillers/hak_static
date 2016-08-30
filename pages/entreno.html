@@ -1,0 +1,355 @@
+<style>
+    #entrenoChecks > div > div{
+        display: inline-block;
+        width: 100px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .visualize{
+        margin-bottom: 50px;
+        margin-top: 25px;
+        margin-left: 10px;
+    }
+    .visualize .visualize-info{
+        background: none !important;
+    }
+    .visualize ul.visualize-key .visualize-key-label{
+        color: white !important;
+    }
+    #entrenoChecks .checkbox{
+        margin: auto;
+    }
+    #selectEquipo{
+        float:right; 
+        margin-right:20px;    
+        margin-top: 3px;
+        background: transparent;
+        border-color: transparent;
+        font-weight: bold;
+    }
+</style>
+
+<div class="grid_8 contenedor" style="height: 100%">
+    <div class="titulo">
+        ESTADO DEL EQUIPO
+        <select id="selectEquipo">
+            <option value="todos">
+                Equipo completo
+            </option>
+            <option value="equipo5">
+                5 con más media
+            </option>
+        </select>
+    </div>
+
+    <div style="position:relative; width: 90%; height: 60%; margin:auto; padding-top:5%">
+
+        <div id="graficoAviso" style="position:absolute"></div>
+
+        <table id="grafico" class="graficoEntreno">
+            <thead>
+                <tr>
+                    <td></td>
+                    <th>9</th>
+                    <th>8</th>
+                    <th>7</th>
+                    <th>6</th>
+                    <th>5</th>
+                    <th>4</th>
+                    <th>3</th>
+                    <th>2</th>
+                    <th>1</th>
+                    <th>hoy</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr id="graficoEqFu">
+                    <th class="hidden">Fuerza</th>
+                </tr>
+                <tr id="graficoEqMa">
+                    <th class="hidden">Magia</th>
+                </tr>
+                <tr id="graficoEqAg">
+                    <th class="hidden">Agilidad</th>
+                </tr>
+                <tr id="graficoEqRf">
+                    <th class="hidden">Reflejos</th>
+                </tr>
+                <tr id="graficoEqCo">
+                    <th class="hidden">Constitucion</th>
+                </tr>
+                <tr id="graficoEqDf">
+                    <th class="hidden">Defensa</th>
+                </tr>
+                <tr id="graficoEqRc">
+                    <th class="hidden">Reaccion</th>
+                </tr>
+                <tr id="graficoEqExp">
+                    <th>Exp</th>
+                </tr>
+
+                <tr id="graficoEqMedia">
+                    <th>Media</th>
+                </tr>
+                <tr id="graficoEqFr">
+                    <th>Frescura</th>
+                </tr>
+                <tr id="graficoEqMo">
+                    <th>Moral</th>
+                </tr>
+            </tbody>
+        </table>
+
+        <div id="grafico" ></div>
+
+        <div id="entrenoChecks">
+            <div>
+                <div>
+                    <div class="checkbox"><div id="mediaCheck" class="check checked"></div></div>
+                    <div>Media</div>
+                </div>
+                <div>
+                    <div class="checkbox"><div id="frCheck" class="check checked"></div></div>
+                    <div>Frescura</div>
+                </div>
+                <div>
+                    <div class="checkbox"><div id="moCheck" class="check checked"></div></div>
+                    <div>Moral</div>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <div class="checkbox"><div id="fuCheck" class="check"></div></div>
+                    <div>Fuerza</div>
+                </div>
+                <div>
+                    <div class="checkbox"><div id="maCheck" class="check"></div></div>
+                    <div>Magia</div>
+                </div>
+                <div>
+                    <div class="checkbox"><div id="agCheck" class="check"></div></div>
+                    <div>Agilidad</div>
+                </div>
+                <div>
+                    <div class="checkbox"><div id="rfCheck" class="check"></div></div>
+                    <div>Reflejos</div>
+                </div>
+                <div>
+                    <div class="checkbox"><div id="coCheck" class="check"></div></div>
+                    <div>Constitucion</div>
+                </div>
+                <div>
+                    <div class="checkbox"><div id="dfCheck" class="check"></div></div>
+                    <div>Defensa</div>
+                </div>
+                <div>
+                    <div class="checkbox"><div id="rcCheck" class="check"></div></div>
+                    <div>Reaccion</div>
+                </div>
+                <div>
+                    <div class="checkbox"><div id="expCheck" class="check checked"></div></div>
+                    <div>Exp</div>
+                </div>    
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="contenedor grid_4" id="bloquePrincipal" style="height: 100%">
+    <div class="titulo">ENTRENAMIENTO</div>
+
+    <div class="cuerpo">
+        <div id="tablasAcciones">
+            <table id="entrenamiento"></table>
+            <br/>
+        </div>
+
+        <button id="botonEntreno" style="float:right; margin-right:15px; margin-top:10px" onclick="asignarEntreno();" disabled="disabled">Guardar</button>
+    </div>
+
+</div>
+
+<script>
+    documentLoad();
+</script>
+
+<script type="text/javascript" src="../../hak_static/pages/entreno.js"></script>
+
+<script>
+
+////////////////////////////////////////////////////////////////////
+//G.R.A.F.I.C.A._______________________________________________________________________________________________
+
+    var atributos = ["media", "fu", "ma", "ag", "rf", "co", "df", "rc", "exp", "fr", "mo"];
+
+    if (estadist === "") {
+        estadist = {media: [], fu: [], ma: [], ag: [], rf: [], co: [], df: [], rc: [], exp: [], fr: [], mo: []};
+
+        var equipo = global.equipo;
+        contruirEstadisticas(equipo);
+        drawGrafico();
+    } else {
+        drawGrafico();
+    }
+
+
+    function equipo5() {
+        estadist = {media: [], fu: [], ma: [], ag: [], rf: [], co: [], df: [], rc: [], exp: [], fr: [], mo: []};
+        var equipo = global.equipo;
+
+        var equipo5 = [];
+        equipo5.push(equipo[0]);
+        equipo5.push(equipo[1]);
+        equipo5.push(equipo[2]);
+        equipo5.push(equipo[3]);
+        equipo5.push(equipo[4]);
+
+        var libre = true;
+        for (var i = 5; i < equipo.length; i++) {
+            for (var j = 0; j < 5; j++) {
+                if (equipo[i].media > equipo5[j].media) {
+                    for (var k = 0; k < equipo5.length; k++) {
+                        if (equipo5[k].id === equipo[i].id) {
+                            libre = false;
+                        }
+                    }
+                    if (libre) {
+                        equipo5[j] = equipo[i];
+                    } else {
+                        libre = true;
+                    }
+                }
+            }
+        }
+
+        contruirEstadisticas(equipo5);
+        drawGrafico();
+    }
+
+    function contruirEstadisticas(equipo) {
+
+        var json = {};
+        for (var r = 0; r < equipo.length; r++) {
+            if (typeof equipo[r].evolucion !== 'undefined' && equipo[r].evolucion !== '') {
+                json["" + r] = JSON.parse(equipo[r].evolucion);
+            }
+        }
+
+        var evol;
+        var z;
+        for (var m = 0; m < atributos.length; m++) {
+
+            for (var j = 0; j < 10; j++) {
+                z = 0;
+                var atr = atributos[m];
+                for (var i = 0; i < equipo.length; i++) {
+                    evol = json["" + i];
+
+                    if (typeof evol !== 'undefined') {
+                        if (typeof evol[j] !== 'undefined') {
+
+                            if (atr === "media") {
+                                evol[j].media = (evol[j].fu + evol[j].ma + evol[j].ag + evol[j].rf + evol[j].co + evol[j].df + evol[j].rc) / 7;
+                            }
+
+                            if ('undefined' !== typeof estadist[atr][j]) {
+                                estadist[atr][j] = estadist[atr][j] + evol[j][atr];
+                            } else {
+                                estadist[atr][j] = evol[j][atr];
+                            }
+
+                            if (estadist[atr][j] < 0) {
+                                estadist[atr][j] = NaN;
+                            }
+
+                            z++;
+                        } else {
+                            break;
+                        }
+                    } else {
+                        break;
+                    }
+                }
+                estadist[atr][j] = estadist[atr][j] / z;
+            }
+        }
+    }
+
+//LLENAR TABLA Y VISUALIZAR
+    function drawGrafico() {
+
+        var id = {};
+        $('.visualize').remove();
+
+        for (var p = 0; p < atributos.length; p++) {
+            var tr = document.getElementById("graficoEq" + cap(atributos[p]));
+            $(tr).find("td").remove();
+            id[atributos[p]] = tr;
+        }
+
+        for (var q = 0; q < atributos.length; q++) {
+            for (var i = estadist[atributos[q]].length - 1; i >= 0; i--) {
+                var cell = id[atributos[q]].insertCell(1);
+                cell.innerHTML = estadist[atributos[q]][i];
+            }
+        }
+
+        visualize();
+
+        if (isNaN(estadist["media"][9])) {
+            sinDatos();
+        }
+    }
+
+//VISUALIZE
+    function visualize() {
+        $('#grafico').visualize({
+            type: 'line',
+            appendTitle: true,
+            colors: ['#be1e2d', '#666699', '#92d5ea', '#ee8310', '#8d10ee', '#5a3b16', '#26a4ed', '#f45a90', '#e9e744', 'green', 'white', 'black'],
+            lineWeight: 2
+        });
+    }
+
+//SIN DATOS
+    function sinDatos() {
+        $("#graficoAviso").text("sin datos por el momento");
+        $("#graficoAviso").css("margin-top", $(".visualize:eq(0)").height() / 2 - $("#graficoAviso").height() / 2 + "px");
+        $("#graficoAviso").css("margin-left", $(".visualize:eq(0)").width() / 2 - $("#graficoAviso").width() / 2 + "px");
+    }
+
+//CONTROLADOR CHECKERS
+    $.each(atributos, function () {
+        var grf = this;
+
+        $("#" + grf + "Check").click(function () {
+            $(this).toggleClass("checked");
+            var linea = $("#graficoEq" + cap(grf)).find("th");
+            if ($(this).hasClass("checked")) {
+                linea.removeClass("hidden");
+            } else {
+                linea.addClass("hidden");
+            }
+            drawGrafico();
+        });
+    });
+
+
+    $("#selectEquipo").change(function () {
+        if ($(this).val() === "todos") {
+            estadist = {media: [], fu: [], ma: [], ag: [], rf: [], co: [], df: [], rc: [], exp: [], fr: [], mo: []};
+            var equipo = global.equipo;
+            contruirEstadisticas(equipo);
+            drawGrafico();
+
+        } else if ($(this).val() === "equipo5") {
+            equipo5();
+        }
+    });
+
+</script>
+
+

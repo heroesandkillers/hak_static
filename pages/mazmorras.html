@@ -1,0 +1,274 @@
+<style>
+    .select {
+        background: no-repeat right #ddd;
+        /*float:left;*/
+    }
+
+    .ui-spinner-input{
+        margin:0;
+    }
+    .ui-state-default{
+        background: inherit;
+    }
+    .ui-icon-triangle-1-n, .ui-icon-triangle-1-s {
+        background: rgba(0,0,0,0);
+    }
+
+    .ui-spinner.ui-corner-all{
+        background: none;
+        border:none;
+        float: right;
+    }
+
+    #buscadorMazmorras{
+        position: absolute;
+        bottom: 8px;
+        left: 10px;
+        right: 10px;
+        line-height: 0;
+    }
+    #buscadorMazmorras table{
+        width: 100%;
+    }
+
+    #busquedaMazmorras .ico_Papelera{
+        margin: 5px; 
+        opacity: 0.5;
+        width: 25px;
+        background-size: 65%;
+        background-position: 100% 50%;
+    }
+    #divVender{
+        padding: 10px !important;
+        font-weight: bold;
+    }
+    #tableMazmorras .moneda{
+        display: table-cell !important;
+        background-size: 65%;
+        background-position: 50% 30%;
+    }
+    #barraMazmorras{
+        top: 0;
+        position: absolute;
+    }
+</style>
+
+<div id="pestanas" class="grid_12">
+    <div class="tituloPestana" onclick="mazmorrasJs.getMisPujas()">
+        Mis Pujas
+    </div>
+</div>
+
+<div id="bloquePrincipal" class="grid_12 contenedor" style="height:100%">
+
+    <div class="titulo">MAZMORRAS</div>
+
+    <div id="tableMazmorras" class="cuerpo tabla">
+        <div class="subtitulo">
+            <table class="thead">
+                <tr>
+                    <th style="width: 120px">Nombre</th>
+                    <th style="width: 15px"></th>
+                    <th style="width: 15px"></th>
+                    <th style="width: 15px"></th>
+                    <th style="width: 15px"></th>
+                    <th style="width: 10px">&Oslash</th>
+                    <th class="help" style="width: 10px">Fu<span>Fuerza</span></th>
+                    <th title="Magia" style="width: 10px">Ma</th>
+                    <th title="Agilidad" style="width: 10px">Ag</th>
+                    <th title="Reflejos" style="width: 10px">Rf</th>
+                    <th title="Constitución" style="width: 10px">Co</th>
+                    <th title="Defensa" style="width: 10px">Df</th>
+                    <th title="Reacción" style="width: 10px">Rc</th>
+                    <th title="lvl" style="width: 10px">lvl.</th>
+                    <th style="width: 10px">Edad</th>
+                    <!--<th style="width: 10px">Precio</th>-->
+                    <th style="width: 10px" class="moneda"></th>
+                    <th style="width: 10px">#</th>
+                    <th style="width: 5px; text-align: right">Tiempo</th>
+                </tr>
+            </table>
+        </div>
+        <div class="scrollMazmorras">
+            <table class="tbody tablesorter">
+                <thead style="height: 0">
+                    <tr style="height: 0">
+                        <th style="height: 0"><input type="hidden" value="false" id="input"/></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div id="buscadorMazmorras">
+            <table >
+                <tr>
+                    <td class="flechaCell"><-</td>
+                    <td id="contenedorBarra">
+                        <!--<div id="barraMazmorras" style="position:absolute;">-->
+                        <div id="barraMazmorras">                            
+                            <div class="buscadorCell">1-10</div>
+                        </div>
+                    </td>
+                    <td class="flechaCell">-></td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<div id="bloqueSegundo" style="height: 30%">
+    <div id="detalleCriatura" class="grid_8 bloque contenedor" style="height: 100%">
+        <div class="titulo">
+            <span id="nombre"></span>
+            <div class="maximizar" onclick="detalles();" style="pointer-events:none"></div>
+        </div>
+        <div id="contenidoDetalle" class="cuerpo tabla innerTabla20" style="font-weight: bold; display:none">
+
+            <table style="height:100%">
+                <tbody>
+                    <tr>
+                        <td id="aspectoDiv" class="alturaCanvas" width="1%"></td>
+
+                        <td width="20%">
+                            <table class="tablaIn">
+                                <tbody>
+                                    <tr class="UnHighLight">
+                                        <td>
+
+                                        </td>
+                                        <td style="text-align: right;">temp.</td>
+                                        <td style="text-align: right;">total</td>
+                                    </tr>
+                                    <tr class="UnHighLight">
+                                        <td>Batallas:</td>
+                                        <td id="batallasTemp" style="text-align: right;"></td>
+                                        <td id="batallasTotal" style="text-align: right;"></td>
+                                    </tr>
+                                    <tr class="UnHighLight">
+                                        <td>Bajas:</td>
+                                        <td id="bajasTemp" style="text-align: right;"></td>
+                                        <td id="bajasTotal" style="text-align: right;"></td>
+                                    </tr>
+                                    <tr class="UnHighLight">
+                                        <td>Muertes:</td>
+                                        <td id="muertesTemp" style="text-align: right;"></td>
+                                        <td id="muertesTotal" style="text-align: right;"></td>
+                                    </tr><tr class="UnHighLight">
+                                        <td>Ratio:</td>
+                                        <td id="ratioTemp" style="text-align: right;"></td>
+                                        <td id="ratioTotal" style="text-align: right;"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td width="20%">
+                            <table class="tablaIn">
+                                <tbody>
+                                    <tr class="UnHighLight">
+                                        <td>
+                                            <div> Puja actual: <span id="precioPuja"></span></div> 
+                                            <div id="pujaMin">
+
+                                                <small> Puja Mínima: <span></span>, un 2% sobre la puja</small>
+
+                                            </div>
+
+                                            <div class ="salto">
+                                                <br/>
+                                            </div>
+
+                                            <br/>
+                                            <input type="text" name="pujaRealizada" id="pujaRealizada"/>
+
+                                            <button id="pujar" onclick='mazmorrasJs.pujar($("#pujaRealizada").val());'>pujar</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="busquedaMazmorras" class="grid_4 bloque contenedor" style="height: 100%">
+        <div class="titulo">BÚSQUEDA</div>
+        <div class="cuerpo">
+            <table style="width: 100%" class="scrollTabla">
+                <!--filtro tipo to copy-->
+                <tr class="filtro" style="display:none">
+                    <td class="select">
+                        <select class="selectAtributo">
+                            <option value="fuerza">
+                                Fuerza
+                            </option> 
+                            <option value="magia">
+                                Magia
+                            </option> 
+                            <option value="agilidad">
+                                Agilidad
+                            </option> 
+                            <option value="reflejos">
+                                Reflejos
+                            </option> 
+                            <option value="constitucion">
+                                Constitucion
+                            </option> 
+                            <option value="defensa">
+                                Defensa
+                            </option> 
+                            <option value="reaccion">
+                                Reacción
+                            </option> 
+                        </select>
+                    </td>
+                    <td class="select" style="width: 30px">
+                        <select class="selectSigno"> 
+                            <option value="igual" selected="selected">
+                                =
+                            </option> 
+                            <option value="mayor">
+                                >
+                            </option> 
+                            <option value="menor">
+                                <
+                            </option> 
+                        </select>
+                    </td>
+                    <td class="select" style="width: 60px">
+                        <input class="selectNumero" style="width: 40px" type="text" value="0">
+                    </td>
+                    <td onclick="mazmorrasJs.eliminarFiltro(this);" class="icon ico_Papelera"></td>
+                </tr>
+
+            </table>
+            <div style="margin-top:10px; margin-bottom:10px; float:none; display:block">
+                <button onclick="mazmorrasJs.nuevoFiltro();">nuevo filtro</button>                    
+                <button id="botonBuscarMazmorras" onclick="mazmorrasJs.getMazmorrasRango(this);" style="float:right">Buscar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="divPujas" class="dialog" style="display: none">
+    <table id="tablaPujas" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    <b>Pujador</b>
+                </th>
+                <th>
+                    <b>Ofrece</b>
+                </th>
+            </tr>
+        </thead>
+        <tbody><tbody>
+    </table>
+</div>
+
+<script src="../../hak_static/pages/mazmorras.js"></script>

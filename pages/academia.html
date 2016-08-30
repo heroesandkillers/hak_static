@@ -1,0 +1,73 @@
+
+<div id="pestanas" class="grid_12">
+    <div id="academiaEquipo" class="tituloPestana" onclick="pestanaAcademia('academiaEquipo');">
+        Equipo
+    </div>
+    <div id="academiaAlineacion" class="tituloPestana" onclick="pestanaAcademia('academiaAlineacion');">
+        Alineacion
+    </div>    
+</div>
+
+<div class="grid_3 contenedor" style="height: 100%; z-index: 1">
+
+    <div class="titulo">OPCIONES</div>
+    <div style="margin:20px">
+        <span>Ver Batalla:</span>
+        <select id="selectBatallas" style="max-width: 100%;"></select>
+        <a onclick="academia.getBatallaAcademia();">ir</a>
+    </div>
+
+</div>
+
+<div id="contenidosAcademia" style="height: 100%; position:relative"></div>
+
+<script>
+        pestanas();
+        documentLoad();
+
+        pestanaAcademia("academiaEquipo");
+        function pestanaAcademia(pest) {
+            cargar(pest, "#contenidosAcademia");
+            $(".tituloPestana").removeClass("pestanaSelected");
+            $("#" + pest).addClass("pestanaSelected");
+        }
+
+        var academia = {
+            batallas: {},
+            getBatallas: function(callback) {
+                var ths = this;
+                $.ajax({
+                    type: "POST",
+                    url: "getBatallasAcademia",
+                    success: function(response) {
+                        if (response !== "") {
+                            ths.batallas = JSON.parse(response);
+                        }
+                        callback();
+                    }
+                });
+            },
+            cargarBatallas: function() {
+                var ths = this;
+                ths.getBatallas(function() {
+                    var select = $("#selectBatallas");
+                    for (var i = 0; i < ths.batallas.length; i++) {
+                        var batalla = ths.batallas[i];
+                        var option = $("<option>");
+                        option.val(i);
+                        option.html(batalla.eqLocName + " vs " + batalla.eqVisName);
+
+                        select.append(option);
+                    }
+                });
+            },
+            getBatallaAcademia: function() {
+                var ths = this;
+                var i = $("#selectBatallas").val();
+                getBatalla(ths.batallas[i]);
+            }
+        };
+
+        academia.cargarBatallas();
+
+</script>

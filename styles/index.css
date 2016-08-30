@@ -1,0 +1,727 @@
+/*@media screen and (min-width: 760px){*/
+/*
+--- DIALOG --------------------------------------------------------------------
+*/
+
+div[id^="detalles"] > table{
+    cursor: default;
+}
+
+.tablaIn tr td {
+    cursor: default;
+}
+
+.ui-dialog-titlebar {
+    /*margin-top: 20px;*/
+}
+
+.ui-dialog-titlebar:hover {
+    background-color: rgba(200,110,0,0.8);
+}
+
+#confirmacion{
+    position: absolute;
+}
+
+/*
+--- GENERAL --------------------------------------------------------------------
+*/
+
+body{
+    background-color: black;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    overflow: hidden !important;
+}
+
+#wrapper{
+    height: 100%;
+    overflow: hidden !important;
+}
+
+header{
+    width: 100%;
+    position: relative;
+    height: 80px;
+}
+header .borde{
+    width:100%;
+    height: 15px; 
+    position:absolute; 
+    bottom:-9px;
+}
+
+footer{
+    height: 70px;
+}
+
+.icono{
+    position: relative;
+    height: 100%;
+    font-size: 14px;
+    font-weight: bolder;
+}
+
+.icono:hover span{
+    color:yellow;
+    text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -3px 3px 6px #000,
+        3px 3px 6px #000;
+}
+.icono:active span{
+    color:orange;
+}
+
+.iconoImg{
+    top: 20px;
+    width: 80%;
+    height: 100%;
+    position: relative;
+    display: block;
+    margin:auto;
+    background-size: 100%;
+    background-repeat: no-repeat;
+
+    transition: 150ms;
+    -moz-transition: 150ms;
+    -webkit-transition: 150ms;
+    -o-transition: 150ms;
+}
+.iconoImg img{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
+.icono:hover .iconoImg{
+    width: 100% !important;
+    top: -20px !important;
+}
+.footerHover .iconoImg{
+    top: 0;
+}
+
+.icono span{
+    position: absolute;
+    padding-bottom:13px;
+
+    margin-left: 50%;    
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
+
+    text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;  
+
+    bottom:2%;
+}
+
+.errors {
+    background-color:#FFCCCC;
+    border:1px solid #CC0000;
+    width:400px;
+    margin-bottom:8px;
+}
+.errors li{ 
+    list-style: none; 
+}
+
+.popup {
+    position:absolute;
+    width:300px;
+    height:300px;
+    z-index: 9002;
+    left: 0;
+    top: 0;
+    background: rgba(255,255,255,0.66); 
+    border: 2px  solid rgba(0,0,0,0.5); 
+    border-radius: 4px; 
+    padding: 8px;
+}
+
+#handler{    
+    height: 100%;
+    background-color: rgba(50,35,20,0.15);
+    /*border-radius: 10px;*/
+    padding-bottom: 10px;   
+    margin-top: 10px;
+    position: relative;
+
+    box-shadow: inset 0 40px 40px rgba(0,0,0,1);
+    -moz-box-shadow: inset 0 40px 40px rgba(0,0,0,1);
+    -webkit-box-shadow: inset 0 40px 40px rgba(0,0,0,1);
+    -o-shadow: inset 0 40px 40px rgba(0,0,0,1);
+}
+
+#contenidos{
+    pointer-events: none;
+    z-index:1;
+    position: relative;
+
+    height: 100%;
+    width:100%;
+
+    -webkit-transition: opacity 400ms ease-in 0ms;
+    -moz-transition: opacity 400ms ease-in 0ms;
+    -o-transition: opacity 400ms ease-in 0ms;
+    transition: opacity 400ms ease-in 0ms;
+}
+
+#contenidos2{
+    overflow: hidden;
+    position: absolute;
+    top:0;
+    opacity:0;
+
+    height: 100%;
+    width:100%;
+
+    -webkit-transition: opacity 400ms ease-in 0ms;
+    -moz-transition: opacity 400ms ease-in 0ms;
+    -o-transition: opacity 400ms ease-in 0ms;
+    transition: opacity 400ms ease-in 0ms;
+}
+
+.contenedor{
+    position:relative;
+    border-radius: 10px;
+    border-style: solid;
+    overflow: hidden;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    /*overflow-y: scroll;*/
+    z-index: 5;
+
+    -webkit-transition: all 400ms ease-in 0ms;
+    -moz-transition: all 400ms ease-in 0ms;
+    -o-transition: all 400ms ease-in 0ms;
+    transition: all 400ms ease-in 0ms;
+}
+.contenedorAislado{
+    position:relative;
+    background-color: rgba(185,150,100,0.5);
+
+    border-radius: 10px 10px 0 0;
+    border-style: solid;
+    overflow: hidden;
+    margin-top: 10px;
+}
+.cuerpo{
+    overflow-x: hidden;
+    height: auto !important;
+    margin: 0 !important;
+    position: absolute;
+    /*width: 100%;*/
+    top: 0;
+    bottom: 0; 
+    padding: 0 10px;
+    /*padding-top: 35px;*/       
+    top: 30px;
+    right: 0;
+    left: 0;
+}
+.cuerpo > *{
+    /*margin: 0 5px !important;*/
+    /*width: auto !important;*/
+}
+.cuerpo > *:first-child{
+    /*margin-top: 30px;*/
+}
+
+#foro .cuerpo{
+    bottom: 0;
+    overflow: hidden;
+    margin: 0 10px !important;
+}
+
+.tituloEditar{
+    padding: 3px 15px 3px 15px;
+    margin-right: 1px;
+    margin-top: -1px;
+    float:right;
+}
+.tituloEditar div{
+    margin-right:20px;
+    float:right;
+}
+
+.tituloPestana{
+    position:absolute;
+    top: -35px; 
+    right:15px;   
+    margin-top: 6px;
+    text-align: center;
+    /*width:80px;*/
+    min-width: 80px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    color: rgb(50,35,0);
+    text-shadow: 1px 1px white;
+    padding: 3px 15px 3px 15px;
+    white-space: nowrap;
+
+    border-width: 1px 1px 0 1px;
+    border-color: rgba(185,150,100,0.5);
+    border-radius: 20px 20px 0 0;
+    border-style: solid;
+    overflow: hidden;
+
+    opacity: 0.8;
+
+    background-color: rgb(255,215,0);
+    background: -webkit-linear-gradient(top, 
+        rgb(255,215,0) 0%,
+        rgb(255,255,0) 50%,
+        rgb(150,95,0) 51%,
+        rgb(200,135,0) 80%,
+        rgb(0,0,0) 100%);
+    background: -ms-linear-gradient(top, 
+        rgb(255,215,0) 0%,
+        rgb(255,255,0) 50%,
+        rgb(150,95,0) 51%,
+        rgb(200,135,0) 80%,
+        rgb(0,0,0) 100%);
+    background: -o-linear-gradient(top, 
+        rgb(255,215,0) 0%,
+        rgb(255,255,0) 50%,
+        rgb(150,95,0) 51%,
+        rgb(200,135,0) 80%,
+        rgb(0,0,0) 100%);
+    background: linear-gradient(top, 
+        rgb(255,215,0) 0%,
+        rgb(255,255,0) 50%,
+        rgb(150,95,0) 51%,
+        rgb(200,135,0) 80%,
+        rgb(0,0,0) 100%);
+
+    box-shadow: 3px -3px 5px -3px black, -3px -3px 5px -3px black;
+    z-index:-1;
+}
+
+.tituloPestana:hover, .pestanaSelected{
+    opacity: 1 !important;
+    z-index:1;
+}
+
+.tituloInput{
+    width: 35px;
+    height: 15px;
+    text-align: center;
+}
+
+.flecha {
+    margin-right:3px;
+    margin-left:3px;
+}
+.flecha:hover {
+    cursor: pointer;
+    outline-width: 1px;
+    outline-color: brown;
+    outline-style: solid;
+}
+
+.icon{
+    cursor: pointer;
+}
+
+.thead{
+    width: 100%;
+}
+.thead th {
+    cursor: pointer;
+    background-color: rgba(60,45,30,0.4);
+    padding-bottom: 5px;
+    font-weight: bold;
+    font-size: 15px;
+    padding-left: 5px;
+    /*flechas*/
+    background-position: 95% 70%;
+    background-repeat: no-repeat;
+}
+
+.arrows:hover, .arrowDown:hover, .arrowUp:hover {
+    background-color:rgba(200,100,0,0.25);
+}
+
+.tbody tbody tr{ 
+    cursor:pointer;
+    height: 25px;
+}
+.tbody tbody td{ 
+    /*padding-left: 5px;*/    
+    overflow: hidden;
+    width: 0;
+}
+.tbody tbody td > div{
+    overflow: hidden;
+    padding-left: 5px;
+    text-overflow: ellipsis;
+    min-height: 1px;
+}
+
+.botones{
+    width: 100%;
+}
+
+.boton{
+    line-height: 24px;
+}
+.boton:hover{
+    background-color: rgba(130,75,0,0.5);
+    cursor: pointer;
+}
+.boton:active{
+    background-color: rgba(20,20,0,1);
+}
+
+button{
+    cursor: pointer;
+}
+button:hover, input[type=button]:hover{
+    background-color: rgba(185,150,100,0.5);
+}
+
+.jspPane{
+    width: 100% !important;
+    padding: 0 !important;
+}
+
+.ayuda .mensajeAyuda{ 
+    position: absolute;
+    visibility: hidden;
+    color: black;
+    text-shadow: 1px 1px rgba(255,255,255,0.8);
+    text-decoration: none;
+}
+
+.ayuda .mensajeAyuda img{
+    border-width: 0;
+    padding: 2px;
+}
+
+.ayuda:hover .mensajeAyuda{ 
+    visibility: visible;
+    left: -10px;
+    /*bottom: -20px;*/
+}
+
+#titulo{
+    position: absolute;    
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    width: 100%;
+
+    -webkit-transition: opacity 200ms ease-in 0ms;
+    -moz-transition: opacity 200ms ease-in 0ms;
+    -o-transition: opacity 200ms ease-in 0ms;
+    transition: opacity 200ms ease-in 0ms;
+    opacity: 0.3;
+}
+#titulo:hover{
+    opacity: 1;
+}
+
+.iconoMin div img{
+    width:100%; 
+}
+
+.iconoSup div img{
+    position:absolute; 
+    width:100%; 
+}
+
+.checkbox{
+    cursor:pointer;
+    -webkit-transition: background-position-x 200ms;
+    -moz-transition: background-position-x 200ms;
+    -o-transition: background-position-x 200ms;
+    transition: background-position-x 200ms;
+}
+.checkbox:hover{
+    background-position-x: -2px;
+
+    box-shadow: inset 1px 1px 1px rgba(0,0,0,.6), inset -1px -1px 1px rgba(0,0,0,.6);
+    -moz-box-shadow: inset 1px 1px 1px rgba(0,0,0,.6), inset -1px -1px 1px rgba(0,0,0,.6);
+    -webkit-box-shadow: inset 1px 1px 1px rgba(0,0,0,.6), inset -1px -1px 1px rgba(0,0,0,.6);
+}
+.checkbox:active{
+    background-position-x: -3px;
+}
+
+.datos{
+    margin:15px;
+}
+.datos tr td{
+    font-weight: bold;
+    padding-top:5px;
+}
+.datos tr td:nth-child(1){
+    text-align: right;
+}
+.datos tr td:nth-child(2){
+    padding-left:15px;
+    text-align: left;
+}
+
+.estadisticas td:hover{
+    text-decoration: underline;
+}
+
+.minImg{   
+    background-repeat: no-repeat;
+    /*background-size: auto 100%;*/
+    max-width: 100%;
+    max-height: 100%;    
+
+    transition: width 150ms;
+    -moz-transition: width 150ms;
+    -webkit-transition: width 150ms;
+    -o-transition: width 150ms;
+}
+
+td{
+    position:relative;  
+}
+
+.margen{
+    margin:10px;
+}
+.margen input{
+    width:100%;
+}
+#conjunto{    
+    height: 100%;
+    position: relative;
+
+    box-shadow: inset 0 40px 40px rgba(0,0,0,1);
+    -moz-box-shadow: inset 0 40px 40px rgba(0,0,0,1);
+    -webkit-box-shadow: inset 0 40px 40px rgba(0,0,0,1);
+    -o-shadow: inset 0 40px 40px rgba(0,0,0,1);
+}
+
+#juegaAhora{
+    margin-bottom:10px;
+    font-weight: bold;
+    color:goldenrod;
+    font-size: 16px;
+    text-shadow:
+        -1px -1px 1px rgba(0, 0, 0, 1),
+        1px -1px 1px rgba(0, 0, 0, 1),
+        -1px 1px 1px rgba(0, 0, 0, 1),
+        1px 1px 1px rgba(0, 0, 0, 1);  
+}
+#foroVentana, #registroVentana{
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top:0;
+    z-index:99;
+    margin:auto;
+    left: 50%;
+}
+#foroVentana iframe, #registroVentana iframe{
+    height: 100%;
+    width: 100%;
+    position: relative; 
+    left: -50%;
+}
+#close{
+    background-repeat: no-repeat;
+    position:absolute;
+    width:45px;
+    height:45px;
+    top:30px;
+    right:50%;
+    margin-right:30px;
+    cursor: pointer;
+}
+#close:hover{
+    background-position-x: -45px;
+}
+
+#iframe{
+    height:100%;
+    width: 100%;
+    overflow-y: hidden;
+}
+#listaBatallas{
+    font-size: 13px;
+    width: 250px !important;
+    height:100%; 
+    position: absolute; 
+    right:0;
+    top: 0;
+}
+.iconPujas{
+    height:14px;
+}
+#calendarioDatos{
+    background-color: white;
+    position: absolute;
+    right: 0;
+}
+#contactoMensaje{
+    position: relative;
+    overflow: hidden;
+}
+#tablasAcciones{
+    margin-right: 5px;
+}
+
+#foroExpand{
+    pointer-events:auto !important;
+    position:absolute;
+    top:0;
+    right:0;
+    width:16px;
+    height:9px;
+    background-size: 16px 18px;
+    background-repeat: no-repeat;
+    margin-top:7px;
+    margin-right:20px;
+    cursor: pointer;
+    z-index:1;
+}
+#foro:hover #foroExpand{
+    background-position-y: -9px;
+}
+#foro:hover #mensajes > div{
+    box-shadow: 1px 1px 1px rgba(255,200,0,0.5), -1px -1px 1px rgba(255,200,0,0.5);
+}
+
+#foro div{
+    /*pointer-events:none;*/
+}
+#foro.contenedor{
+    position: absolute;
+    background: none;
+    box-shadow: none;
+    right: 270px;
+}
+#comentarios{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: absolute;
+    top: 0;
+    bottom: 40px;    
+    left: 0;
+    right: 0;
+}
+#comentarios .jspVerticalBar{
+    position: absolute;
+    left: -9px;
+}
+#comentarios .jspDrag{
+    background: rgba(100,50,0,0.5) !important;
+}
+#comentarios .jspContainer{
+    overflow: visible;
+}
+
+#foro #textarea{
+    position: absolute;
+    bottom: 0;
+}
+
+#mensajes div{
+    cursor: default;
+    pointer-events:auto;
+}
+/*#mensajes > div{
+    display: inline-block;    
+}*/
+#mensajes > div{
+    background-color: rgba(50,25,0,0.7);
+}
+
+.foroSize{
+    height:250px !important;
+}
+.foroSize #foroExpand{
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+#contenidos{
+    /*pointer-events:none;*/
+}
+#contenidos > div{
+    pointer-events:auto;
+}
+.loaderInner{
+    margin-top: 100%;
+    margin-left: 50%;
+    position: absolute;
+    top: 0;
+}
+.loader{
+    width:100px;
+    height:100px;
+    margin-top: -50%;
+    margin-left: -50%;
+}
+.flecha{
+    display: inline-block;
+    width:10px;
+    height:10px;
+    background-repeat: no-repeat;
+}
+
+#detalleCriatura{
+    height:200px;
+}
+
+.detalleCriatura{
+    box-sizing: border-box;
+    padding-bottom: 215px;
+
+    transition: 400ms;
+    -moz-transition: 400ms;
+    -webkit-transition: 400ms;
+    -o-transition: 400ms;
+}
+
+#proximaBatalla_div{
+    height:100%; 
+    color:white; 
+    position: absolute; 
+    margin-left: 50%; 
+    transform: translateX(-50%); 
+    top: 20px;
+}
+.proximaBatalla_equipo{
+    font-size: 24px; 
+    padding: 0 25px;
+    width: 200px;
+}
+
+#iframeInner{
+    height: 100%;
+    overflow-y: auto;
+}
+
+#busquedaMazmorras .selectNumero{
+    line-height: 30px;
+}
+/*}*/
+
+.ico_lupa{
+    padding-left: 5px; 
+    width: 10px !important;
+}
+
+#mensajeError{
+    font-size: 13px;
+    font-weight: bold;
+    padding: 10px;
+}

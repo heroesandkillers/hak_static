@@ -1,0 +1,126 @@
+
+<div id="contactoResumen" class="tituloPestana pestanas" onclick="contactoJs.pestanaContacto('contactoResumen');">
+    Resumen
+</div>
+<div id="contactoCalendario" class="tituloPestana pestanas" onclick="contactoJs.pestanaContacto('contactoCalendario');">
+    Calendario
+</div>
+<div id="contactoEquipo" class="tituloPestana pestanas" onclick="contactoJs.pestanaContacto('contactoEquipo');">
+    Equipo
+</div>
+<div id="contactoTraspasos" class="tituloPestana pestanas" onclick="contactoJs.pestanaContacto('contactoTraspasos');">
+    Traspasos
+</div>
+
+<div style="height: 100%" id="contenidosContacto"></div>
+
+<script>
+    pestanas();
+    documentLoad();
+
+    var contactoJs = {
+        getEquipoContacto: function () {
+            $.ajax({
+                type: "GET",
+                url: "getEquipoContacto",
+                data: {
+                    id: global.contactoId
+                },
+                success: function (response) {
+                    if (response) {
+                        var equipo;
+                        try {
+                            equipo = JSON.parse(response);
+                        } catch (e) {
+                            console.log("parsing equipo error: " + e + "; on: " + response);
+                            return;
+                        }
+                        global.contacto.equipo = equipo;
+                    }
+                }
+            });
+        },
+        medidas: function () {
+            $("#contenidosContacto").height($("#contenidosContacto").height() - 30);
+        },
+        getPerfilContacto: function (callback) {
+            var ths = this;
+            if (!global.contactoId) {
+                global.contactoId = global.perfil.id;
+            }
+
+            var contactoId = global.contactoId;
+            console.log("getPerfilContacto(). contactoId: " + contactoId);
+
+            if (global.perfil.id === contactoId) {
+                global.contacto = {};
+                global.contacto.username = global.perfil.username;
+                global.contacto.posicion = global.perfil.posicion;
+                global.contacto.fichajes = global.perfil.fichajes;
+                global.contacto.div = global.perfil.division.division;
+                global.contacto.equipo = global.equipo;
+                global.contacto.trofeos = ths.getTrofeos();
+                callback();
+            }
+            else {
+                $.ajax({
+                    type: "GET",
+                    url: "getPerfilContacto",
+                    data: {
+                        id: contactoId
+                    },
+                    success: function (response) {
+                        validate(response, function () {
+                            ths.getTrofeos();
+                            ths.getEquipoContacto();
+                            callback();
+                        });
+                    }
+                });
+            }
+        },
+        getTrofeos: function () {
+            $.ajax({
+                type: "GET",
+                url: "getTrofeos",
+                data: {
+                    id: global.contactoId
+                },
+                success: function (response) {
+                    if (response) {
+                        try {
+                            global.contacto.trofeos = JSON.parse(response);
+                        } catch (e) {
+                            console.log("parsing trofeos error: " + response);
+                        }
+                    }
+//                    else {
+//                        global.contacto.trofeos = "";
+//                    }
+                }
+            });
+        },
+        pestanaObjetivo: function () {
+            var pagObjetivo = global.paginaObjetivo;
+            if (!pagObjetivo) {
+                this.pestanaContacto("contactoResumen");
+            } else {
+                this.pestanaContacto(pagObjetivo);
+                pagObjetivo = "";
+            }
+        },
+        pestanaContacto: function (pest) {
+            cargar(pest, "#contenidosContacto");
+            $(".tituloPestana").removeClass("pestanaSelected");
+            $("#" + pest).addClass("pestanaSelected");
+        }
+    };
+
+    //init:
+    contactoJs.getPerfilContacto(function () {
+        contactoJs.pestanaObjetivo();
+    });
+
+    contactoJs.medidas();
+
+</script>

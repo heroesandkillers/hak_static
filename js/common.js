@@ -234,7 +234,7 @@ function atributo(num) {
 function loadCanvasAspecto(criatura, stage) {
     stage.removeAllChildren();
     stage.update();
-    
+
     if (criatura.raza === "duende")
         criatura.raza = "goblin";
 
@@ -255,7 +255,7 @@ function loadCanvasAspecto(criatura, stage) {
 function loadCanvasAspectoAcademia(criatura, stage) {
     stage.removeAllChildren();
     stage.update();
-    
+
     if (criatura.raza === "duende")
         criatura.raza = "goblin";
 
@@ -363,8 +363,12 @@ function error(error) {
     if (error.indexOf("Struts Problem Report") != -1) {
         console.log("STRUTS ERROR!");
         var myWindow = window.open('', '', 'width=200,height=100');
-        myWindow.document.write(error);
-        myWindow.focus();
+        if (myWindow) {
+            myWindow.document.write(error);
+            myWindow.focus();
+        }else{
+            console.log(error);
+        }
         return;
     }
 

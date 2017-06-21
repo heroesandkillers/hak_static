@@ -87,12 +87,8 @@
         "../../hak_static/js/crearMapa.js",
         "../../hak_static/js/detalles.js",
         "../../hak_static/js/alineacion.js"
-
     ];
 
-    require(commons, function () {
-        //
-    });
 </script>
 
 <script type="text/javascript" src="../../hak_static/js/adapt/adapt.min.js"></script>
@@ -182,11 +178,12 @@ JS
                 }
             });
 
-        // session will check in java
+            // session will check in java
         } else if (key1) {
             console.log("key: " + key1);
             location.hash = "mapa";
-            $("#wrapper").load(urlHandler.url + "base.html");
+            //$("#wrapper").load(urlHandler.url + "base.html");
+            load("base.html");
 
         } else {
             console.log("not keys: " + key1 + "," + key2);
@@ -211,13 +208,15 @@ JS
             if (!location.hash) {
                 location.hash = "mapa";
             }
-            $("#wrapper").load(urlHandler.url + "base.html");
+            //$("#wrapper").load(urlHandler.url + "base.html");
+            load("base.html");
 
         } else if (response === "fail") {
             error("invalid log");
         } else if (response === "admin") {
             if (!gameAccess.out) {
-                $("#wrapper").load(urlHandler.url + "base.html");
+//                $("#wrapper").load(urlHandler.url + "base.html");
+                load("base.html");
 //                window.location.replace(window.location + "admin");
             }
         } else if (response !== "") {
@@ -234,6 +233,13 @@ JS
         }, 100);
     }
 
-    $("#wrapper").load(urlHandler.url + "home.html");
+//    $("#wrapper").load(urlHandler.url + "home.html");
+    load("home.html");
+    
+    function load(page) {
+        require(commons, function () {
+            $("#wrapper").load(urlHandler.url + page);
+        });
+    }
 
 </script>

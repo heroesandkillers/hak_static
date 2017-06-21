@@ -62,12 +62,56 @@
         ]
     };
 
-    require.config({
-        waitSeconds: 0, //prevent timeout by requirejs
-        paths: {
-            jquery: '../../hak_static/js/jquery-1.11.0.min', //jquery.mobile.events.min.js calls this (prevent bug)
+    (function () {
+        require.config({
+            waitSeconds: 0, //prevent timeout by requirejs
+            paths: {
+                jquery: '../../hak_static/js/jquery-1.11.0.min', //jquery.mobile.events.min.js calls this (prevent bug)
+            }
+        });
+
+        var libs = [
+            "jquery",
+            "../../hak_static/js/easeljs-0.6.0.min.js",
+        ];
+
+        var commons = [
+            //"jquery",
+            "../../hak_static/styles/images.js",
+            "../../hak_static/styles/images_static.js",
+            "../../hak_static/js/jquery-ui-1.10.2/ui/minified/jquery-ui.min.js",
+            "../../hak_static/js/jquery-ui-1.10.2/external/jquery.mousewheel.js",
+            "../../hak_static/js/common.js",
+            "../../hak_static/js/base.js",
+            //"video.js",
+            //JQUERY EXTERNAL PLUGINS
+            "../../hak_static/js/plugins/jquery.sortElements.js",
+            "../../hak_static/js/plugins/visualize.jQuery.js",
+            //EASEL JS (CANVAS)
+            //"../../hak_static/js/easeljs-0.6.0.min.js",
+            "../../hak_static/js/Filter.js",
+            "../../hak_static/js/ColorFilter.js",
+            "../../hak_static/js/FilteredSprite.js",
+            //BATALLAS
+            "../../hak_static/js/crearBatallas.js",
+            "../../hak_static/js/batalla/IA/IA.js",
+            "../../hak_static/js/batalla/IAsprite.js",
+            //JS
+            "../../hak_static/js/ajax.js",
+            "../../hak_static/js/crearMapa.js",
+            "../../hak_static/js/detalles.js",
+            "../../hak_static/js/alineacion.js"
+        ];
+
+        //LOAD FUNCTION
+        window.load = function (page) {
+            require(libs, function () {
+                require(commons, function () {
+                    $("#wrapper").load(urlHandler.url + page);
+                });
+            });
         }
-    });
+    })();
 
 </script>
 
@@ -215,50 +259,5 @@ JS
 
 //    $("#wrapper").load(urlHandler.url + "home.html");
     load("home.html");
-    
-    
-    (function () {
-        var libs = [
-            "jquery",
-            "../../hak_static/js/easeljs-0.6.0.min.js",
-        ];
-
-        var commons = [
-            //"jquery",
-            "../../hak_static/styles/images.js",
-            "../../hak_static/styles/images_static.js",
-            "../../hak_static/js/jquery-ui-1.10.2/ui/minified/jquery-ui.min.js",
-            "../../hak_static/js/jquery-ui-1.10.2/external/jquery.mousewheel.js",
-            "../../hak_static/js/common.js",
-            "../../hak_static/js/base.js",
-            //"video.js",
-            //JQUERY EXTERNAL PLUGINS
-            "../../hak_static/js/plugins/jquery.sortElements.js",
-            "../../hak_static/js/plugins/visualize.jQuery.js",
-            //EASEL JS (CANVAS)
-            //"../../hak_static/js/easeljs-0.6.0.min.js",
-            "../../hak_static/js/Filter.js",
-            "../../hak_static/js/ColorFilter.js",
-            "../../hak_static/js/FilteredSprite.js",
-            //BATALLAS
-            "../../hak_static/js/crearBatallas.js",
-            "../../hak_static/js/batalla/IA/IA.js",
-            "../../hak_static/js/batalla/IAsprite.js",
-            //JS
-            "../../hak_static/js/ajax.js",
-            "../../hak_static/js/crearMapa.js",
-            "../../hak_static/js/detalles.js",
-            "../../hak_static/js/alineacion.js"
-        ];
-        
-        //LOAD FUNCTION
-        window.load = function (page) {
-            require(libs, function () {
-                require(commons, function () {
-                    $("#wrapper").load(urlHandler.url + page);
-                });
-            });
-        }
-    })();
 
 </script>

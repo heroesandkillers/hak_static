@@ -104,7 +104,7 @@
         ];
 
         //LOAD FUNCTION
-        window.load = function (page) {
+        window.loadWrapper = function (page) {
             require(libs, function () {
                 require(commons, function () {
                     $("#wrapper").load(urlHandler.url + page);
@@ -206,10 +206,9 @@ JS
         } else if (key1) {
             console.log("key: " + key1);
             location.hash = "mapa";
-            gameAccess.login = "done";
+//            gameAccess.login = "done";
             //$("#wrapper").load(urlHandler.url + "base.html");
-            load("base.html");
-//            load("home.html");
+            loadWrapper("base.html");
 
             setTimeout(function () {
                 $("#loadScreen").css("display", "none");
@@ -239,14 +238,14 @@ JS
                 location.hash = "mapa";
             }
             //$("#wrapper").load(urlHandler.url + "base.html");
-            load("base.html");
+            loadWrapper("base.html");
 
         } else if (response === "fail") {
             error("invalid log");
         } else if (response === "admin") {
             if (!gameAccess.out) {
 //                $("#wrapper").load(urlHandler.url + "base.html");
-                load("base.html");
+                loadWrapper("base.html");
 //                window.location.replace(window.location + "admin");
             }
         } else if (response !== "") {
@@ -264,6 +263,6 @@ JS
     }
 
 //    $("#wrapper").load(urlHandler.url + "home.html");
-    load("home.html");
+    loadWrapper("home.html");
 
 </script>

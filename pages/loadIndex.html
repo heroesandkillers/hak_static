@@ -2,6 +2,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <title>Heroes and Killers</title>
 
+<script type="text/javascript" src="../../hak_static/libs/requirejs/require.js"></script>    
+
 <script type="text/javascript">
 
     function wheel(e) {
@@ -15,12 +17,12 @@
     var urlHandler = {
         urlBase: "",
         url: "",
-        init: function() {
+        init: function () {
             var arr = location.href.split('/');
             this.urlBase = arr[0] + "//" + arr[2]; // http://...
             this.url = this.urlBase + "/hak_static/pages/";
         },
-        page: function() {
+        page: function () {
             if (location.hash) {
                 return location.hash.split('#')[1];
             }
@@ -41,10 +43,10 @@
 <link rel='stylesheet' href='../../hak_static/styles/mobile.css'>
 <link rel='stylesheet' href='../../hak_static/styles/hak.css'>
 <link rel='stylesheet' href='../../hak_static/styles/common.css'>
-<script type="text/javascript" src='../../hak_static/styles/images.js'></script>
+<!--<script type="text/javascript" src='../../hak_static/styles/images.js'></script>
 <script type="text/javascript" src='../../hak_static/styles/images_static.js'></script>
 
-<script type="text/javascript" src="../../hak_static/js/jquery-ui-1.10.2/ui/minified/jquery-ui.min.js"></script>  
+<script type="text/javascript" src="../../hak_static/js/jquery-ui-1.10.2/ui/minified/jquery-ui.min.js"></script>  -->
 <script type="text/javascript">
     var ADAPT_CONFIG = {
         path: '../../hak_static/styles/adapt/',
@@ -59,6 +61,38 @@
             '2540px           = 2520.min.css'
         ]
     };
+
+    var commons = [
+        "../../hak_static/styles/images.js",
+        "../../hak_static/styles/images_static.js",
+        "../../hak_static/js/jquery-ui-1.10.2/ui/minified/jquery-ui.min.js",
+        "../../hak_static/js/jquery-ui-1.10.2/external/jquery.mousewheel.js",
+        "../../hak_static/js/common.js",
+        "../../hak_static/js/base.js",
+        //"video.js",
+        //JQUERY EXTERNAL PLUGINS
+        "../../hak_static/js/plugins/jquery.sortElements.js",
+        "../../hak_static/js/plugins/visualize.jQuery.js",
+        //EASEL JS (CANVAS)
+        "../../hak_static/js/easeljs-0.6.0.min.js",
+        "../../hak_static/js/Filter.js",
+        "../../hak_static/js/ColorFilter.js",
+        "../../hak_static/js/FilteredSprite.js",
+        //BATALLAS
+        "../../hak_static/js/crearBatallas.js",
+        "../../hak_static/js/batalla/IA/IA.js",
+        "../../hak_static/js/batalla/IAsprite.js",
+        //JS
+        "../../hak_static/js/ajax.js",
+        "../../hak_static/js/crearMapa.js",
+        "../../hak_static/js/detalles.js",
+        "../../hak_static/js/alineacion.js"
+        
+    ];
+
+    require(commons, function () {
+        //
+    });
 </script>
 
 <script type="text/javascript" src="../../hak_static/js/adapt/adapt.min.js"></script>
@@ -70,32 +104,32 @@
 </div>
 <div id="wrapper" class="container_12">
 </div>
-
-<!--FOOT-->
+<!--
+FOOT
 <script type="text/javascript" src="../../hak_static/js/jquery-ui-1.10.2/external/jquery.mousewheel.js"></script>
 <script type="text/javascript" src="../../hak_static/js/common.js"></script>
 <script type="text/javascript" src="../../hak_static/js/base.js"></script>        
-<!--<script type="text/javascript" src="video.js"></script>-->
+<script type="text/javascript" src="video.js"></script>
 
-<!--JQUERY EXTERNAL PLUGINS-->
-<script type="text/javascript" src="../../hak_static/js/plugins/jquery.sortElements.js"></script><!--SORT-->
-<script type="text/javascript" src="../../hak_static/js/plugins/visualize.jQuery.js"></script><!--GRAFICOS-->
-<!--EASEL JS (CANVAS)-->
+JQUERY EXTERNAL PLUGINS
+<script type="text/javascript" src="../../hak_static/js/plugins/jquery.sortElements.js"></script>SORT
+<script type="text/javascript" src="../../hak_static/js/plugins/visualize.jQuery.js"></script>GRAFICOS
+EASEL JS (CANVAS)
 <script type="text/javascript" src="../../hak_static/js/easeljs-0.6.0.min.js"></script>
 <script type="text/javascript" src="../../hak_static/js/Filter.js"></script>
 <script type="text/javascript" src="../../hak_static/js/ColorFilter.js"></script> 
 <script type="text/javascript" src="../../hak_static/js/FilteredSprite.js"></script> 
-<!--BATALLAS-->
+BATALLAS
 <script type="text/javascript" src="../../hak_static/js/crearBatallas.js"></script>
 <script type="text/javascript" src="../../hak_static/js/batalla/IA/IA.js"></script>
 <script type="text/javascript" src="../../hak_static/js/batalla/IAsprite.js"></script>
 
-<!--JS-->
+JS
 <script type="text/javascript" src="../../hak_static/js/ajax.js"></script>
 <script type="text/javascript" src="../../hak_static/js/crearMapa.js"></script>
 <script type="text/javascript" src="../../hak_static/js/detalles.js"></script>
 
-<script type="text/javascript" src="../../hak_static/js/alineacion.js"></script>
+<script type="text/javascript" src="../../hak_static/js/alineacion.js"></script>-->
 
 <script>
 
@@ -142,7 +176,7 @@
                     key1: key1,
                     key2: key2
                 },
-                success: function(response) {
+                success: function (response) {
                     gameAccess.login = response;
                     checkGameAccess(response);
                 }
@@ -194,7 +228,7 @@
             console.log("unknown response");
         }
 
-        setTimeout(function() {
+        setTimeout(function () {
             $("#loadScreen").css("display", "none");
         }, 100);
     }

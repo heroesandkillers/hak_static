@@ -308,6 +308,7 @@ footer{
 .tituloPestana:hover, .pestanaSelected{
     opacity: 1 !important;
     z-index:1;
+    background: -webkit-linear-gradient(top, rgb(255,215,0) 0%, rgb(255,255,0) 50%, rgb(150,95,0) 51%, rgb(200,135,0) 80%);
 }
 
 .tituloInput{

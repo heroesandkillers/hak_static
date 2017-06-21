@@ -62,8 +62,15 @@
         ]
     };
 
+    require.config({
+        waitSeconds: 0, //prevent timeout by requirejs
+        paths: {
+            jquery: '../../hak_static/js/jquery-1.11.0.min', //jquery.mobile.events.min.js calls this (prevent bug)
+        }
+    });
+
     var commons = [
-        "../../hak_static/js//jquery-1.11.0.min.js",
+        "jquery",
         "../../hak_static/styles/images.js",
         "../../hak_static/styles/images_static.js",
         "../../hak_static/js/jquery-ui-1.10.2/ui/minified/jquery-ui.min.js",
@@ -236,7 +243,7 @@ JS
 
 //    $("#wrapper").load(urlHandler.url + "home.html");
     load("home.html");
-    
+
     function load(page) {
         require(commons, function () {
             $("#wrapper").load(urlHandler.url + page);

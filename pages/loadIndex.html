@@ -206,9 +206,14 @@ JS
         } else if (key1) {
             console.log("key: " + key1);
             location.hash = "mapa";
+            gameAccess.login = "done";
             //$("#wrapper").load(urlHandler.url + "base.html");
-//            load("base.html");
-            load("home.html");
+            load("base.html");
+//            load("home.html");
+
+            setTimeout(function () {
+                $("#loadScreen").css("display", "none");
+            }, 100);
 
         } else {
             console.log("not keys: " + key1 + "," + key2);

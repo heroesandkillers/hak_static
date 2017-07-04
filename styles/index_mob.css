@@ -60,9 +60,9 @@ footer.show{
     left: -1px !important;
 }
 footer > div{
+    height: 0;
     background-position: 100%;
-    min-height: 100%;
-
+    /*min-height: 100%;*/
     margin-right:30px;
     background-color: rgba(200,200,180,1);
     background-repeat: repeat-y;
@@ -117,6 +117,13 @@ footer > div{
 
 .iconoImg{
     display:inline;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-repeat: none;
+
     transition: width 150ms;
     -moz-transition: width 150ms;
     -webkit-transition: width 150ms;
@@ -125,6 +132,8 @@ footer > div{
 .icono{
     font-size: 16px;
     padding-right:20px;
+    position: relative;
+
     background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,0.1),rgba(0,0,0,0.1)));
     background-image: -ms-linear-gradient(rgba(255,255,255,0.1),rgba(0,0,0,0.1));
     background-image: -o-linear-gradient(rgba(255,255,255,0.1),rgba(0,0,0,0.1));
@@ -213,8 +222,8 @@ footer > div{
     height:100%;
     z-index:101;
     background-color: rgb(200,150,60);
-/*    position:fixed;
-    top:0;*/
+    /*    position:fixed;
+        top:0;*/
 }
 
 .comentarioTexto{

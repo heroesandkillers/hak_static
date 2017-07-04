@@ -20,7 +20,7 @@ body{
 
 .contenedor{
     /*overflow-y: scroll;*/
-    overflow-x: hidden;
+    /*overflow-x: hidden;*/
 }
 
 header{

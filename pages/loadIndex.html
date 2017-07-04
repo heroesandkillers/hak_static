@@ -325,14 +325,19 @@
         global.alin = typeof global.perfil.alin === 'undefined' ? {} : JSON.parse(global.perfil.alin);
         global.mazmorras = typeof global.perfil.pujas === 'undefined' ? {} : JSON.parse(global.perfil.pujas);
     }
-    
+
     function loadJuego() {
+//        if (!location.hash) {
+//            location.hash = "mapa";
+//        }
+        
 //                $("#log").text("load game");
 //                mostrarMapa();
         $("#log").text("loading user preferences");
         cargarPerfil();
         $("#log").text("loading map screen");
-        cargar();
+//        cargar();
+        $("#wrapper").load("../pages/base.html");
         $("#log").text("showing game");
         $("#pantalla").css("display", "none");
         $("#iframe").css("display", "none");

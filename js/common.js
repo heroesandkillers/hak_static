@@ -39,6 +39,7 @@ function cargarPerfil() {
 }
 
 function getBatallasCalculo(callback) {
+    console.log("getBatallasCalculo()");
     ajax.call("getBatallasCalculo", null, function (batallas) {
         if (batallas.length != 0) {
             calcularBatallas(batallas);

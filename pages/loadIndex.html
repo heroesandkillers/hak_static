@@ -177,6 +177,8 @@
         //
         org + "js/plugins/jquery.ba-outside-events.min.js",
         org + "js/plugins/jquery.sortElements.js",
+        //
+        org + "js/crearBatallas.js",
     ];
 
     var global = {};
@@ -261,6 +263,7 @@
     }
 
     function loadLoginResponse(response) {
+        console.log("loadLoginResponse()");
         //console.log(response);
         if (response === "error") {
             $("#log").text("unknown server error");
@@ -278,6 +281,7 @@
     }
 
     function cargarAll(response) {
+        console.log("cargarAll()");
         $("#log").text("loading user data");
         var all;
         try {
@@ -327,6 +331,7 @@
     }
 
     function loadJuego() {
+        console.log("loadJuego()");
 //        if (!location.hash) {
 //            location.hash = "mapa";
 //        }

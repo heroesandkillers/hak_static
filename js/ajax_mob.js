@@ -1,6 +1,7 @@
 
 var ajax_mob = {
     login: function (key1, key2) {
+        console.log("login()");
         $.post(url + "logMovil", {
             key1: key1,
             key2: key2

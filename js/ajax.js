@@ -173,6 +173,10 @@ function getBatalla(batalla) {
 
         console.log("batalla cargada");
         batallaJSON = batalla;
+        if(!batallaJs){
+            console.log("WARNING: !batallaJs IN getBatalla()");
+            return;
+        }
         batallaJs.mostrarDatos();
         batallaJs.centrarGameArea();
     });

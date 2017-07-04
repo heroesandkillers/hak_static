@@ -176,25 +176,24 @@
     documentLoad();
 </script>
 
-<script type="text/javascript" src="../../hak_static/pages/entreno.js"></script>
-
 <script>
 
-////////////////////////////////////////////////////////////////////
-//G.R.A.F.I.C.A._______________________________________________________________________________________________
+    ////////////////////////////////////////////////////////////////////
+    //G.R.A.F.I.C.A._______________________________________________________________________________________________
 
     var atributos = ["media", "fu", "ma", "ag", "rf", "co", "df", "rc", "exp", "fr", "mo"];
 
-    if (estadist === "") {
-        estadist = {media: [], fu: [], ma: [], ag: [], rf: [], co: [], df: [], rc: [], exp: [], fr: [], mo: []};
+    require(["../pages/entreno.js"], function () {
+        if (estadist === "") {
+            estadist = {media: [], fu: [], ma: [], ag: [], rf: [], co: [], df: [], rc: [], exp: [], fr: [], mo: []};
 
-        var equipo = global.equipo;
-        contruirEstadisticas(equipo);
-        drawGrafico();
-    } else {
-        drawGrafico();
-    }
-
+            var equipo = global.equipo;
+            contruirEstadisticas(equipo);
+            drawGrafico();
+        } else {
+            drawGrafico();
+        }
+    });
 
     function equipo5() {
         estadist = {media: [], fu: [], ma: [], ag: [], rf: [], co: [], df: [], rc: [], exp: [], fr: [], mo: []};
@@ -278,7 +277,7 @@
         }
     }
 
-//LLENAR TABLA Y VISUALIZAR
+    //LLENAR TABLA Y VISUALIZAR
     function drawGrafico() {
 
         var id = {};
@@ -304,7 +303,7 @@
         }
     }
 
-//VISUALIZE
+    //VISUALIZE
     function visualize() {
         $('#grafico').visualize({
             type: 'line',
@@ -314,15 +313,10 @@
         });
     }
 
-//SIN DATOS
-    function sinDatos() {
-        $("#graficoAviso").text("sin datos por el momento");
-        $("#graficoAviso").css("margin-top", $(".visualize:eq(0)").height() / 2 - $("#graficoAviso").height() / 2 + "px");
-        $("#graficoAviso").css("margin-left", $(".visualize:eq(0)").width() / 2 - $("#graficoAviso").width() / 2 + "px");
-    }
+    //EVENTOS
 
-//CONTROLADOR CHECKERS
-    $.each(atributos, function () {
+    //CONTROLADOR CHECKERS
+    for (var i = 0; i < atributos.length; i++) {
         var grf = this;
 
         $("#" + grf + "Check").click(function () {
@@ -335,8 +329,7 @@
             }
             drawGrafico();
         });
-    });
-
+    }
 
     $("#selectEquipo").change(function () {
         if ($(this).val() === "todos") {

@@ -147,4 +147,11 @@ function cap(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+//SIN DATOS
+function sinDatos() {
+    $("#graficoAviso").text("sin datos por el momento");
+    $("#graficoAviso").css("margin-top", $(".visualize:eq(0)").height() / 2 - $("#graficoAviso").height() / 2 + "px");
+    $("#graficoAviso").css("margin-left", $(".visualize:eq(0)").width() / 2 - $("#graficoAviso").width() / 2 + "px");
+}
+
 reloadTablas();

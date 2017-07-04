@@ -191,7 +191,8 @@ footer > div{
     width:100%;
 }
 #conjunto{
-    padding:15px;
+    padding: 15px;
+    padding: 0 15px;
 }
 
 .tbody tbody td{
@@ -212,8 +213,8 @@ footer > div{
     height:100%;
     z-index:101;
     background-color: rgb(200,150,60);
-    position:fixed;
-    top:0;
+/*    position:fixed;
+    top:0;*/
 }
 
 .comentarioTexto{

@@ -1,0 +1,273 @@
+<!--HEAD-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Heroes and Killers</title>
+
+<script type="text/javascript" src="../../hak_static/libs/requirejs/require.js"></script>    
+
+<script type="text/javascript">
+
+    function wheel(e) {
+        e.preventDefault;
+    }
+    window.onmousewheel = document.onmousewheel = wheel; // disable scroll down page
+
+    var org = "../../hak_static/";
+    var url = "";
+
+    var urlHandler = {
+        urlBase: "",
+        url: "",
+        init: function () {
+            var arr = location.href.split('/');
+            this.urlBase = arr[0] + "//" + arr[2]; // http://...
+            this.url = this.urlBase + "/hak_static/pages/";
+        },
+        page: function () {
+            if (location.hash) {
+                return location.hash.split('#')[1];
+            }
+            return false;
+        }
+    };
+    urlHandler.init();
+
+</script>
+
+<link rel="shortcut icon" href= "../../hak_static/img/iHak.ico">
+<link rel="stylesheet" href="../../hak_static/styles/adapt/master.css" />
+
+<link rel="stylesheet" href="../../hak_static/js/jquery-ui-1.10.2/themes/base/jquery-ui.css" />       
+<link rel="stylesheet" type="text/css" href="../../hak_static/styles/plugins/visualize.css"/>
+
+<!--<link rel='stylesheet' href='../../hak_static/styles/index.css'>-->
+<link rel='stylesheet' href='../../hak_static/styles/index_mob.css'>
+
+<link rel='stylesheet' href='../../hak_static/styles/mobile.css'>
+<link rel='stylesheet' href='../../hak_static/styles/hak.css'>
+<link rel='stylesheet' href='../../hak_static/styles/common.css'>
+<!--<script type="text/javascript" src='../../hak_static/styles/images.js'></script>
+<script type="text/javascript" src='../../hak_static/styles/images_static.js'></script>
+
+<script type="text/javascript" src="../../hak_static/js/jquery-ui-1.10.2/ui/minified/jquery-ui.min.js"></script>  -->
+<script type="text/javascript">
+    var ADAPT_CONFIG = {
+        path: '../../hak_static/styles/adapt/',
+        dynamic: true,
+        range: [
+            '0px    to 760px  = mobile.min.css',
+            '760px  to 980px  = 720.min.css',
+            '980px  to 1280px = 960.min.css',
+            '1280px to 1600px = 1200.min.css',
+            '1600px to 1940px = 1560.min.css',
+            '1940px to 2540px = 1920.min.css',
+            '2540px           = 2520.min.css'
+        ]
+    };
+
+    (function () {
+        require.config({
+            waitSeconds: 0, //prevent timeout by requirejs
+            paths: {
+                jquery: org + 'js/jquery-1.11.0.min', //jquery.mobile.events.min.js calls this (prevent bug)
+            }
+        });
+
+        var libs = [
+            "jquery",
+            org + "js/easeljs-0.6.0.min.js",
+        ];
+
+        var commons = [
+            //"jquery",
+            org + "styles/images.js",
+            org + "styles/images_static.js",
+            org + "js/jquery-ui-1.10.2/ui/minified/jquery-ui.min.js",
+            org + "js/jquery-ui-1.10.2/external/jquery.mousewheel.js",
+            org + "js/common.js",
+            org + "js/base.js",
+            //"video.js",
+            //JQUERY EXTERNAL PLUGINS
+            org + "js/plugins/jquery.sortElements.js",
+            org + "js/plugins/visualize.jQuery.js",
+            //EASEL JS (CANVAS)
+            //pref + "../../hak_static/js/easeljs-0.6.0.min.js",
+            org + "js/Filter.js",
+            org + "js/ColorFilter.js",
+            org + "js/FilteredSprite.js",
+            //BATALLAS
+            org + "js/crearBatallas.js",
+            org + "js/batalla/IA/IA.js",
+            org + "js/batalla/IAsprite.js",
+            //JS
+            org + "js/ajax.js",
+            org + "js/crearMapa.js",
+            org + "js/detalles.js",
+            org + "js/alineacion.js"
+        ];
+
+        //LOAD FUNCTION
+        window.loadWrapper = function (page) {
+            require(libs, function () {
+                require(commons, function () {
+                    $("#wrapper").load(urlHandler.url + page);
+                });
+            });
+        }
+    })();
+
+</script>
+
+<script type="text/javascript" src="../../hak_static/js/adapt/adapt.min.js"></script>
+<link type="text/css" rel='stylesheet' href='../../hak_static/styles/hak_extra.css'>
+
+<!--BODY-->
+<div id="loadScreen">
+    <div>Waiting forum connection...</div>
+</div>
+<div id="wrapper" class="container_12">
+</div>
+<!--
+FOOT
+<script type="text/javascript" src="../../hak_static/js/jquery-ui-1.10.2/external/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="../../hak_static/js/common.js"></script>
+<script type="text/javascript" src="../../hak_static/js/base.js"></script>        
+<script type="text/javascript" src="video.js"></script>
+
+JQUERY EXTERNAL PLUGINS
+<script type="text/javascript" src="../../hak_static/js/plugins/jquery.sortElements.js"></script>SORT
+<script type="text/javascript" src="../../hak_static/js/plugins/visualize.jQuery.js"></script>GRAFICOS
+EASEL JS (CANVAS)
+<script type="text/javascript" src="../../hak_static/js/easeljs-0.6.0.min.js"></script>
+<script type="text/javascript" src="../../hak_static/js/Filter.js"></script>
+<script type="text/javascript" src="../../hak_static/js/ColorFilter.js"></script> 
+<script type="text/javascript" src="../../hak_static/js/FilteredSprite.js"></script> 
+BATALLAS
+<script type="text/javascript" src="../../hak_static/js/crearBatallas.js"></script>
+<script type="text/javascript" src="../../hak_static/js/batalla/IA/IA.js"></script>
+<script type="text/javascript" src="../../hak_static/js/batalla/IAsprite.js"></script>
+
+JS
+<script type="text/javascript" src="../../hak_static/js/ajax.js"></script>
+<script type="text/javascript" src="../../hak_static/js/crearMapa.js"></script>
+<script type="text/javascript" src="../../hak_static/js/detalles.js"></script>
+
+<script type="text/javascript" src="../../hak_static/js/alineacion.js"></script>-->
+
+<script>
+
+    var routes = {
+        "academia": "pages/academia.html",
+        "alineacion": "pages/alineacion.html",
+        "batallas": "pages/batallas.html",
+        "construccion": "pages/construccion.html",
+        "contacto": "pages/contacto.html",
+        "entreno": "pages/entreno.html",
+        "equipo": "pages/equipo.html",
+        "estadisticas": "pages/estadisticas.html",
+        "mapa": "pages/mapa.html",
+        "mazmorras": "pages/mazmorras.html",
+        "mensajes": "pages/mensajes.html",
+        "perfil": "pages/perfil.html",
+        "academiaAlineacion": "pages/academia/academiaAlineacion.html",
+        "academiaEquipo": "pages/academia/academiaEquipo.html",
+        "contactoCalendario": "pages/contacto/contactoCalendario.html",
+        "contactoEquipo": "pages/contacto/contactoEquipo.html",
+        "contactoResumen": "pages/contacto/contactoResumen.html",
+        "contactoTraspasos": "pages/contacto/contactoTraspasos.html",
+        "perfilDatos": "pages/perfil/perfilDatos.html",
+        "perfilEconomia": "pages/perfil/perfilEconomia.html"
+    };
+
+    var gameAccess = {
+        out: false,
+        login: false
+    };
+    function gameIn(key1, key2) {
+        console.log("game.in");
+
+        if (location.hash && !routes[location.hash.split("#")[1]]) {
+            //alert(location.hash);
+            location.hash = "";
+            gameOut();
+
+        } else if (key1 && key2) { //key2 is not necessary
+            $.ajax({
+                type: "POST",
+                url: "log",
+                data: {
+                    key1: key1,
+                    key2: key2
+                },
+                success: function (response) {
+//                    if("error" == response){
+//                        return;
+//                    }                    
+                    gameAccess.login = response;
+                    checkGameAccess(response);
+                }
+            });
+
+            // session will check in java
+        } else if (key1) {
+            console.log("key: " + key1);
+            location.hash = "mapa";
+//            gameAccess.login = "done";
+            //$("#wrapper").load(urlHandler.url + "base.html");
+            loadWrapper("base.html");
+
+            setTimeout(function () {
+                $("#loadScreen").css("display", "none");
+            }, 100);
+
+        } else {
+            console.log("not keys: " + key1 + "," + key2);
+            gameOut();
+        }
+    }
+
+    function gameOut() {
+        gameAccess.out = true;
+        $("#loadScreen").css("display", "none");
+    }
+
+    function checkGameAccess(response) {
+
+        if (response.indexOf("Struts Problem Report") != -1) {
+            error(response);
+            return;
+        }
+
+        console.log("response = " + response)
+        if (response === "done") {
+            if (!location.hash) {
+                location.hash = "mapa";
+            }
+            //$("#wrapper").load(urlHandler.url + "base.html");
+            loadWrapper("base.html");
+
+        } else if (response === "fail" || response === "error") {
+            error("invalid log");
+        } else if (response === "admin") {
+            if (!gameAccess.out) {
+//                $("#wrapper").load(urlHandler.url + "base.html");
+                loadWrapper("base.html");
+//                window.location.replace(window.location + "admin");
+            }
+        } else if (response !== "") {
+            if (!gameAccess.out) {
+                $("body").load(response);
+//                $("#iframeInner").append(response);
+            }
+        } else {
+            console.log("unknown response");
+        }
+
+        setTimeout(function () {
+            $("#loadScreen").css("display", "none");
+        }, 100);
+    }
+
+//    $("#wrapper").load(urlHandler.url + "home.html");
+    loadWrapper("home.html");
+
+</script>

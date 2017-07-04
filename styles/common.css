@@ -144,6 +144,9 @@ html {
 body, #wrapper {
     overflow-x: hidden;
 }
+#wrapper, #conjunto, #conjunto > div, #contenido1, #contenido1A{
+    height: 100%;
+}
 
 body{
     user-select: none;

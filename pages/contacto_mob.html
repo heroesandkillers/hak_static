@@ -1,0 +1,145 @@
+
+<div id="pestanas" class="grid_12">
+    <div id="contactoTraspasos" class="tituloPestana" onclick="contactoJs.pestanaContacto('contactoTraspasos');">
+        Traspasos
+    </div>
+    <div id="contactoEquipo" class="tituloPestana" onclick="contactoJs.pestanaContacto('contactoEquipo');">
+        Equipo
+    </div>
+    <div id="contactoCalendario" class="tituloPestana" onclick="contactoJs.pestanaContacto('contactoCalendario');">
+        Calendario
+    </div>
+    <div id="contactoResumen" class="tituloPestana" onclick="contactoJs.pestanaContacto('contactoResumen');">
+        Resumen
+    </div>
+</div>
+
+<div style="height: 100%" id="contenidosContacto"></div>
+
+<script>
+
+    var contactoJs = {
+        getEquipoContacto: function (callback) {
+            if (global.perfil.id !== global.contactoId) {
+                $.ajax({
+                    type: "GET",
+                    url: url + "getEquipoContacto",
+                    data: {
+                        id: global.contactoId
+                    },
+                    success: function (json) {
+                        var equipo;
+                        try {
+                            equipo = JSON.parse(json);
+                        } catch (e) {
+                            console.log("getPerfilContacto:() ERROR");
+                            return;
+                        }
+                        callback(equipo);
+                    }
+                });
+            } else {
+                return global.equipo;
+            }
+        },
+        medidas: function () {
+            $("#contenidosContacto").height($("#contenidosContacto").height() - 30);
+        },
+        getPerfilContacto: function (callback) {
+            var perfil = global.perfil;
+            var contactoId = global.contactoId;
+            if (perfil.id === contactoId) {
+                return perfil;
+            } else {
+                $.ajax({
+                    type: "GET",
+                    url: url + "getPerfilContacto",
+                    data: {
+                        id: contactoId
+                    },
+                    success: function (json) {
+                        var obj;
+                        try {
+                            obj = JSON.parse(json);
+                        } catch (e) {
+                            console.log("getPerfilContacto:() ERROR");
+                            return;
+                        }
+                        callback(obj);
+                    }
+                });
+            }
+        },
+        getTrofeos: function (perfil, callback) {
+            if (perfil.trofeos) {
+                return perfil.trofeos;
+            }
+
+            $.ajax({
+                type: "GET",
+                url: url + "getTrofeos",
+                data: {
+                    id: global.contactoId
+                },
+                success: function (json) {
+                    var trofeos;
+                    if ("" === json) {
+                        callback();
+                    }
+
+                    try {
+                        trofeos = JSON.parse(json);
+                    } catch (e) {
+                        console.log("getPerfilContacto:() ERROR");
+                        return;
+                    }
+
+                    perfil.trofeos = trofeos;
+                    callback();
+                }
+            });
+        },
+        pestanaObjetivo: function () {
+            var pagObjetivo = global.paginaObjetivo;
+            if (!pagObjetivo) {
+                this.pestanaContacto("contactoResumen");
+            } else {
+                this.pestanaContacto(pagObjetivo);
+                pagObjetivo = "";
+            }
+        },
+        pestanaContacto: function (pest) {
+            if(!pest){
+                return;
+            }
+            console.log("pestanaContacto() " + pest);
+            
+            //contactoCargar(pest);
+            cargar(pest, "#contenidosContacto");
+            
+            $(".tituloPestana").removeClass("pestanaSelected");
+            $("#" + pest).addClass("pestanaSelected");
+        }
+    };
+
+    //
+    contactoJs.getEquipoContacto(function (equipoContacto) {
+        global.equipoContacto = equipoContacto;
+
+        contactoJs.getPerfilContacto(function (perfil) {
+            if(!perfil){
+                return;
+            }
+            
+            global.perfilContacto = perfil;
+            $("#nombreContacto").text(perfil.nombreId);
+
+            contactoJs.getTrofeos(perfil, function () {
+                contactoJs.pestanaObjetivo();
+                contactoJs.medidas();
+            });
+        });
+    });
+
+
+</script>

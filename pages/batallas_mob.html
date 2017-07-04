@@ -1,0 +1,605 @@
+<script type="text/javascript" src="../js/crearBatallas.js"></script>
+<script type="text/javascript" src="../js/batalla/IA/IA.js"></script>
+<script type="text/javascript" src="../js/batalla/IAsprite.js"></script>
+<script type="text/javascript" src="../js/batalla/Capas.js"></script>
+
+<style>
+    #muertes .muerte > div{
+        overflow:hidden;
+        text-overflow:ellipsis; 
+        width: 100% !important;
+        font-size: 12px;
+    }
+</style>
+
+<div id="gameArea" class="profundidad">
+    <div style="height: 100%">
+        <div id="container"></div>
+        <div id="reproduccion">
+            <div id="rReplay" style="margin-right:12px"></div>
+            <div id="rMBack"></div>
+            <div id="rPause"></div>
+            <div id="rPlay"></div>
+            <div id="rMPlay" style="margin-right:12px"></div>
+            <div id="r1Play"></div>
+        </div>
+        <div id="botonDatosBatalla" class="boton">Datos Batalla</div>
+        <div id="loaderBatalla"></div>
+    </div>
+</div>
+
+<div id="datosBatalla" style="height:100%; width:230px; padding:10px;">
+    <div id="resultadosBatalla" class="tabla" style="display:none">
+        <div class="subtitulo">
+            <table class="thead" style="width:100%">
+                <tbody>
+                    <tr>
+                        <th>
+                            <!--<img style="width: 35%" src="../img/escudo.png"/>-->
+                            <p id="equipoLocal"></p>
+                        </th>
+                        <th>
+                            <p id="resultado"></p>
+                        </th>
+                        <th>
+                            <!--<img style="width: 35%" src="../img/escudo.png"/>-->
+                            <p id="equipoVisitante"></p>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <table class="tbody" style="width:100%; table-layout:fixed;">
+                <tbody  id="muertes">
+
+                </tbody>
+            </table>
+        </div>        
+    </div>
+
+    <div id="estadisticas" class="tabla" style="display:none">
+        <!--                <div>ID: <span id="id"></span></div>-->
+        <!--                <div>Numero: <span  id="numero"></span></div>
+                        <div>Nombre: <span  id="nombre"></span></div>-->
+        <div>Equipo: <span  id="equipo"></span></div>
+
+        <div class="stats">
+            <div>Fuerza: <span id="fuerza"></span></div>
+            <div>Magia: <span id="magia"></span></div>
+            <div>Agilidad: <span id="agilidad"></span></div>
+            <div>Reflejos <span id="reflejos"></span></div>
+            <div>Constitucion: <span id="constitucion"></span></div>
+            <div>Defensa: <span id="defensa"></span></div>
+            <div>Reaccion: <span id="reaccion"></span></div>
+        </div>
+
+        <div>
+            <canvas id="aspecto" height="300" width="200"></canvas>
+        </div>
+        <!--                <div><span id="param"></span></div>-->
+    </div>
+
+</div>
+
+<script>
+
+    //reset?
+    batalla.loadBatalla = [];
+    batalla.grupos = {};
+    batalla.imagenes = [];
+    batalla.imagenesObj = {};
+
+    //var batallaJSON = global.batallas;
+
+    //getBatalla
+    if (window.batallaINFO) {
+        if (batallaINFO.tipo != "juvenil") {
+            ajax.call("getBatalla", {id: batallaINFO.id}, function (res) {
+                batallaINFO = res;
+            });
+
+        } else {
+            if (typeof batallaINFO.resultados == 'undefined') {
+                ajax.call("getBatalla", {id: batallaINFO.id}, function (res) {
+                    batallaINFO = res;
+                });
+            }
+        }
+    }
+
+    getBatallaVisible(window.batallaINFO, function (data) {
+        // console.log(batalla)
+        if (!data) {
+            console.log("!batalla");
+            aviso("error al mostrar batalla");
+            return;
+        }
+        if (!data.alinLoc || !data.alinVis) {
+            console.log("!batalla.alinLoc || !batalla.alinVis");
+            aviso("error al mostrar batalla");
+            return;
+        }
+
+        console.log("batalla cargada: " + data);
+        window.batallaJSON = data;
+
+        mostrarDatos();
+        centrarGameArea();
+    });
+
+    function mostrarDatos() {
+        if (!window.batallaJSON) {
+            console.log("!window.batallaJSON in mostrarDatos()");
+            return;
+        }
+
+        $(".cuerpo").css("display", "none");
+        $("#resultadosBatalla").css("display", "inherit");
+
+        $("#equipoLocal").text(batallaJSON.eqLoc);
+        $("#equipoVisitante").text(batallaJSON.eqVis);
+
+        var res = JSON.parse(batallaJSON.res);
+
+        $("#resultado").text(res.resultado);
+
+        var muertes = res.muertes.split(",");
+        var table = $("#muertes");
+
+        for (var i = 0; i < muertes.length; i++) {
+            var muerte = muertes[i];
+            if (!muerte) {
+                continue;
+            }
+            var arr = muerte.split(":");
+            var row = $("<tr class='UnHighLight'>").appendTo(table);
+
+            $("<td class='muerte' style='text-align:right'>"
+                    + "<div>"
+                    + getNombreAlineacion(arr[0])
+                    + "</div>"
+                    + "</td>").appendTo(row);
+
+            $("<td style='width:15px'><img src='../img/iconos/espada.png'/></td>").appendTo(row);
+
+            $("<td class='muerte' style='text-align:left'>"
+                    + "<div>"
+                    + getNombreAlineacion(arr[1])
+                    + "</div>"
+                    + "</td>").appendTo(row);
+        }
+
+        reloadTablas();
+        ordenarTablas();
+    }
+
+    function getNombreAlineacion(id) {
+        var alineacion = JSON.parse(batallaJSON.alinLoc);
+        for (var i = 0; i < alineacion.length; i++) {
+            if (alineacion[i].id == id) {
+                return alineacion[i].nombre;
+            }
+        }
+
+        alineacion = JSON.parse(batallaJSON.alinVis);
+        for (var i = 0; i < alineacion.length; i++) {
+            if (alineacion[i].id == id) {
+                return alineacion[i].nombre;
+            }
+        }
+
+        console.log("nombre not found " + id + " en batallaJSON");
+        return " - ";
+    }
+
+    function centrarGameArea() {
+        var canvas = document.createElement('canvas');
+        canvas.width = campoBatallaX;
+        canvas.height = campoBatallaY;
+
+        $("#container").append(canvas);
+        ordenarGameArea();
+    }
+
+    function ordenarGameArea() {
+        var gameCanvas = $("#container > canvas");
+//        $("#gameArea").height($(document).height());
+        var gameArea = $("#gameArea");
+
+        var borde = parseInt(gameCanvas.css("border-width"));
+        var bordes = borde * 2;
+        bordes = 0;
+
+        var rel = (gameCanvas.width() + bordes) / (gameCanvas.height() + bordes);
+
+        if (gameArea.width() / gameArea.height() > rel) {
+            gameCanvas.width(gameArea.height() * rel - bordes);
+            gameCanvas.height(gameArea.height() - bordes);
+
+        } else {
+            gameCanvas.width(gameArea.width() - bordes);
+            gameCanvas.height(gameArea.width() / rel - bordes);
+        }
+
+        reescale();
+
+        var startLeft = (gameArea.width() - bordes - gameCanvas.width()) / 2;
+        var startTop = (gameArea.height() - bordes - gameCanvas.height()) / 2;
+        var marginLeft = Math.min(startLeft, 100);
+        var marginTop = Math.min(startTop, 100);
+        gameCanvas.css("left", startLeft + 'px');
+        gameCanvas.css("top", startTop + 'px');
+
+        Hammer($('#contenidos')).on('touch', function (ev) {
+            ev.preventDefault();
+        });
+
+        var left, top, x, y;
+        Hammer($(gameCanvas).parent()).on("dragstart", function (e) {
+            e.preventDefault();
+//            gameCanvas.removeClass("transition");
+//            $("#gameArea > div").removeClass("transition");
+
+            left = parseInt(gameCanvas.css("left"));
+            top = parseInt(gameCanvas.css("top"));
+            x = parseInt($("#gameArea > div").css('background-position-x'));
+            y = parseInt($("#gameArea > div").css('background-position-y'));
+
+        }).on("drag", function (event) {
+            event.preventDefault();
+            $("#gameArea > div").css('background-position-x', (x + event.gesture.deltaX) + "px");
+            $("#gameArea > div").css('background-position-y', (y + event.gesture.deltaY) + "px");
+
+            gameCanvas.css("left", (left + event.gesture.deltaX) + "px");
+            gameCanvas.css("top", (top + event.gesture.deltaY) + "px");
+
+        }).on("dragend", function () {
+//            gameCanvas.addClass("transition");
+//            $("#gameArea > div").addClass("transition");
+
+            var left = parseInt(gameCanvas.css("left"));
+            var top = parseInt(gameCanvas.css("top"));
+            var cambio;
+
+            var marginLeft2 = gameArea.width() - bordes - gameCanvas.width() - marginLeft;
+            var left2 = gameArea.width() - bordes - gameCanvas.width();
+
+            var marginTop2 = gameArea.height() - bordes - gameCanvas.height() - marginTop;
+            var top2 = gameArea.height() - bordes - gameCanvas.height();
+
+            var left_limit = left > 0 && left > marginLeft;
+            var right_limit = left < left2 && left < marginLeft2;
+            if ((left_limit || right_limit) && !(left_limit && right_limit)) { //not all
+                var overflows = $(this).width() > $(gameCanvas).width();
+                if ((left_limit && !overflows) || (right_limit && overflows)) {
+                    if (marginLeft > 0) {
+                        cambio = marginLeft;
+                    } else {
+                        cambio = 0;
+                    }
+                    moveGameArea(gameCanvas, left, cambio, "left");
+                } else {
+                    if (marginLeft2 < left2) {
+                        cambio = marginLeft2;
+                    } else {
+                        cambio = left2;
+                    }
+                    moveGameArea(gameCanvas, left, cambio, "left");
+                }
+            }
+
+            var top_limit = top > 0 && top > marginTop;
+            var bottom_limit = top < top2 && top < marginTop2;
+            if ((top_limit || bottom_limit) && !(top_limit && bottom_limit)) { //not all
+                console.log(top_limit + " && " + bottom_limit)
+                var overflows = $(this).height() > $(gameCanvas).height();
+                if ((top_limit && !overflows) || (bottom_limit && overflows)) {
+                    if (marginTop > 0) {
+                        cambio = marginTop;
+                    } else {
+                        cambio = 0;
+                    }
+                    moveGameArea(gameCanvas, top, cambio, "top");
+                } else {
+                    if (marginTop2 < top2) {
+                        cambio = marginTop2;
+                    } else {
+                        cambio = top2;
+                    }
+                    moveGameArea(gameCanvas, top, cambio, "top");
+                }
+            }
+
+        }).on("pinchin pinchout mousewheel", function (e) {
+            //console.log(e);
+            var scale;
+            if (e.gesture && e.gesture.scale) {
+                scale = e.gesture.scale;
+            } else if (e.originalEvent.deltaY > 0) {
+                scale = 0.9;
+            } else if (e.originalEvent.deltaY < 0) {
+                scale = 1.1;
+            } else {
+                return;
+            }
+
+            var offset = $(gameCanvas).offset();
+            var diff = 1 - scale;
+            var diffX = diff * (e.pageX - offset.left);
+            var diffY = diff * (e.pageY - offset.top);
+            console.log(diffX + " " + diffY);
+            var left = parseInt(gameCanvas.css("left")) + diffX;
+            var top = parseInt(gameCanvas.css("top")) + diffY;
+            gameCanvas.width(gameCanvas.width() * scale);
+            gameCanvas.height(gameCanvas.height() * scale);
+            gameCanvas.css({
+                left: left,
+                top: top
+            });
+
+            reescale(scale);
+        });
+    }
+
+    function reescale(scale) {
+        var size = parseInt(parseInt($("#gameArea > div").css("background-size")) * scale) || 150;
+        console.log("reescale(" + scale + ") " + size);
+
+        $("#gameArea > div").css("background-size", size + "px");
+        var offset = $("#container > canvas").offset();
+        $("#gameArea > div").css("background-position", offset.left + "px " + offset.top + "px");
+
+        $("#container > canvas").css("background-size", size + "px");
+
+        $("#container > canvas").css("border-width", size + "px");
+    }
+
+    function moveGameArea(gameCanvas, margenActual, cambio, margen) {
+
+        var dif = margenActual - cambio;
+        gameCanvas.css(margen, parseInt(gameCanvas.css(margen)) - dif + 'px');
+
+        if (margen === "top") {
+            var y = parseInt($("#gameArea > div").css('background-position-y'));
+            $("#gameArea > div").css('background-position-y', y - dif);
+        } else if (margen === "left") {
+            var x = parseInt($("#gameArea > div").css('background-position-x'));
+            $("#gameArea > div").css('background-position-x', x - dif);
+        }
+    }
+
+    $("#gameArea").resize(function () {
+        ordenarGameArea();
+    });
+
+//    function comprobarTipo(tipo, callback) {
+//        if (tipo === "academia") {
+//            getAcademia(function () {
+//                callback();
+//            });
+//        } else {
+//            callback();
+//        }
+//    }
+
+    function verBatalla() {
+        loaderBatalla.start(function () {
+            //comprobarTipo(batallaJSON.tipo, function () {
+            document.body.style.cursor = 'wait';
+            $("#estadisticas .temp").remove();
+
+            if (typeof batallaJSON.alinLoc === 'undefined') {
+                aviso("A�n no tienes nuevas batallas!");
+                return;
+            }
+
+            var equipo1, equipo2;
+
+            if (batallaJSON.tipo !== "academia") {
+                batalla.loadBatalla = (function () {
+                    equipo1 = JSON.parse(batallaJSON.alinLoc);
+                    equipo2 = JSON.parse(batallaJSON.alinVis);
+
+                    return calcularBatalla(equipo1, equipo2);
+                })();
+
+            } else {
+                batalla.loadBatalla = JSON.parse(LZW.decompress(JSON.parse(JSON.parse(batallaJSON.res).batalla)));
+
+                equipo1 = JSON.parse(batallaJSON.alinLoc);
+                equipo2 = JSON.parse(batallaJSON.alinVis);
+
+                if (batallaJSON.eqLocId === global.perfil.id) {
+                    setCriaturasBatallaJuvPropio(equipo1);
+                    setCriaturasBatallaJuv(equipo2);
+
+                } else if (batallaJSON.eqVisId === global.perfil.id) {
+                    setCriaturasBatallaJuv(equipo1);
+                    setCriaturasBatallaJuvPropio(equipo2);
+                } else {
+                    setCriaturasBatallaJuv(equipo1);
+                    setCriaturasBatallaJuv(equipo2);
+                }
+
+                $("#estadisticas").append("<div class='temp' style='font-size:12px'>(En las batallas de academia los stats están comienzan ocultos)</div>");
+            }
+
+            var imagenes = [];
+            var equipos = equipo1.concat(equipo2);
+
+            for (var i = 0; i < equipos.length; i++) {
+                var id = equipos[i].id;
+                var raza = batalla.criaturas[id].raza;
+                var clase = batalla.criaturas[id].clase;
+                var string = razaClase(raza, clase); //use for repair
+
+                $.ajax({
+                    url: url + '../img/sprites/' + string + '.js',
+                    async: false,
+                    dataType: "script"
+                });
+                var src = '../img/sprites/' + string + '.png';
+                imagenes[imagenes.length] = src;
+            }
+            loadImagenes(imagenes, function () {
+
+                crearCapas(equipo1, 1);
+                crearCapas(equipo2, 2);
+
+                runBatalla();
+                document.body.style.cursor = 'default';
+            });
+            //});
+        });
+    }
+
+    function mostrarRects() {
+        var grupos = batalla.grupos;
+        var ids = batalla.ids;
+        for (var i = 0; i < ids.length; i++) {
+            grupos[ids[i]].getChildByName('subgrupo').visible = true;
+        }
+    }
+
+    var loaderBatalla = {
+        start: function (callback) {
+            $("#loaderBatalla").css('display', 'inherit');
+            $('#verBatalla').addClass('noClick');
+            setTimeout(function () {
+                callback();
+            }, 100);
+        },
+        stop: function () {
+            $("#loaderBatalla").css('display', 'none');
+        }
+    };
+
+    var controlIntervaloBatalla;
+    var criaturasBatalla;
+    var frame = 0;
+    batalla.seleccion = -1;
+
+    createjs.Ticker.addListener(window, true);
+    createjs.Ticker.setFPS(22);
+    createjs.Ticker.setPaused(true);
+
+    var framerate = 1;
+    function tick() {
+        criaturasBatalla = batalla.loadBatalla[frame];
+
+        for (var i = 0; i < criaturasBatalla.length; i++) {
+            IAsprite(criaturasBatalla[i]);
+        }
+        batalla.stage.update();
+        frame += framerate;
+
+        if (frame === batalla.loadBatalla.length) {
+            frame = batalla.loadBatalla.length - 1;
+            createjs.Ticker.setPaused(true);
+        } else if (frame === -1) {
+            frame = 0;
+            createjs.Ticker.setPaused(true);
+        }
+    }
+
+    function runBatalla() {
+        loaderBatalla.stop();
+        createjs.Ticker.setPaused(false);
+    }
+
+    function contraer() {
+        $("#estadisticas").css("display", "none");
+    }
+
+    function expandir(id) {
+        $(".cuerpo").css("display", "none");
+        $("#estadisticas").css("display", "inherit");
+
+        mostrarStats(id);
+    }
+
+    //CANVAS ASPECTO
+    window.stageAspectoBatalla = new createjs.Stage($("#estadisticas #aspecto")[0]);
+    function mostrarStats(id) {
+        var criaturaId = batalla.criaturas[id];
+
+        $("#estadisticas #fuerza").text(criaturaId.fuerza);
+        $("#estadisticas #magia").text(criaturaId.magia);
+        $("#estadisticas #agilidad").text(criaturaId.agilidad);
+        $("#estadisticas #reflejos").text(criaturaId.reflejos);
+        $("#estadisticas #constitucion").text(criaturaId.constitucion);
+        $("#estadisticas #defensa").text(criaturaId.defensa);
+        $("#estadisticas #reaccion").text(criaturaId.reaccion);
+
+        loadCanvasAspecto(criaturaId, window.stageAspectoBatalla);
+    }
+
+    var iniciado = false;
+    $("#rPlay").click(function () {
+        activar("rPlay");
+        framerate = 1;
+        rBotones();
+    });
+    $("#rReplay").click(function () {
+        activar("rPlay");
+        rBotones();
+        mostrarRects();
+        framerate = 1;
+        frame = 0;
+    });
+    $("#rPause").click(function () {
+        activar("rPause");
+        rBotones();
+        createjs.Ticker.setPaused(true);
+    });
+    $("#rMPlay").click(function () {
+        activar("rMPlay");
+        rBotones();
+        framerate = 1;
+        createjs.Ticker.setFPS(44);
+    });
+    $("#rMBack").click(function () {
+        activar("rMBack");
+        rBotones();
+        framerate = -1;
+        createjs.Ticker.setFPS(44);
+    });
+    $("#r1Play").click(function () {
+        if (frame < batalla.loadBatalla.length - 1) {
+            activar("rPause");
+            rBotones();
+            createjs.Ticker.setPaused(true);
+            frame++;
+            tick();
+        }
+    });
+
+    function activar(icono) {
+        $("#reproduccion div").removeClass("activo");
+        $("#reproduccion div").css("background-position-y", 0);
+
+        $("#" + icono).addClass("activo");
+        $("#" + icono).css("background-position-y", "-50px");
+    }
+
+    function rBotones() {
+        if (iniciado === false) {
+            frame = 0;
+            verBatalla();
+            iniciado = true;
+        } else {
+            createjs.Ticker.setPaused(false);
+            createjs.Ticker.setFPS(22);
+        }
+    }
+
+    Hammer($("#datosBatalla")).on("touch", function (e) {
+        e.stopPropagation();
+        $("#datosBatalla").removeClass("swipRight");
+    });
+    Hammer($("#botonDatosBatalla")).on("touch", function (e) {
+        $("#datosBatalla").addClass("swipRight");
+    });
+
+</script>

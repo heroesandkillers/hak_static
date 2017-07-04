@@ -22,7 +22,7 @@ var alineacionObj = {
     js: {}, //no detalle
     click: false
     ,
-    startCanvas: function() {
+    startCanvas: function () {
         console.log("startCanvas")
         var ths = this;
         ths.externalEvents();
@@ -41,7 +41,7 @@ var alineacionObj = {
         ths.stage = new createjs.Stage(ths.canvas);
         ths.stage.enableMouseOver();
 
-        $(ths.canvas).mousedown(function() {
+        $(ths.canvas).mousedown(function () {
             if (ths.click === false) {
                 ths.oval.visible = false;
                 ths.stage.update();
@@ -79,7 +79,7 @@ var alineacionObj = {
         }
 
         $(ths.canvas).droppable({
-            drop: function(e) {
+            drop: function (e) {
                 var criaturas = ths.criaturas;
 
                 if (ths.drag === true) {
@@ -136,16 +136,20 @@ var alineacionObj = {
         ths.colocarAlineaciones();
 
     },
-    colocarAlineaciones: function() {
+    colocarAlineaciones: function () {
         var ths = this;
         var alineacionArray = global.perfil[ths.alineacion];
         console.log(alineacionArray)
+
+        if (!alineacionArray) {
+            alineacionArray = [];
+        }
 
         if (typeof alineacionArray != "object") {
             try {
                 alineacionArray = JSON.parse(alineacionArray);
             } catch (e) {
-                console.log("error parsing alineacion");
+                console.log("error parsing alineacion in: " + alineacionArray);
                 return;
             }
         }
@@ -169,14 +173,14 @@ var alineacionObj = {
                 });
             }
             //need preload images after update
-            loadImagenes([org + 'img/alineacion/clase.png', org + 'img/alineacion/actitud.png'], function() {
+            loadImagenes([org + 'img/alineacion/clase.png', org + 'img/alineacion/actitud.png'], function () {
                 ths.stage.update();
             });
         }
         ths.botonAsignar.addClass("noClick");
 
     },
-    crearGrupo: function(id, x, y, atributos) {
+    crearGrupo: function (id, x, y, atributos) {
 
         var ths = this;
         var criatura = getObjById(ths.obj, id);
@@ -239,7 +243,7 @@ var alineacionObj = {
             ths.mouseup(grupo);
         }
     },
-    claseImg: function(img, atributos) {
+    claseImg: function (img, atributos) {
         console.log(atributos);
         var x = 0, y = 0;
 
@@ -275,7 +279,7 @@ var alineacionObj = {
         };
         return img;
     },
-    actitudImg: function(img, actitud) {
+    actitudImg: function (img, actitud) {
 
         if (actitud === 'cauto') {
             img.sourceRect = {
@@ -301,7 +305,7 @@ var alineacionObj = {
         }
         return img;
     },
-    textoAlineacion: function(id) {
+    textoAlineacion: function (id) {
         for (var i = 0; i < this.obj.length; i++) {
             if (this.obj[i].id === id) {
                 var nombre = getApodo(this.obj[i]);
@@ -311,7 +315,7 @@ var alineacionObj = {
         return "";
     },
     oval: new createjs.Shape(),
-    asignarAlineacion: function() {
+    asignarAlineacion: function () {
         var ths = this;
         var alineacion = [];
 
@@ -338,19 +342,19 @@ var alineacionObj = {
         }
 
         var alin = JSON.stringify(alineacion);
-        ajax.call(ths.urlAsignar, {alineacion: alin}, function(res) {
+        ajax.call(ths.urlAsignar, {alineacion: alin}, function (res) {
             if (res != '') {
                 error(res);
             }
             ths.guardar(alineacion);
         });
     },
-    guardar: function(alineacion) {
+    guardar: function (alineacion) {
         global[this.alineacion] = alineacion;
         confirmacion("guardado correctamente");
         this.botonAsignar.addClass("noClick");
     },
-    dragImg: function(grupo) {
+    dragImg: function (grupo) {
         var ths = this;
 
         var stage = this.stage;
@@ -358,7 +362,7 @@ var alineacionObj = {
         var dragX = 0;
         var dragY = 0;
 
-        grupo.onPress = function(evt) {
+        grupo.onPress = function (evt) {
             stage.addChild(grupo);
             var i = getIndexById(grupo.id, global[ths.equipo]);
             ths.js.detalle(i);
@@ -366,14 +370,14 @@ var alineacionObj = {
                 x: grupo.x - evt.stageX,
                 y: grupo.y - evt.stageY
             };
-            evt.onMouseMove = function(ev) {
+            evt.onMouseMove = function (ev) {
                 grupo.x = ev.stageX + offset.x;
                 grupo.y = ev.stageY + offset.y;
                 stage.update();
             };
         };
 
-        grupo.addEventListener('mousedown', function() {
+        grupo.addEventListener('mousedown', function () {
             ths.oval.visible = true;
             ths.click = true;
 
@@ -406,7 +410,7 @@ var alineacionObj = {
             dragY = grupo.y;
         });
 
-        grupo.onClick = function() {
+        grupo.onClick = function () {
             ths.mouseup(grupo, dragX, dragY);
 
             var imgX = grupo.x;
@@ -428,7 +432,7 @@ var alineacionObj = {
             dragY = 0;
         };
     },
-    mouseup: function(grupo, dragX, dragY) {
+    mouseup: function (grupo, dragX, dragY) {
         var ths = this;
         ths.botonAsignar.removeClass('noClick');
 
@@ -462,7 +466,7 @@ var alineacionObj = {
             }
         }
     },
-    quitarCriaturaId: function(id) {
+    quitarCriaturaId: function (id) {
         for (var i = 0; i < this.criaturas.length; i++) {
             if (this.criaturas[i].id === id) {
                 this.criaturas = this.criaturas.slice(0, i).concat(this.criaturas.slice(i + 1, this.criaturas.length));
@@ -470,13 +474,13 @@ var alineacionObj = {
             }
         }
     },
-    quitarCriaturaPosicion: function(i) {
+    quitarCriaturaPosicion: function (i) {
         this.criaturas = this.criaturas.slice(0, i).concat(this.criaturas.slice(i + 1, this.criaturas.length));
     },
-    movimientoAnimation: function(elem, stage, inicialX, inicialY, terminoX, terminoY, tiempo) {
+    movimientoAnimation: function (elem, stage, inicialX, inicialY, terminoX, terminoY, tiempo) {
         var variacionX = (inicialX - terminoX) / tiempo;
         var variacionY = (inicialY - terminoY) / tiempo;
-        var intervaloDrag = setInterval(function() {
+        var intervaloDrag = setInterval(function () {
             inicialX = inicialX - variacionX;
             inicialY = inicialY - variacionY;
             elem.x = inicialX;
@@ -488,7 +492,7 @@ var alineacionObj = {
             }
         }, 30);
     },
-    comprobarHueco: function(img) {
+    comprobarHueco: function (img) {
         for (var i = 0; i < this.criaturas.length; i++) {
             if (this.criaturas[i].x === img.x && this.criaturas[i].y === img.y) {
                 this.criaturas[i].remove();
@@ -496,9 +500,9 @@ var alineacionObj = {
             }
         }
     },
-    externalEvents: function() {
+    externalEvents: function () {
         var ths = this;
-        this.actitudSelect.on("change click", function() {
+        this.actitudSelect.on("change click", function () {
             var actitud = $(this).val();
             var grupo = ths.seleccion;
             grupo.actitud = actitud;
@@ -506,7 +510,7 @@ var alineacionObj = {
             img = ths.actitudImg(img, actitud);
             ths.stage.update();
         });
-        this.claseSelect.on("change click", function() {
+        this.claseSelect.on("change click", function () {
             var clase = $(this).val();
             var grupo = ths.seleccion;
             grupo.clase = clase;

@@ -199,6 +199,9 @@ JS
                     key2: key2
                 },
                 success: function (response) {
+//                    if("error" == response){
+//                        return;
+//                    }                    
                     gameAccess.login = response;
                     checkGameAccess(response);
                 }
@@ -242,7 +245,7 @@ JS
             //$("#wrapper").load(urlHandler.url + "base.html");
             loadWrapper("base.html");
 
-        } else if (response === "fail") {
+        } else if (response === "fail" || response === "error") {
             error("invalid log");
         } else if (response === "admin") {
             if (!gameAccess.out) {

@@ -10,9 +10,9 @@ var equiposDivision = "";
 
 //only for sending
 function calcularBatallas(batallas) {
+    console.log("calcularBatallas()" + batallas.length);
 
     for (var j = 0; j < batallas.length; j++) {
-
         calculoBatalla.muertes = "";
 
         var resultado = "";
@@ -297,21 +297,16 @@ function ordenarIniciativa(equipo1, equipo2) {
 }
 
 function setResultadosBatallas(resultados) {
-
-    $.ajax({
-        type: "POST",
-        url: url + "setResultadosBatallas",
-        data: {
-            resultados: resultados
+    $.post(url + "setResultadosBatallas", {
+        resultados: resultados
+    }, function () {
+        if (window.willContinueLoading) {
+            //get more
+            getBatallasCalculo();
+        } else {
+            //TODO: continue loading
         }
     });
-
-    if (window.willContinueLoading) {
-        //get more
-        getBatallasCalculo();
-    } else {
-        //TODO: continue loading
-    }
 }
 
 var VPArquero = 30;

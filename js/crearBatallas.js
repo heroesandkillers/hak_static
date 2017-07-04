@@ -431,7 +431,6 @@ function setCriaturasBatallaJuv(equipo) {
 }
 
 function setCriaturasBatallaJuvPropio(equipo) {
-
     getAcademia(function() {
 
         var promesas = jsonPaginas["academia"];

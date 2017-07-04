@@ -10,8 +10,10 @@ var ajax_mob = {
                 console.log(err);
                 $("#log").text(err);
                 localStorage.removeItem("Gusuario");
-                $.post(url + "logout", function(){
-                    location.href = url;
+                $.post(url + "logout", function () {
+                    if (false) {
+                        location.href = url;
+                    }
                 });
                 return;
             }

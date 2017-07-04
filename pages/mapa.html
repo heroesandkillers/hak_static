@@ -174,38 +174,31 @@
                 var rowCount = 0;
                 for (var i = 0; i < ths.liga.length; i++) {
 
-                    var row = table.insertRow(rowCount);
-                    row.setAttribute("class", "UnHighLight");
-                    row.setAttribute("onMouseOver", "HighLight(this)");
-                    row.setAttribute("onMouseOut", "UnHighLight(this)");
-                    row.setAttribute("onclick", 'Select(this)');
-                    row.setAttribute("ondblclick", 'mapaJs.contacto(' + ths.liga[i].id + ')');
+                    var $row = $("<tr class='UnHighLight'"
+                            + " onMouseOver='HighLight(this)'"
+                            + " onMouseOut='UnHighLight(this)'"
+                            + " onclick='Select(this)'"
+                            + " ondblclick='mapaJs.contacto('" + ths.liga[i].id + "')'>").appendTo(table);
+
                     if (ths.liga[i].username === global.perfil.username) {
-                        $(row).css("color", "gold");
+                        $row.css("color", "gold");
                     }
 
-                    var cell = row.insertCell(0);
-                    var div = $("<div>");
-                    $(cell).append(div);
-                    $(cell).attr('pos', ths.liga[i].posicion);
-                    $(div).html(ths.liga[i].posicion);
+                    var pos = $("<td pos='" + ths.liga[i].posicion + "'>").appendTo($row);
+                    $("<div>" + ths.liga[i].posicion + "</div>").appendTo(pos);
 
-                    var cell = row.insertCell(1);
-                    $(cell).css("font-weight", "bold");
-                    $(cell).html("<div>" + ths.liga[i].username + "<div>");
+                    $("<td style='font-weight:bold'>" + ths.liga[i].username + "<div>").appendTo($row);
 
-                    var cell2 = row.insertCell(2);
-
-                    var cell3 = row.insertCell(3);
-                    $(cell3).css("font-weight", "bold");
+                    var $p1 = $("<td>").appendTo($row);
+                    var $p2 = $("<td>").appendTo($row);
 
                     var puntos = ths.liga[i].puntos;
                     if (typeof puntos !== 'undefined') {
-                        $(cell2).html("<div>" + puntos.split(",")[1] + "</div>");
-                        $(cell3).html("<div>" + puntos.split(",")[0] + "</div>");
+                        $p1.html("<div>" + puntos.split(",")[1] + "</div>");
+                        $p2.html("<div>" + puntos.split(",")[0] + "</div>");
                     } else {
-                        $(cell2).html("<div>0-0</div>");
-                        $(cell3).html("<div>0</div>");
+                        $p1.html("<div>0-0</div>");
+                        $p2.html("<div>0</div>");
                     }
 
                     rowCount++;
@@ -228,26 +221,23 @@
             ajax.getMensajesPrensa(this, function (mensajes) {
                 var contenedor = $("#mensajes").html("");
                 for (var j = 0; j < mensajes.length; j++) {
-
-                    console.log("fecha: " + mensajes[j].fecha)
+                  
+//                    //CHECK IS IN MONTH -> CLEAN DATA
+//                    var d = new Date();
+//                    d.setDate(1);
+//                    d.setHours(0);
+//                    d.setMinutes(0);                    
+//                    if (mensajes[j].fecha < d.getTime() / 1000) {
+//                        d.setDate(d.getDate() - 1);
+//                        if (mensajes[j].fecha < d.getTime() / 1000 && !this.clearOldMessagesCalled) {
+//                            this.clearOldMessagesCalled = true;
+////                            ajax.call("clearOldBatallas");
+//                            //TODO: CLEAR OLD MESSAGES
+//                        }
+//                        continue;
+//                    }
+//                    //
                     
-                    //CHECK IS IN MONTH - SECURITY
-                    var d = new Date();
-                    d.setDate(1);
-                    d.setHours(0);
-                    d.setMinutes(0);
-                    
-                    if (mensajes[j].fecha < d.getTime() / 1000) {
-                        d.setDate(d.getDate() - 1);
-                        if (mensajes[j].fecha < d.getTime() / 1000 && !this.clearOldMessagesCalled) {
-                            this.clearOldMessagesCalled = true;
-//                            ajax.call("clearOldBatallas");
-                            //TODO: CLEAR OLD MESSAGES
-                        }
-                        continue;
-                    }
-                    //
-
                     var div = $("<div>");
 
                     var p = $("<p>");
@@ -284,7 +274,7 @@
             if (this.division !== global.division) {
                 $.ajax({
                     type: "GET",
-                    url: "getCalendarioDivision",
+                    url: url + "getCalendarioDivision",
                     data: {
                         division: ths.division
                     },
@@ -312,23 +302,23 @@
                 var disputados = true;
                 var hoy = false;
                 for (var i = 0; i < ths.calendarioDivision.length; i++) {
-                    var batalla = ths.calendarioDivision[i];
 
-                    //CHECK IS IN MONTH - SECURITY
-                    var d = new Date();
-                    d.setDate(1);
-                    d.setHours(0);
-                    d.setMinutes(0);
-
-                    if (batalla.fecha < d.getTime() / 1000) {
-                        d.setDate(d.getDate() - 1);
-                        if (batalla.fecha < d.getTime() / 1000 && !this.clearOldBatallasCalled) {
-                            this.clearOldBatallasCalled = true;
-                            ajax.call("clearOldBatallas");
-                        }
-                        continue;
-                    }
-                    //
+//                    //CLEAR IF OLD IS SHOWING!
+//                    var batalla = ths.calendarioDivision[i];
+//                    //CHECK IS IN MONTH - SECURITY
+//                    var d = new Date();
+//                    d.setDate(1);
+//                    d.setHours(0);
+//                    d.setMinutes(0);
+//                    if (batalla.fecha < d.getTime() / 1000) {
+//                        d.setDate(d.getDate() - 1);
+//                        if (batalla.fecha < d.getTime() / 1000 && !this.clearOldBatallasCalled) {
+//                            this.clearOldBatallasCalled = true;
+//                            ajax.call("clearOldBatallas");
+//                        }
+//                        continue;
+//                    }
+//                    //
 
                     if (ths.calendarioDivision[i].tipo === tipo) {
 
@@ -425,7 +415,7 @@
             if (mensaje !== "") {
                 $.ajax({
                     type: "GET",
-                    url: "enviarMensajePrensa",
+                    url: url + "enviarMensajePrensa",
                     data: {
                         mensaje: mensaje
                     },

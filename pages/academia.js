@@ -21,7 +21,7 @@ var academiaEquipoJs = {
             var ths = this;
             $.ajax({
                 type: "GET",
-                url: "getBatallasAcademia",
+                url: url + "getBatallasAcademia",
                 success: function (response) {
                     ths.batallasAcademia = JSON.parse(response);
                     ths.selectBatallas();
@@ -103,6 +103,7 @@ var academiaEquipoJs = {
     },
     detalle: function (i) {
         var ths = this;
+        this.i = i;        
         $(".alturaDetalle").removeClass("alturaDetalle");
 
         $(".none").removeClass("none");
@@ -150,7 +151,7 @@ var academiaEquipoJs = {
         var id = ths.eqAcademia[ths.i].id;
         $.ajax({
             type: "GET",
-            url: "ocultar",
+            url: url + "ocultar",
             data: {
                 id: id,
                 atr: ths.atributo
@@ -160,7 +161,7 @@ var academiaEquipoJs = {
                     error(response);
                 }
                 ths.eqAcademia[ths.i][ths.atributo] = 0;
-                ths.pestanaAcademia('academiaEquipo');
+                //ths.pestanaAcademia('academiaEquipo');
             }
         });
     },
@@ -193,7 +194,7 @@ var academiaEquipoJs = {
         var ths = this;
         $.ajax({
             type: "GET",
-            url: "expulsar",
+            url: url + "expulsar",
             data: {
                 id: ths.eqAcademia[ths.i].id
             },
@@ -205,49 +206,49 @@ var academiaEquipoJs = {
                 }
                 $('#divExpulsar').dialog('close');
                 global.equipoAcademia = "";
-                ths.pestanaAcademia('academiaEquipo');
+                //ths.pestanaAcademia('academiaEquipo');
             }
         });
     },
     events: function () {
-        var ths = this;
+//        var ths = this;
         $('#botonFinalExpular').keydown(function (e) {
             if (e.keyCode === 13) {
                 return false;
             }
         });
-        Hammer($("#detalleCriatura")).on("tap", function () {
-
-            var atributos = ["fu", "ma", "ag", "rf", "co", "df", "rc"];
-            var menu = $("#divOcultables");
-            var div = $("<div>");
-
-            if (typeof global.criatura.destapes !== 'undefined') {
-                var dest = JSON.parse(global.criatura.destapes);
-
-                for (var j = 0; j < atributos.length; j++) {
-                    div = $("<div>");
-                    div.append(setDest(dest[atributos[j]]));
-                    menu.append(div);
-                }
-            } else {
-                menu.append("no hay atributos para destapar");
-            }
-
-            var nombre = global.criatura.nombre;
-            $('#divOcultables').dialog({
-                resizable: false,
-                closeOnEscape: false,
-                height: 150,
-                width: 300,
-                title: nombre,
-                modal: true,
-                draggable: true,
-                close: function () {
-                    $(ths).dialog("destroy");
-                }
-            });
-        });
+//        Hammer($("#detalleCriatura")).on("tap", function () {
+//
+//            var atributos = ["fu", "ma", "ag", "rf", "co", "df", "rc"];
+//            var menu = $("#divOcultables").html("");
+//            var div = $("<div>");
+//
+//            if (typeof global.criatura.destapes !== 'undefined') {
+//                var dest = JSON.parse(global.criatura.destapes);
+//
+//                for (var j = 0; j < atributos.length; j++) {
+//                    div = $("<div>");
+//                    div.append(setDest(dest[atributos[j]]));
+//                    menu.append(div);
+//                }
+//            } else {
+//                menu.append("no hay atributos para destapar");
+//            }
+//
+//            var nombre = global.criatura.nombre;
+//            $('#divOcultables').dialog({
+//                resizable: false,
+//                closeOnEscape: false,
+//                height: 150,
+//                width: 300,
+//                title: nombre,
+//                modal: true,
+//                draggable: true,
+////                close: function () {
+////                    $(ths).dialog("destroy");
+////                }
+//            });
+//        });
     }
 };
 

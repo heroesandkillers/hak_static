@@ -17,10 +17,11 @@ function crearCapas(criaturasCapa, equipoCapa) {
 
     stage.enableMouseOver();
 
-    $(document).mouseup(function(e) {
+    $(document).mouseup(function (e) {
         var container = $("#gameArea");
         if (container.has(e.target).length === 0) {
             batalla.oval.visible = false;
+            $(".cuerpo").css("display", "none")
             $("#resultadosBatalla").css("display", "inherit");
         }
     });
@@ -37,23 +38,11 @@ function crearCapas(criaturasCapa, equipoCapa) {
         }
 
         raza = batalla.criaturas[id].raza;
-        if (raza == "duende")
-            raza = "goblin";
         clase = batalla.criaturas[id].clase;
-
-        //TODO: Guardar como clase, no como "especial"
-        if ("especial" == clase) {
-            if (raza == "goblin") {
-                clase = "healer";
-            } else if (raza == "humano") {
-                clase = "shinobi";
-            } else if (raza == "muerto") {
-                clase = "paladin";
-            }
-        }
+        var raza_clase = razaClase(raza, clase); //use for repair
 
         image = new Image();
-        src = org + "img/sprites/" + raza + clase + ".png";
+        src = org + "img/sprites/" + raza_clase + ".png";
         image.src = src;
 
         var grupo = new createjs.Container();
@@ -64,15 +53,15 @@ function crearCapas(criaturasCapa, equipoCapa) {
             frames: [],
             animations: {}
         };
-
-        Animaciones.frames = spriteJson[raza + clase].frames;
+        
+        Animaciones.frames = spriteJson[raza_clase].frames;
 
         var acciones = ['para', 'move', 'golp', 'espe', 'muer'];
         var direcciones = ['AbaDer', 'AbaIzq', 'Der', 'Izq', 'Arr', 'Aba', 'ArrDer', 'ArrIzq'];
 
         for (var j = 0; j < acciones.length; j++) {
             for (var k = 0; k < direcciones.length; k++) {
-                Animaciones.animations[acciones[j] + direcciones[k]] = Sprite(spriteJson[raza + clase], acciones[j], direcciones[k]);
+                Animaciones.animations[acciones[j] + direcciones[k]] = Sprite(spriteJson[raza_clase], acciones[j], direcciones[k]);
             }
         }
 
@@ -103,7 +92,7 @@ function crearCapas(criaturasCapa, equipoCapa) {
         var contorno = new createjs.Shape();
         contorno.graphics.beginStroke("black").drawRect(-25, -50, 50, 6);
         subgrupo.addChild(contorno);
-
+        
         for (var q = 1; q < criaturasCapa[i].vida / 50; q++) {
             var linea = new createjs.Shape();
             linea.graphics.beginStroke('rgba(0,0,0,0.3)').drawRect(-25 + q * ((50 / criaturasCapa[i].vida) * 50), -50, 1, 5);
@@ -112,11 +101,13 @@ function crearCapas(criaturasCapa, equipoCapa) {
 
         grupo.addChild(subgrupo);
         stage.addChild(grupo);
-
-        batalla.grupos[criaturasCapa[i].id] = grupo;
+        
+        var capa = criaturasCapa[i];
+        batalla.grupos[capa.id] = grupo;
     }
 
     function Sprite(json, accion, direccion) {
+        //console.log("Sprite() " + json);
 
         var serie = {
             AbaIzq: '0',
@@ -189,10 +180,10 @@ function crearCapas(criaturasCapa, equipoCapa) {
     batalla.stage = stage;
 
     function eventListener(id, equipo) {
-        animation.addEventListener("mousedown", function() {
+        animation.addEventListener("mousedown", function () {
             batalla.grupos[id].addChildAt(batalla.oval, 0);
             batalla.oval.visible = true;
-            batallaJs.expandir(id, equipo);
+            expandir(id, equipo);
 
             //stop sprite animations
             for (var i = 0; i < spriteArray.length; i++) {
@@ -207,4 +198,26 @@ function crearCapas(criaturasCapa, equipoCapa) {
             }
         });
     }
+}
+
+function razaClase(raza, clase) {
+    var validRazas = ["humano", "goblin", "muerto"];
+    var validClases = ["barbaro", "arquero", "mago", "healer", "paladin", "shinobi"];
+    
+    //deprecated name
+    if ("duende" == raza) {
+        raza = "goblin";
+    }
+
+    if (validRazas.indexOf(raza) == -1) {
+        console.log("wrong raza " + raza);
+        raza = "humano";
+    }
+    if (validClases.indexOf(clase) == -1) {
+        console.log("wrong clase " + clase);
+        clase = "barbaro";
+    }
+    
+    console.log("raza + clase: " + raza + clase);
+    return raza + clase;
 }

@@ -5,7 +5,8 @@
     display: none;
     margin:0;
     font-size: 12px;
-    padding: 5px;    
+    padding: 5px;  
+    margin: 10px;
 }
 
 .dialog .value{
@@ -75,8 +76,8 @@ div[id^="detalles"] > table > tbody > tr > td {
     overflow: hidden;
     padding: 0 !important;
 
-    width: 100%; 
-    height: 100%;
+    /*width: 100%;*/ 
+    /*height: 100%;*/
 }
 
 .ui-dialog-titlebar {
@@ -87,9 +88,9 @@ div[id^="detalles"] > table > tbody > tr > td {
     background-color: rgba(200,110,0,0.6);
     border-radius: 0;
 
-    -moz-box-shadow: 0px 1px 5px rgba(0,0,0,1);
-    -webkit-box-shadow: 0px 1px 5px rgba(0,0,0,1);
-    box-shadow: 0px 1px 5px rgba(0,0,0,1);
+    -moz-box-shadow: 0px 1px 25px rgba(0,0,0,1);
+    -webkit-box-shadow: 0px 1px 25px rgba(0,0,0,1);
+    box-shadow: 0px 1px 25px rgba(0,0,0,1);
 }
 
 .ui-dialog .ui-dialog-content {
@@ -102,12 +103,8 @@ div[id^="detalles"] > table > tbody > tr > td {
     color: black;
     text-shadow: 1px 1px rgba(255,255,255,0.3);
     overflow: hidden;
-    padding: 0;
+    padding: 0 !important;
 }  
-
-.ui-dialog-content.ui-widget-content{
-    padding: 8 !important;
-}
 
 .ui-widget-content .UnHighLight {
     background-color:rgba(0,0,0,0.1);
@@ -125,6 +122,10 @@ div[id^="detalles"] > table > tbody > tr > td {
     font-weight: bold;
     z-index:99;
     background-color:rgba(0,0,0,0.3);
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -100%);
 
     transition: opacity 250ms;
     -moz-transition: opacity, 250ms;
@@ -194,6 +195,7 @@ header .borde{
     font-weight: bolder;
     background-size: contain;
     background-repeat: no-repeat;
+    cursor: pointer;
 
     border-bottom: rgba(255,255,255,0.1) solid 1px;
     border-top: rgba(0,0,0,0.1) solid 1px;
@@ -342,6 +344,7 @@ a:active {
 }
 
 .titulo{
+    position: relative;
     padding-left: 10px;
     color: rgb(100,70,0);
     text-shadow: -1px -1px white;
@@ -633,7 +636,7 @@ dif{
     /*color: rgba(255,255,255,0.5);*/
     color: gold;
     position:absolute;
-    left:20px;
+    /*left:20px;*/
     /*top:6px;*/
 }
 
@@ -1002,7 +1005,7 @@ dif{
     display:inline-block;
 }
 #mensaje{
-    width: 100%;
+    width: 85%; 
     resize: none;
     overflow: hidden;
     outline: none;
@@ -1014,14 +1017,13 @@ dif{
     top: 0;
     width: 25px;
     height: 100%;
-    text-align: center;
-    cursor: pointer;
     background-color: rgba(255,255,255,0.7);
-
     box-shadow: 1px 1px 5px rgba(0,0,0,0.6), -1px -1px 5px rgba(0,0,0,0.6);
     -webkit-box-shadow: 1px 1px 5px rgba(0,0,0,0.6), -1px -1px 5px rgba(0,0,0,0.6);
     -moz-box-shadow: 1px 1px 5px rgba(0,0,0,0.6), -1px -1px 5px rgba(0,0,0,0.6);
-    -o-box-shadow: 1px 1px 5px rgba(0,0,0,0.6), -1px -1px 5px rgba(0,0,0,0.6);    
+    -o-box-shadow: 1px 1px 5px rgba(0,0,0,0.6), -1px -1px 5px rgba(0,0,0,0.6);
+
+    text-align: center;
 }
 #listaBatallas .botonRight > div{
     content:'';
@@ -1395,6 +1397,12 @@ dif{
 #canvasAlineacion, #canvasAlineacionAcademia{
     position: relative;
     overflow: hidden;
+
+/*    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;*/
 
     -moz-box-shadow: inset 10px 10px 50px rgba(0,0,0,.5),inset -10px 10px 50px rgba(0,0,0,.5),inset 10px -10px 50px rgba(0,0,0,.5),inset -10px -10px 50px rgba(0,0,0,.5);
     -webkit-box-shadow: inset 10px 10px 50px rgba(0,0,0,.5),inset -10px 10px 50px rgba(0,0,0,.5),inset 10px -10px 50px rgba(0,0,0,.5),inset -10px -10px 50px rgba(0,0,0,.5);

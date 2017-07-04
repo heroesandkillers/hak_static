@@ -85,16 +85,17 @@ function getPerfil() {
 }
 
 var gameURL = "/game/";
-function load() {
-    console.log("load");
+function load(hash, callback) {    
+    if (!hash) {
+        hash = location.hash.split("#")[1];
+    }
+    console.log("load() " + hash);
 
-    if (!location.hash) {
+    if (!hash) {
         console.log("!location.hash");
         //location.href = gameURL;
 
     } else {
-        var hash = location.hash.split("#")[1];
-
         if (!window.routes[hash]) {
             console.log("error route = " + hash);
             return;
@@ -102,19 +103,29 @@ function load() {
         console.log("routes[parts[1] = " + routes[hash])
 //        var url = "http://" + document.domain + "/hak_static/" + routes[hash];
         var url = org + routes[hash];
-        $("#contenidos").load(url);
+        $("#contenidos").load(url, function () {
+            if (callback) {
+                callback();
+            }
+        });
     }
 }
 window.onload = load;
-window.onhashchange = load;
+$(window).on('hashchange', function() {
+    var hash = location.hash.split("#")[1];
+    load(hash);
+});
 
 function cargar(pagina, id) {
     console.log("pagina = " + pagina + " " + id);
     if(!pagina){
-        pagina = "mapa";
+        pagina = location.hash.split("#").pop();
+        if(!pagina){
+            pagina = "mapa";
+        }
     }
     
-    if (!id) {
+    if (!id) { //"#contenidos"        
 //        location.href = gameURL + "#" + pagina;
         location.hash = pagina;
 
@@ -128,7 +139,7 @@ function cargar(pagina, id) {
 function getJson(json) {
     $.ajax({
         type: "GET",
-        url: "get" + json.charAt(0).toUpperCase() + json.slice(1),
+        url: url + "get" + json.charAt(0).toUpperCase() + json.slice(1),
         success: function (response) {
             if (response !== "") {
                 global[json] = JSON.parse(response);
@@ -141,44 +152,6 @@ function asignarApodo(id, apodo, pagina) {
     ajax.call("asignarApodo", {id: id, apodo: apodo}, function (res) {
         getJson(pagina);
         $('#divApodo').dialog('close');
-    });
-}
-
-function getBatalla(batalla) {
-    if (batalla.tipo != "juvenil") {
-        ajax.call("getBatalla", {id: batalla.id}, function (res) {
-            batalla = res;
-        });
-
-    } else {
-        if (typeof batalla.resultados == 'undefined') {
-            ajax.call("getBatalla", {id: batalla.id}, function (res) {
-                batalla = res;
-            });
-        }
-    }
-
-    getBatallaVisible(batalla, function (batalla) {
-//        console.log(batalla)
-        if (!batalla) {
-            console.log("!batalla");
-            aviso("error al mostrar batalla");
-            return;
-        }
-        if (!batalla.alinLoc || !batalla.alinVis) {
-            console.log("!batalla.alinLoc || !batalla.alinVis");
-            aviso("error al mostrar batalla");
-            return;
-        }
-
-        console.log("batalla cargada");
-        batallaJSON = batalla;
-        if(!batallaJs){
-            console.log("WARNING: !batallaJs IN getBatalla()");
-            return;
-        }
-        batallaJs.mostrarDatos();
-        batallaJs.centrarGameArea();
     });
 }
 
@@ -204,11 +177,21 @@ function getMiBatalla() {
         return;
     }
 
-    getBatalla(batalla);
+    //getBatalla(batalla);
+    window.batallaINFO = batalla;
+    cargar("batallas");
 }
 
 function getBatallaVisible(batalla, callback) {
-    if (batalla.tipo != "juvenil") {
+    if(!batalla){
+        ajax.call("getBatalla", null, function (visible) {
+//            if (!visible.alinLoc || !visible.alinVis) {
+//                console.log(visible)
+//                callback(false);
+//            }
+            callback(visible);
+        });
+    }else if (batalla.tipo != "juvenil") {
         ajax.call("getBatalla", {id: batalla.id}, function (visible) {
 //            if (!visible.alinLoc || !visible.alinVis) {
 //                console.log(visible)

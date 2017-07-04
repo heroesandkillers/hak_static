@@ -351,9 +351,6 @@ $("html").click(function() {
         $("#detalleCriatura").height("0%");
     }
 });
-$('body').click(function(event) {
-    event.stopPropagation();
-});
 
 function pestanas() {
     var margin = 0;
@@ -379,7 +376,6 @@ function setProximaBatalla(batalla) {
 
 
 $(window).on('hashchange', function() {
-    console.log("hashchange")
     documentLoad();
 });
 function documentLoad() {

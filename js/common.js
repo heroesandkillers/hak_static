@@ -234,7 +234,7 @@ function atributo(num) {
 function loadCanvasAspecto(criatura, stage) {
     stage.removeAllChildren();
     stage.update();
-
+    
     if (criatura.raza === "duende")
         criatura.raza = "goblin";
 
@@ -255,7 +255,7 @@ function loadCanvasAspecto(criatura, stage) {
 function loadCanvasAspectoAcademia(criatura, stage) {
     stage.removeAllChildren();
     stage.update();
-
+    
     if (criatura.raza === "duende")
         criatura.raza = "goblin";
 
@@ -274,6 +274,8 @@ function loadCanvasAspectoAcademia(criatura, stage) {
 }
 
 function montarAspecto(aspecto, raza, stage) {
+    //console.log(stage);
+
     stage.removeAllChildren();
     var grupo = new createjs.Container();
     raza.onload = updateOnLoad(stage);
@@ -366,8 +368,6 @@ function error(error) {
         if (myWindow) {
             myWindow.document.write(error);
             myWindow.focus();
-        }else{
-            console.log(error);
         }
         return;
     }
@@ -402,15 +402,15 @@ function confirmacion(mensaje) {
     $("#mensajeConfirmacion").html(mensaje);
 
     $('#confirmacion').css("transition-duration", 0);
-    $('#confirmacion').css("display", "none");
     $('#confirmacion').css("opacity", "100");
-    $('#confirmacion').css("transition-duration", "500ms");
-
     $('#confirmacion').css("display", "block");
-    $('#confirmacion').css("top", $(window).height() / 2 - $('#confirmacion').height() / 2 + "px");
-    $('#confirmacion').css("left", $(window).width() / 2 - $('#confirmacion').width() / 2 + "px");
+
     setTimeout(function () {
+        $('#confirmacion').css("transition-duration", "500ms");
         $('#confirmacion').css("opacity", "0");
+        setTimeout(function () {
+            $('#confirmacion').css("display", "none");
+        }, 300);
     }, 800);
 }
 
@@ -607,6 +607,9 @@ function getResutadoBatalla(res) {
     }
 }
 
+//var nombres = ["Thonald", "Sunggorma", "Bribeo", "Caeli", "Nyaegel", "Thonychell", "Lynya", "Marmarisa", "Canvid", "Renea", "Cysa", "Soing", "Wen", "Thaegard", "Ruthja", "Stecia", "Thasthae", "Stechael", "Nyawilwaru", "Braswise"];
+//var apellidos = ["Glazewater", "Gold", "Summerred", "Oakfire", "Seaside", "Capeflare", "Tallmountain", "Shortbright", "Orefalconbear", "Birdblur", "Sandrunner", "Tallragemetal", "Long", "Forceborne", "Helmshort", "Spearmace", "Walkerfire", "Eyeheart", "Battlerroad", "Fallbreak"];
+
 function getNombre(obj) {
     if (typeof obj.apodo === 'undefined') {
         var nombre = obj.nombre.split(" ");
@@ -616,10 +619,14 @@ function getNombre(obj) {
     }
 }
 
-function getApodo(criat) {
+function getApodo(criat, withName) {
     var apodo = criat.apodo;
     if (typeof apodo !== 'undefined' && apodo !== '') {
-        return "<b>" + apodo + '</b> - ' + criat.nombre;
+        if (withName) {
+            return "<b>" + apodo + '</b> - ' + criat.nombre;
+        } else {
+            return apodo;
+        }
     }
     return criat.nombre;
 }
@@ -706,7 +713,7 @@ function getFechaBySeconds(fecha) {
         dia = date.getDate();
         if (dia < 10)
             dia = "0" + dia;
-
+        
         return dia + "/" + mes + "/" + anoFinal;
     }
 }

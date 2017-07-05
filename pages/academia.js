@@ -117,7 +117,7 @@ var academiaEquipoJs = {
         var observables = $("tbody .observable");
         for (var i = 0; i < observables.length; i++) {
             var div = $(observables[i]);
-            var td = div.closest("td");
+            var td = $(div.closest("tr")).find("td")[1];
 
             div.removeClass("observar");
             if (td.text().search("-") === -1) {

@@ -279,7 +279,7 @@
                 var div = $("<div>");
                 td12.append(div);
                 setNivel(div, eqAcademia[i].exp);
-                
+
                 var td13 = $("<td>");
                 $(row).append(td13);
                 td13.html(getEdad(eqAcademia[i].edad));
@@ -287,7 +287,8 @@
             }
             reloadTablas();
             helpers();
-        },
+        }
+        ,
         detalle: function (i) {
             var ths = this;
             global.criatura = ths.eqAcademia[i];
@@ -302,10 +303,13 @@
                     div.addClass("observar");
                     div.addClass("help");
                     div.html('<span>ocultar valor</span>');
-                    div.click(function () {
-                        ths.ocultarValor();
-                        ths.atributo = td.attr("id");
-                    });
+                    
+                    (function (div, td) {
+                        div.click(function () {
+                            ths.atributo = td.attr("id");
+                            ths.ocultarValor();
+                        });
+                    })(div, td);
                 }
             });
             helpers();
@@ -318,7 +322,8 @@
                 $("#detalleCriatura").height(alto + "%");
             }
 
-        },
+        }
+        ,
         ocultarValor: function () {
             var nombre = this.eqAcademia[this.i].nombre;
             $("#atrOcultar").text(this.atributo.toUpperCase());
@@ -335,7 +340,8 @@
                     $(this).dialog("destroy");
                 }
             });
-        },
+        }
+        ,
         ocultar: function (elem) {
             var ths = this;
 
@@ -410,7 +416,7 @@
                     $("#apodoDetalles").val($("#apodoDetalles").val().split('" ')[1].split(' "')[0]);
                 }
             });
-            
+
             $("#apodoDetalles").blur(function () {
                 if ($("#apodoDetalles").val() !== ths.eqAcademia[ths.i].apodo) {
                     $.ajax({

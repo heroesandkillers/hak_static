@@ -51,26 +51,26 @@ var academiaEquipoJs = {
             $(row).attr("id", this.eqAcademia[i].id);
             $(row).attr("class", "UnHighLight");
             $(row).attr("onclick", 'academiaEquipoJs.detalle(' + i + ')');
-            
+
             var td0 = $("<td>");
             $(row).append(td0);
             td0.html(eqAcademia[i].nombre);
-            
+
             var td1 = $("<td>");
             $(row).append(td1);
             setRazaImg(td1[0], eqAcademia[i].raza);
 
             var atributos = ["fu", "ma", "ag", "rf", "co", "df", "rc"];
-            
+
             var td2 = $("<td>");
             $(row).append(td2);
-            
+
             var td3 = $("<td>");
             $(row).append(td3);
-            
+
             var td4 = $("<td>");
             $(row).append(td4);
-            
+
             var destapes = 0;
             if (typeof this.eqAcademia[i].destapes !== 'undefined') {
                 try {
@@ -91,19 +91,20 @@ var academiaEquipoJs = {
                 }
             }
             td4.text(destapes);
-            
+
             var td5 = $("<td>");
             $(row).append(td5);
             setNivel(td5[0], eqAcademia[i].exp);
-            
+
             var td6 = $("<td>");
             $(row).append(td6);
             td6.html(getEdad(eqAcademia[i].edad));
         }
-    },
+    }
+    ,
     detalle: function (i) {
         var ths = this;
-        this.i = i;        
+        this.i = i;
         $(".alturaDetalle").removeClass("alturaDetalle");
 
         $(".none").removeClass("none");
@@ -120,13 +121,17 @@ var academiaEquipoJs = {
             div.removeClass("observar");
             if (td.text().search("-") === -1) {
                 div.addClass("observar");
-                div.click(function () {
-                    ths.ocultarValor();
-                    ths.atributo = td.attr("id");
-                });
+
+                (function (div, td) {
+                    div.click(function () {
+                        ths.atributo = td.attr("id");
+                        ths.ocultarValor();
+                    });
+                })(div, td);
             }
         });
-    },
+    }
+    ,
     ocultarValor: function () {
         var nombre = this.eqAcademia[this.i].nombre;
         $("#atrOcultar").text(this.atributo.toUpperCase());
@@ -143,7 +148,8 @@ var academiaEquipoJs = {
                 $(this).dialog("destroy");
             }
         });
-    },
+    }
+    ,
     ocultar: function (elem) {
         var ths = this;
 
@@ -164,13 +170,15 @@ var academiaEquipoJs = {
                 //ths.pestanaAcademia('academiaEquipo');
             }
         });
-    },
+    }
+    ,
     setDest: function (i) {
         if (i <= 0) {
             i = "-";
         }
         return i;
-    },
+    }
+    ,
     botonExpulsar: function () {
         var nombre = this.eqAcademia[this.i].nombre;
         $("#nombreExpulsado").text(nombre);

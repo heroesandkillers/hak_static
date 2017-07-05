@@ -153,16 +153,16 @@
         }
     });
 
-//    var libs = [
+    var libs = [
 //        "jquery",
-//        org + "js/easeljs-0.6.0.min.js"
-//    ];
+        org + "js/easeljs-0.6.0.min.js"
+    ];
 
     var commons = [
         org + "js/jquery.mobile.touch.min.js",
         org + "js/plugins/jquery.hammer.min.js",
         //
-        org + "js/easeljs-0.6.1.min.js",
+//        org + "js/easeljs-0.6.1.min.js",
         org + "js/easeljs_Touch.js",
         org + "js/common.js",
         org + "js/base.js",
@@ -191,38 +191,40 @@
     var petAjax = [];
 
 //    $(document).ready(function () {
-    require(commons, function () {
-        console.log("conectando a " + url + " ...");
+    require(libs, function () {
+        require(commons, function () {
+            console.log("conectando a " + url + " ...");
 
-        petAjax[petAjax.length] = $.ajax({
-            type: 'HEAD',
-            url: url,
-            success: function () {
-                console.log("conexión realizada");
-                conectado = true;
-                conexionEstablecida();
-            },
-            error: function () {
-                console.log("fallo en la conexión");
-                console.log("conectando a " + url + " ...");
-                petAjax[petAjax.length] = $.ajax({
-                    type: 'HEAD',
-                    url: url + local,
-                    success: function () {
-                        console.log("conexión realizada");
-                        conectado = true;
-                        conexionEstablecida();
-                    },
-                    error: function () {
-                        console.log("fallo en la conexión");
-                        conexionEstablecida();
-                    }
-                });
-            }
+            petAjax[petAjax.length] = $.ajax({
+                type: 'HEAD',
+                url: url,
+                success: function () {
+                    console.log("conexión realizada");
+                    conectado = true;
+                    conexionEstablecida();
+                },
+                error: function () {
+                    console.log("fallo en la conexión");
+                    console.log("conectando a " + url + " ...");
+                    petAjax[petAjax.length] = $.ajax({
+                        type: 'HEAD',
+                        url: url + local,
+                        success: function () {
+                            console.log("conexión realizada");
+                            conectado = true;
+                            conexionEstablecida();
+                        },
+                        error: function () {
+                            console.log("fallo en la conexión");
+                            conexionEstablecida();
+                        }
+                    });
+                }
+            });
+
+            //FOOTER HIDE WIDTH
+            $("footer").css("left", -($("footer > div").width() + 1) + "px");
         });
-
-        //FOOTER HIDE WIDTH
-        $("footer").css("left", -($("footer > div").width() + 1) + "px");
     });
 
     function conexionEstablecida() {

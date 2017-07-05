@@ -117,10 +117,11 @@ var academiaEquipoJs = {
         var observables = $("tbody .observable");
         for (var i = 0; i < observables.length; i++) {
             var div = $(observables[i]);
-            var td = $(div.closest("tr")).find("td")[1];
+            var $tr = $(div.closest("tr"));
+            var $tdAttr = $($tr.find("td")[1]);
 
             div.removeClass("observar");
-            if (td.text().search("-") === -1) {
+            if ($tdAttr.text().search("-") === -1) {
                 div.addClass("observar");
 
                 (function (div, id) {
@@ -129,7 +130,7 @@ var academiaEquipoJs = {
                         ths.atributo = id;
                         ths.ocultarValor();
                     });
-                })(div, td.attr("id"));
+                })(div, $tdAttr.attr("id"));
             }
         }
     }

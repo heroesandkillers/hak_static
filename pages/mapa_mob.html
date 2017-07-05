@@ -242,8 +242,24 @@
                 var hoy = false;
 
                 for (var i = 0; i < ths.calendarioDivision.length; i++) {
+                    var batalla = ths.calendarioDivision[i];
+                    
+                    //IF THIS MONTH AT DAY 1 IS BIGGER THAN THE BATTLE, CONTINUE
+                    var d = new Date();
+                    d.setDate(1);
+                    d.setHours(0);
+                    d.setMinutes(0);
+                    if (batalla.fecha < getTime() / 1000) {
+                        d.setDate(d.getDate() - 1);
+                        if (batalla.fecha < d.getTime() / 1000 && !this.clearOldBatallasCalled) {
+                            this.clearOldBatallasCalled = true;
+                            //ASK SERVER UPDATE IF OLD IS SHOWING!
+                            ajax.call("clearOldBatallas");
+                        }
+                        continue;
+                    }
 
-                    if (dias !== ths.calendarioDivision[i].fecha) {
+                    if (dias !== batalla.fecha) {
 
                         var $row = $("<tr class='UnHighLight saltoCalendario'>").appendTo($listaBatallas);
 
@@ -254,7 +270,7 @@
                         }
 
                         var $cell0 = $("<td class='fechaCell' colspan='5'>").appendTo($row)
-                        var fecha = getFechaCompletaBySeconds(ths.calendarioDivision[i].fecha);
+                        var fecha = getFechaCompletaBySeconds(batalla.fecha);
                         $cell0.text(fecha);
 
                         rowCount++;
@@ -263,15 +279,15 @@
                     var $row = $("<tr class='UnHighLight'>").appendTo($listaBatallas);
 
                     var $cell0 = $("<td>").appendTo($row);
-                    $("<div style='text-align:right'>").text(ths.calendarioDivision[i].eqLocName).appendTo($cell0);
+                    $("<div style='text-align:right'>").text(batalla.eqLocName).appendTo($cell0);
 
                     $("<td><div> - </div></td>").appendTo($row);
 
                     var $cell2 = $("<td>").appendTo($row);
-                    $("<div>").text(ths.calendarioDivision[i].eqVisName).appendTo($cell2);
+                    $("<div>").text(batalla.eqVisName).appendTo($cell2);
 
-                    if (typeof ths.calendarioDivision[i].resultado !== "undefined") {
-                        var result = ths.calendarioDivision[i].resultado.split("-");
+                    if (typeof batalla.resultado !== "undefined") {
+                        var result = batalla.resultado.split("-");
 
                         $("<div style='text-align:right'>").text(result[0]).appendTo($cell0);
                         $("<div>").text(result[1]).appendTo($cell2);
@@ -290,13 +306,13 @@
                         }
                     }
 
-                    if (ths.calendarioDivision[i].calculos > 0) {
+                    if (batalla.calculos > 0) {
                         $row.attr({
-                            'i': i,
-                            'class': 'icon verBatalla'
+                            i: i,
+                            class: 'icon verBatalla'
                         });
                     } else {
-                        if (typeof ths.calendarioDivision[i].resultado === 'undefined') {
+                        if (typeof batalla.resultado === 'undefined') {
                             if (hoy === false) {
                                 var rowHoy = $listaBatallas.find("tr").eq($row.index(this) - 1);
                                 $(rowHoy).removeClass("calendarioPosterior");
@@ -307,7 +323,7 @@
                         }
                     }
                     rowCount++;
-                    dias = ths.calendarioDivision[i].fecha;
+                    dias = batalla.fecha;
                 }
             });
         },

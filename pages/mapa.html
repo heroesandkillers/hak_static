@@ -221,7 +221,7 @@
             ajax.getMensajesPrensa(this, function (mensajes) {
                 var contenedor = $("#mensajes").html("");
                 for (var j = 0; j < mensajes.length; j++) {
-
+                  
 //                    //CHECK IS IN MONTH -> CLEAN DATA
 //                    var d = new Date();
 //                    d.setDate(1);
@@ -237,7 +237,7 @@
 //                        continue;
 //                    }
 //                    //
-
+                    
                     var div = $("<div>");
 
                     var p = $("<p>");
@@ -303,9 +303,8 @@
                 var hoy = false;
                 for (var i = 0; i < ths.calendarioDivision.length; i++) {
 
-                    //CLEAR IF OLD IS SHOWING!
+                    //ASK SERVER UPDATE IF OLD IS SHOWING!
                     var batalla = ths.calendarioDivision[i];
-                    //CHECK IS IN MONTH - SECURITY
                     var d = new Date();
                     d.setDate(1);
                     d.setHours(0);
@@ -318,7 +317,6 @@
                         }
                         continue;
                     }
-                    //
 
                     if (ths.calendarioDivision[i].tipo === tipo) {
 

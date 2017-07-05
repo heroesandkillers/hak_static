@@ -294,24 +294,28 @@
             global.criatura = ths.eqAcademia[i];
             detalleCriatura(global.criatura, ths.stage, "#contenidosAcademia");
 
-            $(".observable").each(function () {
-                var div = $(this);
+            var observables = $("tbody .observable");
+            for (var i = 0; i < observables.length; i++) {
+                var div = $(observables[i]);
                 var td = div.closest("td");
 
                 div.removeClass("observar");
                 if (td.text().search("-") === -1) {
                     div.addClass("observar");
+                    
                     div.addClass("help");
                     div.html('<span>ocultar valor</span>');
-                    
+
                     (function (div, td) {
-                        div.click(function () {
+                        div.off(".observe");
+                        div.on("click.observe", function () {
                             ths.atributo = td.attr("id");
                             ths.ocultarValor();
                         });
                     })(div, td);
                 }
-            });
+            }
+
             helpers();
 
             $("#detalleCriatura").css("display", "inherit");

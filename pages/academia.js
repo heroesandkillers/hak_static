@@ -114,22 +114,24 @@ var academiaEquipoJs = {
         $("#" + global.criatura.id + " > td").addClass("none");
         $("#detalleCriatura > div").addClass("alturaDetalle");
 
-        $(".observable").each(function () {
-            var div = $(this);
+        var observables = $("tbody .observable");
+        for (var i = 0; i < observables.length; i++) {
+            var div = $(observables[i]);
             var td = div.closest("td");
-            
-            div.removeClass("observar");            
+
+            div.removeClass("observar");
             if (td.text().search("-") === -1) {
                 div.addClass("observar");
-                
+
                 (function (div, id) {
-                    div.click(function () {
+                    div.off(".observe");
+                    div.on("click.observe", function () {
                         ths.atributo = id;
                         ths.ocultarValor();
                     });
                 })(div, td.attr("id"));
             }
-        });
+        }
     }
     ,
     ocultarValor: function () {

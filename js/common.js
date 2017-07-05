@@ -73,6 +73,7 @@ function getTimerEntreno(timers) {
 //....................................................................................
 
 function reloadTablas() {
+//    console.log("reloadTablas()");
 //    $('.tabla').each(function () {
 //        var tabla = $(this);
 //        var width;

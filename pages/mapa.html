@@ -357,8 +357,7 @@
                         $(cell3).css("font-weight", "bold");
                         cell3.innerHTML = "-";
 
-                        var td = $("<td>");
-                        $(row).append(td);
+                        var td = $("<td>").appendTo(row);
 
                         if (typeof ths.calendarioDivision[i].resultado !== "undefined") {
                             var result = ths.calendarioDivision[i].resultado;
@@ -377,10 +376,9 @@
 
                         //load battle
                         if (ths.calendarioDivision[i].calculos > 0) {
-                            var img = $("<div>");
+                            var img = $("<div>").appendTo(td);
                             img.addClass('icon ico_lupa');
                             img.attr('onclick', "cargar('batallas'); mapaJs.getBatallaLista(" + i + ")");
-                            td.append(img);
 
                         } else {
                             if (typeof ths.calendarioDivision[i].resultado === 'undefined') {

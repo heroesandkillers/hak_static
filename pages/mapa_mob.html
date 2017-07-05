@@ -218,7 +218,8 @@
                 }
                 reloadTablas();
             });
-        },
+        }
+        ,
         getCalendarioDivision: function (callback) {
             var ths = this;
             if (ths.division != global.perfil.division.division) {
@@ -226,7 +227,8 @@
             } else {
                 callback();
             }
-        },
+        }
+        ,
         listarBatallas: function () {
             var ths = this;
             this.getCalendarioDivision(function () {
@@ -243,7 +245,7 @@
 
                 for (var i = 0; i < ths.calendarioDivision.length; i++) {
                     var batalla = ths.calendarioDivision[i];
-                    
+
                     //IF THIS MONTH AT DAY 1 IS BIGGER THAN THE BATTLE, CONTINUE
                     var d = new Date();
                     d.setDate(1);
@@ -307,10 +309,12 @@
                     }
 
                     if (batalla.calculos > 0) {
+                        console.log("batalla.calculos > 0");
                         $row.attr({
                             i: i,
                             class: 'icon verBatalla'
                         });
+
                     } else {
                         if (typeof batalla.resultado === 'undefined') {
                             if (hoy === false) {
@@ -326,8 +330,10 @@
                     dias = batalla.fecha;
                 }
             });
-        },
-        mensaje: "",
+        }
+        ,
+        mensaje: ""
+        ,
         enviarMensajePrensa: function () {
             var ths = this;
             ths.mensaje = $("#mensaje").val();
@@ -338,7 +344,8 @@
                 ajax.enviarMensajePrensa(ths);
                 $("#mensaje").val("");
             }
-        },
+        }
+        ,
         events: function () {
             var ths = this;
 
@@ -405,7 +412,8 @@
                 $(this).height(0);
                 $(this).height(this.scrollHeight);
             });
-        },
+        }
+        ,
         sizes: function () {
             $("#listaBatallas").css({
                 right: -$("#listaBatallas").width()

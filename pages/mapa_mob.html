@@ -249,7 +249,7 @@
                     d.setDate(1);
                     d.setHours(0);
                     d.setMinutes(0);
-                    if (batalla.fecha < getTime() / 1000) {
+                    if (batalla.fecha < d.getTime() / 1000) {
                         d.setDate(d.getDate() - 1);
                         if (batalla.fecha < d.getTime() / 1000 && !this.clearOldBatallasCalled) {
                             this.clearOldBatallasCalled = true;

@@ -291,10 +291,6 @@
             return;
         }
 
-//                for (var name in global) {
-//                    global[name] = JSON.parse(global[name]);
-//                }
-
         global.divisiones = all.divisiones;
         global.perfil = JSON.parse(all.perfil);
         global.liga = JSON.parse(all.liga);
@@ -318,7 +314,16 @@
             confirmacion("shared preferences disabled");
         }
 
-        loadJuego();
+        getBatallasCalculo(function () {
+            cargarPerfil();
+            //load();
+            loadJuego();
+        });
+
+        var batalla = getProximaBatalla();
+        if (batalla) {
+            setProximaBatalla(batalla);
+        }
     }
 
     function globalPerfil() {
@@ -328,12 +333,12 @@
         global.alin = typeof global.perfil.alin === 'undefined' ? {} : JSON.parse(global.perfil.alin);
         global.mazmorras = typeof global.perfil.pujas === 'undefined' ? {} : JSON.parse(global.perfil.pujas);
     }
-    
+
     function loadJuego() {
 //                $("#log").text("load game");
 //                mostrarMapa();
         $("#log").text("loading user preferences");
-        cargarPerfil();
+        //cargarPerfil();
         $("#log").text("loading map screen");
         cargar();
         $("#log").text("showing game");

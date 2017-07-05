@@ -59,10 +59,9 @@ footer{
 footer.show{
     left: -1px !important;
 }
-footer > div{
-    height: 0;
+footer > div{    
     background-position: 100%;
-    /*min-height: 100%;*/
+    min-height: 100%;
     margin-right:30px;
     background-color: rgba(200,200,180,1);
     background-repeat: repeat-y;
@@ -71,6 +70,9 @@ footer > div{
     -moz-box-shadow: 0 0 30px 5px #000, inset -15px 0px 30px rgba(0,0,0,0.5);
     -webkit-box-shadow: 0 0 30px 5px #000, inset -15px 0px 30px rgba(0,0,0,0.5);
     -o-shadow: 0 0 30px 5px #000, inset -15px 0px 30px rgba(0,0,0,0.5);
+}
+footer > div > div{   
+    height: 0;
 }
 
 .swipLeft{
@@ -122,7 +124,7 @@ footer > div{
     bottom: 0;
     left: 0;
     right: 0;
-    background-repeat: none;
+    background-repeat: no-repeat;
 
     transition: width 150ms;
     -moz-transition: width 150ms;

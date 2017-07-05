@@ -73,19 +73,19 @@ function getTimerEntreno(timers) {
 //....................................................................................
 
 function reloadTablas() {
-    $('.tabla').each(function () {
-        var tabla = $(this);
-        var width;
-        var i = 0;
-        $(this).find('.thead th').each(function () {
-            width = $(this).outerWidth();
-//            $(this).width(width);
-            tabla.find(".tbody tbody tr").each(function () {
-                $(this).find("td:eq(" + i + ") > div").width(width - 5);
-            });
-            i++;
-        });
-    });
+//    $('.tabla').each(function () {
+//        var tabla = $(this);
+//        var width;
+//        var i = 0;
+//        $(this).find('.thead th').each(function () {
+//            width = $(this).outerWidth();
+////            $(this).width(width);
+//            tabla.find(".tbody tbody tr").each(function () {
+//                $(this).find("td:eq(" + i + ") > div").width(width - 5);
+//            });
+//            i++;
+//        });
+//    });
 }
 
 function Select(obj) {
@@ -762,8 +762,8 @@ function atr(atr) {
     return atr;
 }
 
-$(".icono").click(function () {
-    $(".icono").css("color", "inherit");
+$("footer .icono").click(function () {
+    $("footer .icono").css("color", "inherit");
     $(this).css("color", "gold");
 });
 

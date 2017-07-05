@@ -14,8 +14,10 @@ var academiaEquipoJs = {
         $("#aspectoDiv").append(ths.canvas);
         $(ths.canvas).attr("id", "aspecto");
         ths.stage = new createjs.Stage(ths.canvas);
-    },
-    batallasAcademia: global.batallasAcademia,
+    }
+    ,
+    batallasAcademia: global.batallasAcademia
+    ,
     getBatallasAcademia: function () {
         if (this.batallasAcademia === "") {
             var ths = this;
@@ -30,12 +32,14 @@ var academiaEquipoJs = {
         } else {
             this.selectBatallas();
         }
-    },
+    }
+    ,
     selectBatallas: function () {
         for (var i = 0; i < this.batallasAcademia.length; i++) {
             $('<option>').val(i).text(this.batallasAcademia[i].equipoLocal + " : " + this.batallasAcademia[i].equipoVisitante).appendTo('#selectBatallas');
         }
-    },
+    }
+    ,
     mostrarAcademia: function () {
         var eqAcademia = this.eqAcademia;
         var table = $("#tableAcademia tbody").get(0);
@@ -108,8 +112,8 @@ var academiaEquipoJs = {
         $(".alturaDetalle").removeClass("alturaDetalle");
 
         $(".none").removeClass("none");
-        global.criatura = ths.eqAcademia[i];
-        detalleCriatura(global.criatura, ths.stage);
+        global.criatura = this.eqAcademia[i];
+        detalleCriatura(global.criatura, this.stage);
         $("#" + global.criatura.id).append($("#detalleCriatura"));
         $("#" + global.criatura.id + " > td").addClass("none");
         $("#detalleCriatura > div").addClass("alturaDetalle");

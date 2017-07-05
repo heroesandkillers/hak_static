@@ -6,13 +6,13 @@
 
             <div style="margin:20px; margin-top:50px; font-weight: bold">
 
-                Visualización del juego:                        
+                Visualizaciï¿½n del juego:                        
                 <br/><br/>
                 <div class="checkbox" style="margin-right:20px; float:left">
                     <div id="menu" class="check checked"></div>
                 </div>
                 <div style="margin-left:20px">
-                    Menú dinámico
+                    Menï¿½ dinï¿½mico
                 </div>
 
                 <div style="margin-top:10px">
@@ -33,11 +33,6 @@
 
     </div>
 </div>
-
-<%@taglib uri="/struts-tags" prefix="s" %>
-<s:if test="#session.login != 'true'">
-    <jsp:forward page="index.jsp"/>
-</s:if>
 
 <script>
     documentLoad();
@@ -60,7 +55,7 @@
             },
             complete : function() {
                 graficos.menu = menu;
-                aviso("gráficos guardados correctamente")
+                aviso("grï¿½ficos guardados correctamente")
                 configurarGraficos();
             }
         });                

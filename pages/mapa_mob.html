@@ -216,7 +216,7 @@
                         d.setDate(d.getDate() - 1);
                         if (mensajes[j].fecha < d.getTime() / 1000 && !this.clearOldMessagesCalled) {
                             this.clearOldMessagesCalled = true;
-                            ajax.call("clearOldMessages");
+                            //ajax.call("clearOldMessages");
                             //TODO: CLEAR OLD MESSAGES
                         }
                         continue;

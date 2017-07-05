@@ -207,8 +207,23 @@
 
                 for (var j = mensajes.length - 1; j >= 0; j--) {
                     var $div = $("<div>").appendTo($contenedor);
-                    var p = $("<p class='comentarioUsuario'>").text(mensajes[j].emisorName + ": ").appendTo($div);
-                    var p2 = $("<p class='comentarioTexto'>").text(mensajes[j].mensaje).appendTo($div);
+
+                    var d = new Date();
+                    d.setDate(1);
+                    d.setHours(0);
+                    d.setMinutes(0);
+                    if (mensajes[j].fecha < d.getTime() / 1000) {
+                        d.setDate(d.getDate() - 1);
+                        if (mensajes[j].fecha < d.getTime() / 1000 && !this.clearOldMessagesCalled) {
+                            this.clearOldMessagesCalled = true;
+                            ajax.call("clearOldMessages");
+                            //TODO: CLEAR OLD MESSAGES
+                        }
+                        continue;
+                    }
+
+                    $("<p class='comentarioUsuario'>").text(mensajes[j].emisorName + ": ").appendTo($div);
+                    $("<p class='comentarioTexto'>").text(mensajes[j].mensaje).appendTo($div);
                 }
                 if (mensajes.length === 0) {
                     var $div = $("<div>").appendTo($contenedor);
@@ -307,7 +322,7 @@
                             scrollSelected = true;
                         }
                     }
-                    
+
                     console.log(batalla);
                     if (batalla.calculos > 0) {
                         console.log("batalla.calculos > 0");

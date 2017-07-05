@@ -296,7 +296,7 @@
 
             $(".observable").each(function () {
                 var div = $(this);
-                var td = div.parent().parent().find('td:eq(1)');
+                var td = div.closest("td");
 
                 div.removeClass("observar");
                 if (td.text().search("-") === -1) {

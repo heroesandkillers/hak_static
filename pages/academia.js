@@ -116,18 +116,18 @@ var academiaEquipoJs = {
 
         $(".observable").each(function () {
             var div = $(this);
-            var td = div.parent().parent().find('td:eq(1)');
-
-            div.removeClass("observar");
+            var td = div.closest("td");
+            
+            div.removeClass("observar");            
             if (td.text().search("-") === -1) {
                 div.addClass("observar");
-
-                (function (div, td) {
+                
+                (function (div, id) {
                     div.click(function () {
-                        ths.atributo = td.attr("id");
+                        ths.atributo = id;
                         ths.ocultarValor();
                     });
-                })(div, td);
+                })(div, td.attr("id"));
             }
         });
     }
